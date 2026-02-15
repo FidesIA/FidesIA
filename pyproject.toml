@@ -1,0 +1,29 @@
+[project]
+name = "theologia"
+version = "0.1.0"
+description = "Chatbot RAG Théologie Catholique"
+authors = [
+    {name = "JB de Fromont"}
+]
+readme = "README.md"
+requires-python = "^3.13"
+dependencies = [
+    "fastapi (>=0.129.0,<0.130.0)",
+    "uvicorn[standard] (>=0.40.0,<0.41.0)",
+    "llama-index-core (>=0.14.14,<0.15.0)",
+    "llama-index-llms-ollama (>=0.9.1,<0.10.0)",
+    "llama-index-vector-stores-chroma (>=0.5.5,<0.6.0)",
+    "llama-index-embeddings-huggingface (>=0.6.1,<0.7.0)",
+    "chromadb (>=1.3.5,<1.4.0)",
+    "bcrypt (>=5.0.0,<6.0.0)",
+    "pyjwt (>=2.11.0,<3.0.0)",
+    "slowapi (>=0.1.9,<0.2.0)",
+    "python-dotenv (>=1.2.1,<2.0.0)",
+    "aiosqlite (>=0.22.1,<0.23.0)",
+    "llama-index-readers-file (>=0.5.6,<0.6.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

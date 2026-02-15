@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TheologIA — Assistant Théologie Catholique</title>
+    <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/chat.css">
+</head>
+<body>
+    <!-- Login/Register Modal -->
+    <div id="auth-modal" class="modal" hidden>
+        <div class="modal-backdrop"></div>
+        <div class="modal-content auth-modal-content">
+            <button class="modal-close" onclick="AuthUI.close()">&times;</button>
+            <div class="auth-tabs">
+                <button class="auth-tab active" data-tab="login">Connexion</button>
+                <button class="auth-tab" data-tab="register">Inscription</button>
+            </div>
+            <!-- Login -->
+            <form id="login-form" class="auth-form">
+                <div class="form-group">
+                    <label for="login-email">Email</label>
+                    <input type="email" id="login-email" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Mot de passe</label>
+                    <input type="password" id="login-password" required autocomplete="current-password">
+                </div>
+                <div id="login-error" class="form-error" hidden></div>
+                <button type="submit" id="login-btn" class="btn btn-primary">Se connecter</button>
+            </form>
+            <!-- Register -->
+            <form id="register-form" class="auth-form" hidden>
+                <div class="form-group">
+                    <label for="register-name">Nom d'affichage</label>
+                    <input type="text" id="register-name" required minlength="2" autocomplete="name">
+                </div>
+                <div class="form-group">
+                    <label for="register-email">Email</label>
+                    <input type="email" id="register-email" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Mot de passe</label>
+                    <input type="password" id="register-password" required minlength="6" autocomplete="new-password">
+                </div>
+                <div id="register-error" class="form-error" hidden></div>
+                <button type="submit" id="register-btn" class="btn btn-primary">Créer mon compte</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profile-modal" class="modal" hidden>
+        <div class="modal-backdrop"></div>
+        <div class="modal-content profile-modal-content">
+            <button class="modal-close" onclick="Profile.close()">&times;</button>
+            <h2>Mon profil</h2>
+            <div class="profile-section">
+                <h3>Tranche d'âge</h3>
+                <div class="profile-options" id="age-options">
+                    <button class="profile-btn" data-value="enfant">Enfant</button>
+                    <button class="profile-btn" data-value="ado">Adolescent</button>
+                    <button class="profile-btn" data-value="jeune_adulte">Jeune adulte</button>
+                    <button class="profile-btn active" data-value="adulte">Adulte</button>
+                    <button class="profile-btn" data-value="senior">Senior</button>
+                </div>
+            </div>
+            <div class="profile-section">
+                <h3>Niveau de connaissance</h3>
+                <div class="profile-options" id="level-options">
+                    <button class="profile-btn" data-value="decouverte">Découverte</button>
+                    <button class="profile-btn active" data-value="initie">Initié</button>
+                    <button class="profile-btn" data-value="confirme">Confirmé</button>
+                    <button class="profile-btn" data-value="expert">Expert</button>
+                </div>
+            </div>
+            <div class="profile-section">
+                <h3>Longueur des réponses</h3>
+                <div class="profile-options" id="length-options">
+                    <button class="profile-btn" data-value="bref">Bref</button>
+                    <button class="profile-btn active" data-value="synthetique">Synthétique</button>
+                    <button class="profile-btn" data-value="developpe">Développé</button>
+                </div>
+            </div>
+            <p class="profile-hint">Votre profil adapte le ton, le niveau et la longueur des réponses.</p>
+        </div>
+    </div>
+
+    <!-- Corpus Modal -->
+    <div id="corpus-modal" class="modal" hidden>
+        <div class="modal-backdrop"></div>
+        <div class="modal-content corpus-modal-content">
+            <button class="modal-close" onclick="Corpus.close()">&times;</button>
+            <h2>Corpus documentaire</h2>
+            <input type="search" id="corpus-search" placeholder="Rechercher un document..." class="corpus-search">
+            <div id="corpus-list" class="corpus-list"></div>
+        </div>
+    </div>
+
+    <!-- App Layout -->
+    <div id="app" class="app-layout">
+        <!-- Sidebar (connecté uniquement) -->
+        <aside id="sidebar" class="sidebar" hidden>
+            <div class="sidebar-header">
+                <button id="sidebar-close" class="sidebar-close-btn header-btn" title="Fermer" onclick="App.closeSidebar()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+                </button>
+                <button id="new-chat-btn" class="btn btn-accent" title="Nouvelle conversation">+ Nouveau</button>
+            </div>
+            <div id="conversations-list" class="conversations-list"></div>
+            <div id="sidebar-footer" class="sidebar-footer">
+                <div class="sidebar-user">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0112 0v1"/></svg>
+                    <span id="sidebar-username"></span>
+                </div>
+                <button class="sidebar-logout" onclick="AuthUI.logout()" title="Se déconnecter">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main -->
+        <main class="main">
+            <!-- Header -->
+            <header class="header">
+                <button id="sidebar-toggle" class="header-btn" title="Conversations" hidden>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+                </button>
+                <div class="header-brand">
+                    <span class="brand-cross">&#10013;</span>
+                    <span class="brand-name">TheologIA</span>
+                </div>
+                <div class="header-actions">
+                    <button id="profile-btn" class="header-btn" title="Profil">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0112 0v1"/></svg>
+                    </button>
+                    <button id="corpus-btn" class="header-btn" title="Corpus">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+                    </button>
+                    <button id="auth-btn" class="header-btn" title="Se connecter">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Chat Area -->
+            <div id="chat-area" class="chat-area">
+                <!-- Welcome screen -->
+                <div id="welcome" class="welcome">
+                    <div class="welcome-icon">&#10013;</div>
+                    <h1>TheologIA</h1>
+                    <p>Assistant en théologie catholique</p>
+                    <p class="welcome-sub">Posez vos questions sur la foi, le Magistère, les sacrements, la morale...</p>
+                    <div class="welcome-examples">
+                        <button class="example-btn" data-q="Qu'est-ce que la Trinité ?">Qu'est-ce que la Trinité ?</button>
+                        <button class="example-btn" data-q="Que dit l'Église sur la dignité humaine ?">Dignité humaine</button>
+                        <button class="example-btn" data-q="Quels sont les 7 sacrements ?">Les 7 sacrements</button>
+                    </div>
+                </div>
+
+                <!-- Messages -->
+                <div id="messages" class="messages" hidden></div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <form id="chat-form" class="chat-form">
+                    <textarea id="chat-input" placeholder="Posez votre question..." rows="1" autofocus></textarea>
+                    <button type="submit" id="send-btn" class="btn btn-accent send-btn" title="Envoyer">
+                        <svg viewBox="0 0 24 24"><path d="M2 21L23 12 2 3v7l15 2-15 2v7z" fill="white"/></svg>
+                    </button>
+                </form>
+                <div id="guest-banner" class="guest-banner" hidden>
+                    <span>Connectez-vous pour sauvegarder vos conversations</span>
+                    <button class="btn btn-small" onclick="AuthUI.open()">Se connecter</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/js/vendor/marked.min.js"></script>
+    <script src="/js/vendor/purify.min.js"></script>
+    <script src="/js/api.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/profile.js"></script>
+    <script src="/js/corpus.js"></script>
+    <script src="/js/chat.js"></script>
+    <script src="/js/app.js"></script>
+</body>
+</html>
