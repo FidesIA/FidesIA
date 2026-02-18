@@ -1,20 +1,20 @@
 /**
- * API wrapper for TheologIA
+ * API wrapper for FidesIA
  * Handles JWT auth, fetch, and SSE streaming.
  */
 const API = {
-    getToken() { return localStorage.getItem('theologia_token'); },
-    setToken(t) { localStorage.setItem('theologia_token', t); },
-    clearToken() { localStorage.removeItem('theologia_token'); },
+    getToken() { return localStorage.getItem('fidesia_token'); },
+    setToken(t) { localStorage.setItem('fidesia_token', t); },
+    clearToken() { localStorage.removeItem('fidesia_token'); },
 
-    getUserId() { return localStorage.getItem('theologia_user_id'); },
-    setUserId(id) { localStorage.setItem('theologia_user_id', id); },
+    getUserId() { return localStorage.getItem('fidesia_user_id'); },
+    setUserId(id) { localStorage.setItem('fidesia_user_id', id); },
 
-    getDisplayName() { return localStorage.getItem('theologia_display_name') || ''; },
-    setDisplayName(n) { localStorage.setItem('theologia_display_name', n); },
+    getDisplayName() { return localStorage.getItem('fidesia_display_name') || ''; },
+    setDisplayName(n) { localStorage.setItem('fidesia_display_name', n); },
 
     getSessionId() {
-        let sid = sessionStorage.getItem('theologia_session');
+        let sid = sessionStorage.getItem('fidesia_session');
         if (!sid) {
             if (typeof crypto !== 'undefined' && crypto.randomUUID) {
                 sid = crypto.randomUUID();
@@ -24,7 +24,7 @@ const API = {
                     return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
                 });
             }
-            sessionStorage.setItem('theologia_session', sid);
+            sessionStorage.setItem('fidesia_session', sid);
         }
         return sid;
     },

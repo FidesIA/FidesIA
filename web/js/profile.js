@@ -8,15 +8,15 @@ const Profile = {
 
     init() {
         // Load from localStorage
-        this.ageGroup = localStorage.getItem('theologia_age') || 'adulte';
-        this.knowledgeLevel = localStorage.getItem('theologia_level') || 'initie';
-        this.responseLength = localStorage.getItem('theologia_length') || 'synthetique';
+        this.ageGroup = localStorage.getItem('fidesia_age') || 'adulte';
+        this.knowledgeLevel = localStorage.getItem('fidesia_level') || 'initie';
+        this.responseLength = localStorage.getItem('fidesia_length') || 'synthetique';
 
         // Bind age buttons
         document.querySelectorAll('#age-options .profile-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 this.ageGroup = btn.dataset.value;
-                localStorage.setItem('theologia_age', this.ageGroup);
+                localStorage.setItem('fidesia_age', this.ageGroup);
                 this._updateButtons('#age-options', this.ageGroup);
             });
         });
@@ -25,7 +25,7 @@ const Profile = {
         document.querySelectorAll('#level-options .profile-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 this.knowledgeLevel = btn.dataset.value;
-                localStorage.setItem('theologia_level', this.knowledgeLevel);
+                localStorage.setItem('fidesia_level', this.knowledgeLevel);
                 this._updateButtons('#level-options', this.knowledgeLevel);
             });
         });
@@ -34,7 +34,7 @@ const Profile = {
         document.querySelectorAll('#length-options .profile-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 this.responseLength = btn.dataset.value;
-                localStorage.setItem('theologia_length', this.responseLength);
+                localStorage.setItem('fidesia_length', this.responseLength);
                 this._updateButtons('#length-options', this.responseLength);
             });
         });

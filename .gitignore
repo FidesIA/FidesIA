@@ -15,7 +15,7 @@ build/
 # Data (volumineuses, copiées localement)
 data/chroma_db/
 data/corpus/
-data/theologIA.db
+data/fidesia.db
 
 # IDE
 .vscode/

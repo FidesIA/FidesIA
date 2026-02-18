@@ -1,12 +1,12 @@
 [Unit]
-Description=TheologIA - Chatbot Théologie Catholique
+Description=FidesIA - Chatbot Théologie Catholique
 After=network.target ollama-failover.service
 
 [Service]
 Type=simple
 User=gardien
 Group=gardien
-WorkingDirectory=/home/gardien/TheologIA
+WorkingDirectory=/home/gardien/FidesIA
 ExecStart=/home/gardien/.local/share/pypoetry/venv/bin/poetry run uvicorn app:app --host 0.0.0.0 --port 11438
 Restart=always
 RestartSec=10

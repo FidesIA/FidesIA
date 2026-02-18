@@ -1,5 +1,5 @@
 """
-database.py - Base de données SQLite pour TheologIA
+database.py - Base de données SQLite pour FidesIA
 Tables : users (inscription) + exchanges (conversations Q/R)
 Thread-safe avec lock.
 """

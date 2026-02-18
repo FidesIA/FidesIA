@@ -1,5 +1,5 @@
 """
-rag.py - Pipeline RAG pour TheologIA
+rag.py - Pipeline RAG pour FidesIA
 ChromaDB (Solon embeddings) → LlamaIndex → Ollama streaming
 
 La base ChromaDB est pré-indexée via Domicil-IA (collection share_CathIA).

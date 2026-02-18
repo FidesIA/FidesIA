@@ -1,5 +1,5 @@
 """
-app.py - Serveur FastAPI pour TheologIA
+app.py - Serveur FastAPI pour FidesIA
 Chatbot RAG Théologie Catholique
 """
 
@@ -36,16 +36,16 @@ logger = logging.getLogger(__name__)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("TheologIA démarrage...")
+    logger.info("FidesIA démarrage...")
     init_db()
     init_settings()
     init_index()
-    logger.info("TheologIA prêt")
+    logger.info("FidesIA prêt")
     yield
-    logger.info("TheologIA arrêt")
+    logger.info("FidesIA arrêt")
 
 
-app = FastAPI(title="TheologIA", version="1.0.0", lifespan=lifespan)
+app = FastAPI(title="FidesIA", version="1.0.0", lifespan=lifespan)
 
 # Rate limiting
 limiter = Limiter(key_func=get_remote_address)
@@ -232,7 +232,7 @@ async def health():
     stats = get_collection_stats()
     return {
         "status": "ok",
-        "service": "TheologIA",
+        "service": "FidesIA",
         "version": "1.0.0",
         **stats,
     }

@@ -131,8 +131,8 @@ const AuthUI = {
         Chat.cancelStream();
         await API.logout();
         API.clearToken();
-        localStorage.removeItem('theologia_user_id');
-        localStorage.removeItem('theologia_display_name');
+        localStorage.removeItem('fidesia_user_id');
+        localStorage.removeItem('fidesia_display_name');
         App.onLogout();
     }
 };

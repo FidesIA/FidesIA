@@ -1,5 +1,5 @@
 """
-auth.py - Authentification pour TheologIA
+auth.py - Authentification pour FidesIA
 Inscription email+password, login JWT, validation session.
 """
 

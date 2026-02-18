@@ -1,5 +1,5 @@
 """
-config.py - Configuration centralisée pour TheologIA
+config.py - Configuration centralisée pour FidesIA
 Charge les variables d'environnement depuis .env
 """
 
@@ -14,7 +14,7 @@ BASE_DIR = Path(__file__).parent
 CHROMA_PATH = BASE_DIR / os.getenv("CHROMA_PATH", "data/chroma_db")
 CORPUS_PATH = BASE_DIR / os.getenv("CORPUS_PATH", "data/corpus")
 INVENTAIRE_PATH = BASE_DIR / os.getenv("INVENTAIRE_PATH", "data/inventaire.json")
-DB_PATH = BASE_DIR / os.getenv("DB_PATH", "data/theologIA.db")
+DB_PATH = BASE_DIR / os.getenv("DB_PATH", "data/fidesia.db")
 
 # === Ollama ===
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
