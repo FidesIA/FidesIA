@@ -30,7 +30,20 @@
                 </div>
                 <div id="login-error" class="form-error" hidden></div>
                 <button type="submit" id="login-btn" class="btn btn-primary">Se connecter</button>
+                <a href="#" id="forgot-link" class="forgot-link">Mot de passe oublié ?</a>
             </form>
+            <!-- Forgot Password -->
+            <div id="forgot-form" class="auth-form" hidden>
+                <p class="forgot-intro">Entrez votre adresse email pour recevoir un lien de réinitialisation.</p>
+                <div class="form-group">
+                    <label for="forgot-email">Email</label>
+                    <input type="email" id="forgot-email" required autocomplete="email">
+                </div>
+                <div id="forgot-error" class="form-error" hidden></div>
+                <div id="forgot-success" class="forgot-success" hidden></div>
+                <button type="button" id="forgot-btn" class="btn btn-primary">Envoyer le lien</button>
+                <a href="#" id="forgot-back" class="forgot-link">Retour à la connexion</a>
+            </div>
             <!-- Register -->
             <form id="register-form" class="auth-form" hidden>
                 <div class="form-group">
@@ -179,11 +192,11 @@
     <!-- Scripts -->
     <script src="/js/vendor/marked.min.js"></script>
     <script src="/js/vendor/purify.min.js"></script>
-    <script src="/js/api.js?v=2"></script>
-    <script src="/js/auth.js?v=2"></script>
-    <script src="/js/profile.js?v=2"></script>
-    <script src="/js/corpus.js?v=2"></script>
-    <script src="/js/chat.js?v=2"></script>
-    <script src="/js/app.js?v=2"></script>
+    <script src="/js/api.js?v=3"></script>
+    <script src="/js/auth.js?v=3"></script>
+    <script src="/js/profile.js?v=3"></script>
+    <script src="/js/corpus.js?v=3"></script>
+    <script src="/js/chat.js?v=3"></script>
+    <script src="/js/app.js?v=3"></script>
 </body>
 </html>

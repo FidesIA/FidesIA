@@ -24,7 +24,9 @@ from config import HOST, PORT, CORPUS_PATH, INVENTAIRE_PATH, OLLAMA_MODEL, RATE_
 from database import init_db, save_exchange, update_rating, get_user_conversations, get_conversation_messages, delete_conversation
 from auth import (
     RegisterRequest, LoginRequest, AuthResponse, UserInfo,
-    register, login, get_current_user, require_auth,
+    ForgotPasswordRequest, ResetPasswordRequest,
+    register, login, forgot_password, reset_password,
+    get_current_user, require_auth,
 )
 from rag import init_settings, init_index, query_stream, get_collection_stats
 
@@ -110,6 +112,18 @@ async def route_check(user: Optional[UserInfo] = Depends(get_current_user)):
 @app.post("/auth/logout")
 async def route_logout(user: UserInfo = Depends(require_auth)):
     return {"success": True, "message": "Déconnexion réussie"}
+
+
+@app.post("/auth/forgot-password")
+@limiter.limit("5/minute")
+async def route_forgot_password(request: Request, req: ForgotPasswordRequest):
+    return forgot_password(req.email)
+
+
+@app.post("/auth/reset-password")
+@limiter.limit("10/minute")
+async def route_reset_password(request: Request, req: ResetPasswordRequest):
+    return reset_password(req.token, req.password)
 
 
 # === Chat / RAG ===

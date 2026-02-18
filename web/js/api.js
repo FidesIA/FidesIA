@@ -134,6 +134,10 @@ const API = {
     saveExchange(data) { return this.post('/conversations/exchange', data); },
     deleteConversation(id) { return this.del(`/conversations/${encodeURIComponent(id)}`); },
 
+    // Password reset
+    forgotPassword(email) { return this.post('/auth/forgot-password', { email }); },
+    resetPassword(token, password) { return this.post('/auth/reset-password', { token, password }); },
+
     // Rating
     rate(data) { return this.post('/rate', data); },
 

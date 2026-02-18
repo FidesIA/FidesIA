@@ -4,6 +4,7 @@ Inscription email+password, login JWT, validation session.
 """
 
 import re
+import secrets
 import logging
 from datetime import datetime, timedelta, timezone
 from typing import Optional
@@ -13,8 +14,12 @@ import jwt
 from fastapi import Header, HTTPException
 from pydantic import BaseModel
 
-from config import JWT_SECRET, JWT_ALGORITHM, JWT_EXPIRE_DAYS
-from database import create_user, get_user_by_email, get_user_by_id, update_last_login
+from config import JWT_SECRET, JWT_ALGORITHM, JWT_EXPIRE_DAYS, APP_URL
+from database import (
+    create_user, get_user_by_email, get_user_by_id, update_last_login,
+    save_reset_token, get_reset_token, delete_reset_token, update_user_password,
+)
+from email_utils import send_reset_email
 
 logger = logging.getLogger(__name__)
 
@@ -46,6 +51,15 @@ class UserInfo(BaseModel):
     user_id: int
     email: str
     display_name: str
+
+
+class ForgotPasswordRequest(BaseModel):
+    email: str
+
+
+class ResetPasswordRequest(BaseModel):
+    token: str
+    password: str
 
 
 # === Helpers ===
@@ -127,6 +141,49 @@ def login(email: str, password: str) -> AuthResponse:
         user_id=user["id"],
         display_name=user["display_name"]
     )
+
+
+# === Mot de passe oublié ===
+
+def forgot_password(email: str) -> dict:
+    """Génère un token de réinitialisation et envoie l'email. Retourne toujours succès."""
+    email = email.strip().lower()
+    user = get_user_by_email(email)
+
+    if user:
+        token = secrets.token_urlsafe(32)
+        expires_at = (datetime.now(timezone.utc) + timedelta(hours=1)).isoformat()
+        save_reset_token(user["id"], token, expires_at)
+
+        reset_url = f"{APP_URL}/reset-password.html?token={token}"
+        send_reset_email(email, user["display_name"], reset_url)
+        logger.info(f"Reset token généré pour {email}")
+    else:
+        logger.info(f"Forgot password pour email inconnu: {email}")
+
+    return {"success": True, "message": "Si cette adresse est enregistrée, un email a été envoyé."}
+
+
+def reset_password(token: str, new_password: str) -> dict:
+    """Réinitialise le mot de passe à partir d'un token valide."""
+    if len(new_password) < 6:
+        return {"success": False, "message": "Le mot de passe doit faire au moins 6 caractères"}
+
+    token_data = get_reset_token(token)
+    if not token_data:
+        return {"success": False, "message": "Lien invalide ou expiré"}
+
+    expires_at = datetime.fromisoformat(token_data["expires_at"])
+    if datetime.now(timezone.utc) > expires_at:
+        delete_reset_token(token)
+        return {"success": False, "message": "Ce lien a expiré. Veuillez refaire une demande."}
+
+    password_h = hash_password(new_password)
+    update_user_password(token_data["user_id"], password_h)
+    delete_reset_token(token)
+
+    logger.info(f"Mot de passe réinitialisé pour user_id={token_data['user_id']}")
+    return {"success": True, "message": "Mot de passe modifié avec succès"}
 
 
 # === Dépendances FastAPI ===

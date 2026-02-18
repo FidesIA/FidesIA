@@ -20,6 +20,20 @@ const AuthUI = {
             this.handleRegister();
         });
 
+        // Forgot password
+        document.getElementById('forgot-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            this.showForgotForm();
+        });
+        document.getElementById('forgot-back').addEventListener('click', (e) => {
+            e.preventDefault();
+            this.backToLogin();
+        });
+        document.getElementById('forgot-btn').addEventListener('click', () => this.handleForgotPassword());
+        document.getElementById('forgot-email').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') this.handleForgotPassword();
+        });
+
         // Backdrop close
         document.querySelector('#auth-modal .modal-backdrop').addEventListener('click', () => this.close());
     },
@@ -30,15 +44,18 @@ const AuthUI = {
 
     close() {
         document.getElementById('auth-modal').hidden = true;
-        // Clear errors
         document.getElementById('login-error').hidden = true;
         document.getElementById('register-error').hidden = true;
+        document.getElementById('forgot-form').hidden = true;
+        document.getElementById('forgot-error').hidden = true;
+        document.getElementById('forgot-success').hidden = true;
     },
 
     switchTab(tab) {
         document.querySelectorAll('.auth-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
         document.getElementById('login-form').hidden = tab !== 'login';
         document.getElementById('register-form').hidden = tab !== 'register';
+        document.getElementById('forgot-form').hidden = true;
     },
 
     async handleLogin() {
@@ -109,6 +126,49 @@ const AuthUI = {
         } finally {
             btn.disabled = false;
             btn.textContent = 'Créer mon compte';
+        }
+    },
+
+    showForgotForm() {
+        document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+        document.getElementById('login-form').hidden = true;
+        document.getElementById('register-form').hidden = true;
+        document.getElementById('forgot-form').hidden = false;
+        document.getElementById('forgot-error').hidden = true;
+        document.getElementById('forgot-success').hidden = true;
+        document.getElementById('forgot-email').value = '';
+        document.getElementById('forgot-btn').hidden = false;
+    },
+
+    backToLogin() {
+        document.getElementById('forgot-form').hidden = true;
+        this.switchTab('login');
+    },
+
+    async handleForgotPassword() {
+        const btn = document.getElementById('forgot-btn');
+        const errDiv = document.getElementById('forgot-error');
+        const successDiv = document.getElementById('forgot-success');
+        const email = document.getElementById('forgot-email').value.trim();
+
+        if (!email) return;
+
+        btn.disabled = true;
+        btn.textContent = 'Envoi...';
+        errDiv.hidden = true;
+        successDiv.hidden = true;
+
+        try {
+            const data = await API.forgotPassword(email);
+            successDiv.textContent = data.message || 'Si cette adresse est enregistrée, un email a été envoyé.';
+            successDiv.hidden = false;
+            btn.hidden = true;
+        } catch (e) {
+            errDiv.textContent = e.message || 'Erreur lors de l\'envoi';
+            errDiv.hidden = false;
+        } finally {
+            btn.disabled = false;
+            btn.textContent = 'Envoyer le lien';
         }
     },
 

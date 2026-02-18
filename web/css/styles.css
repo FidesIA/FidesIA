@@ -515,6 +515,84 @@ html, body {
     border-radius: var(--radius);
 }
 
+/* === Forgot Password === */
+.forgot-link {
+    display: block;
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    margin-top: 4px;
+    transition: color var(--transition);
+}
+
+.forgot-link:hover {
+    color: var(--accent);
+}
+
+.forgot-intro {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.forgot-success {
+    font-size: 13px;
+    padding: 12px;
+    background: rgba(34, 139, 34, 0.08);
+    color: #2d7a2d;
+    border-radius: var(--radius);
+    line-height: 1.5;
+}
+
+@media (prefers-color-scheme: dark) {
+    .forgot-success {
+        background: rgba(34, 139, 34, 0.15);
+        color: #5cb85c;
+    }
+}
+
+/* Reset password page */
+.reset-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.reset-card {
+    background: var(--bg-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: 40px 32px;
+    max-width: 420px;
+    width: 100%;
+    box-shadow: 0 4px 24px var(--shadow);
+    text-align: center;
+}
+
+.reset-card h1 {
+    font-size: 24px;
+    margin-bottom: 8px;
+}
+
+.reset-card .reset-subtitle {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 24px;
+}
+
+.reset-card .form-group {
+    text-align: left;
+}
+
+.reset-card .btn {
+    width: 100%;
+    margin-top: 8px;
+}
+
 /* === Profile Modal === */
 .profile-modal-content { max-width: 520px; }
 .profile-modal-content h2 { margin-bottom: 20px; }

@@ -61,6 +61,17 @@ def init_db():
                 )
             """)
 
+            conn.execute("""
+                CREATE TABLE IF NOT EXISTS password_reset_tokens (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    user_id INTEGER NOT NULL,
+                    token TEXT UNIQUE NOT NULL,
+                    expires_at TEXT NOT NULL,
+                    created_at TEXT DEFAULT CURRENT_TIMESTAMP,
+                    FOREIGN KEY (user_id) REFERENCES users(id)
+                )
+            """)
+
             conn.execute("CREATE INDEX IF NOT EXISTS idx_ex_session ON exchanges(session_id)")
             conn.execute("CREATE INDEX IF NOT EXISTS idx_ex_user ON exchanges(user_id)")
             conn.execute("CREATE INDEX IF NOT EXISTS idx_ex_conv ON exchanges(conversation_id)")
@@ -120,6 +131,60 @@ def update_last_login(user_id: int):
                 "UPDATE users SET last_login = ? WHERE id = ?",
                 (datetime.now().isoformat(), user_id)
             )
+            conn.commit()
+        finally:
+            conn.close()
+
+
+def update_user_password(user_id: int, password_hash: str):
+    """Met à jour le mot de passe d'un utilisateur."""
+    with _db_lock:
+        conn = get_connection()
+        try:
+            conn.execute(
+                "UPDATE users SET password_hash = ? WHERE id = ?",
+                (password_hash, user_id)
+            )
+            conn.commit()
+        finally:
+            conn.close()
+
+
+def save_reset_token(user_id: int, token: str, expires_at: str):
+    """Sauvegarde un token de réinitialisation (supprime les anciens du même user)."""
+    with _db_lock:
+        conn = get_connection()
+        try:
+            conn.execute("DELETE FROM password_reset_tokens WHERE user_id = ?", (user_id,))
+            conn.execute(
+                "INSERT INTO password_reset_tokens (user_id, token, expires_at) VALUES (?, ?, ?)",
+                (user_id, token, expires_at)
+            )
+            conn.commit()
+        finally:
+            conn.close()
+
+
+def get_reset_token(token: str) -> Optional[Dict[str, Any]]:
+    """Retourne les infos d'un token de réinitialisation."""
+    with _db_lock:
+        conn = get_connection()
+        try:
+            row = conn.execute(
+                "SELECT user_id, expires_at FROM password_reset_tokens WHERE token = ?",
+                (token,)
+            ).fetchone()
+            return dict(row) if row else None
+        finally:
+            conn.close()
+
+
+def delete_reset_token(token: str):
+    """Supprime un token après usage."""
+    with _db_lock:
+        conn = get_connection()
+        try:
+            conn.execute("DELETE FROM password_reset_tokens WHERE token = ?", (token,))
             conn.commit()
         finally:
             conn.close()
