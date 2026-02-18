@@ -30,12 +30,13 @@ const Chat = {
             }
         });
 
-        // Example questions
-        document.querySelectorAll('.example-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
+        // Example questions (event delegation for dynamically created buttons)
+        document.getElementById('welcome-examples').addEventListener('click', (e) => {
+            const btn = e.target.closest('.example-btn');
+            if (btn) {
                 input.value = btn.dataset.q;
                 this.send();
-            });
+            }
         });
     },
 

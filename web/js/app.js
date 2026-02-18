@@ -1,6 +1,39 @@
 /**
  * App — Init, state, routing
  */
+const EXAMPLE_QUESTIONS = [
+    { q: "Qu'est-ce que la Trinité ?", label: "La Trinité" },
+    { q: "Que dit l'Église sur la dignité humaine ?", label: "Dignité humaine" },
+    { q: "Quels sont les 7 sacrements ?", label: "Les 7 sacrements" },
+    { q: "Qu'est-ce que l'Eucharistie ?", label: "L'Eucharistie" },
+    { q: "Comment l'Église définit-elle le péché originel ?", label: "Péché originel" },
+    { q: "Que signifie la Résurrection du Christ ?", label: "La Résurrection" },
+    { q: "Qu'est-ce que la grâce sanctifiante ?", label: "La grâce" },
+    { q: "Quel est le rôle de la Vierge Marie dans la foi catholique ?", label: "La Vierge Marie" },
+    { q: "Que dit le Magistère sur la liberté religieuse ?", label: "Liberté religieuse" },
+    { q: "Qu'est-ce que la doctrine sociale de l'Église ?", label: "Doctrine sociale" },
+    { q: "Quels sont les dix commandements ?", label: "Les 10 commandements" },
+    { q: "Qu'est-ce que le sacrement de réconciliation ?", label: "La réconciliation" },
+    { q: "Comment prier le rosaire ?", label: "Le rosaire" },
+    { q: "Que dit l'Église sur le mariage ?", label: "Le mariage" },
+    { q: "Qu'est-ce que l'infaillibilité pontificale ?", label: "Infaillibilité pontificale" },
+    { q: "Quelle est la différence entre dogme et doctrine ?", label: "Dogme et doctrine" },
+    { q: "Que sont les vertus théologales ?", label: "Vertus théologales" },
+    { q: "Qu'est-ce que la communion des saints ?", label: "Communion des saints" },
+    { q: "Que dit l'Église sur la fin des temps ?", label: "Eschatologie" },
+    { q: "Qu'est-ce que le Credo de Nicée-Constantinople ?", label: "Le Credo" },
+    { q: "Quel est le sens du Carême ?", label: "Le Carême" },
+    { q: "Qu'est-ce que la liturgie des Heures ?", label: "Liturgie des Heures" },
+    { q: "Que dit l'Église sur la bioéthique ?", label: "Bioéthique" },
+    { q: "Qu'est-ce que la Tradition apostolique ?", label: "Tradition apostolique" },
+    { q: "Quel est le rôle des anges dans la foi catholique ?", label: "Les anges" },
+    { q: "Que signifie l'Ascension du Christ ?", label: "L'Ascension" },
+    { q: "Qu'est-ce que le purgatoire ?", label: "Le purgatoire" },
+    { q: "Comment l'Église comprend-elle la souffrance ?", label: "Sens de la souffrance" },
+    { q: "Que dit l'Église sur la justice et la paix ?", label: "Justice et paix" },
+    { q: "Qu'est-ce que la vocation sacerdotale ?", label: "Vocation sacerdotale" },
+];
+
 const App = {
     state: {
         authenticated: false,
@@ -9,6 +42,9 @@ const App = {
     },
 
     async init() {
+        // Random example questions
+        this._populateExamples();
+
         // Init modules
         AuthUI.init();
         Profile.init();
@@ -147,8 +183,26 @@ const App = {
         if (sidebar.classList.contains('open')) {
             this.toggleSidebar();
         }
+    },
+
+    _populateExamples() {
+        const container = document.getElementById('welcome-examples');
+        const shuffled = [...EXAMPLE_QUESTIONS].sort(() => Math.random() - 0.5);
+        const picked = shuffled.slice(0, 3);
+        for (const ex of picked) {
+            const btn = document.createElement('button');
+            btn.className = 'example-btn';
+            btn.dataset.q = ex.q;
+            btn.textContent = ex.label;
+            container.appendChild(btn);
+        }
     }
 };
 
 // Boot
-document.addEventListener('DOMContentLoaded', () => App.init());
+App._populateExamples();
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => App.init());
+} else {
+    App.init();
+}
