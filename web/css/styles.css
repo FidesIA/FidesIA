@@ -126,6 +126,42 @@ html, body {
 .conv-item:hover .conv-delete { opacity: 1; }
 .conv-item .conv-delete:hover { background: var(--accent); color: white; }
 
+/* Sidebar donate banner */
+.sidebar-donate {
+    padding: 12px;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.donate-link {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 8px 10px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--text-muted);
+    font-size: 12px;
+    line-height: 1.5;
+    transition: all var(--transition);
+}
+
+.donate-link:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+}
+
+.donate-heart {
+    color: var(--accent);
+    font-size: 14px;
+    flex-shrink: 0;
+    line-height: 1.5;
+}
+
+.donate-text {
+    flex: 1;
+}
+
 /* Sidebar footer (compte) */
 .sidebar-footer {
     padding: 12px;
@@ -713,6 +749,42 @@ html, body {
 }
 
 .corpus-item .corpus-link:hover { text-decoration: underline; }
+
+/* === Donation Popup === */
+.donate-modal-content {
+    max-width: 420px;
+    text-align: center;
+}
+
+.donate-icon {
+    font-size: 48px;
+    color: var(--accent);
+    margin-bottom: 12px;
+}
+
+.donate-modal-content h2 {
+    margin-bottom: 12px;
+    font-size: 20px;
+}
+
+.donate-message {
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+.donate-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+}
+
+.donate-btn-primary {
+    text-decoration: none;
+    width: 100%;
+}
 
 /* Hamburger masqué sur desktop */
 #sidebar-toggle {

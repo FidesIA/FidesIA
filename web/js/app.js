@@ -34,6 +34,24 @@ const EXAMPLE_QUESTIONS = [
     { q: "Qu'est-ce que la vocation sacerdotale ?", label: "Vocation sacerdotale" },
 ];
 
+const Donation = {
+    _count: 0,
+    _shown: false,
+
+    onExchange() {
+        this._count++;
+        if (this._count >= 5 && !this._shown && !sessionStorage.getItem('fidesia_donate_dismissed')) {
+            this._shown = true;
+            document.getElementById('donate-modal').hidden = false;
+        }
+    },
+
+    close() {
+        document.getElementById('donate-modal').hidden = true;
+        sessionStorage.setItem('fidesia_donate_dismissed', '1');
+    }
+};
+
 const App = {
     state: {
         authenticated: false,

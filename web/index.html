@@ -112,6 +112,21 @@
         </div>
     </div>
 
+    <!-- Donation Popup -->
+    <div id="donate-modal" class="modal" hidden>
+        <div class="modal-backdrop" onclick="Donation.close()"></div>
+        <div class="modal-content donate-modal-content">
+            <button class="modal-close" onclick="Donation.close()">&times;</button>
+            <div class="donate-icon">&#9829;</div>
+            <h2>Soutenez FidesIA</h2>
+            <p class="donate-message">Vous aimez FidesIA ? Faites un don de quelques euros pour contribuer aux frais d'hébergement et d'abonnement au moteur d'IA</p>
+            <div class="donate-actions">
+                <a href="https://www.helloasso.com/" target="_blank" rel="noopener" class="btn btn-primary donate-btn-primary">Faire un don sur HelloAsso</a>
+                <button class="btn btn-small" onclick="Donation.close()">Plus tard</button>
+            </div>
+        </div>
+    </div>
+
     <!-- App Layout -->
     <div id="app" class="app-layout">
         <!-- Sidebar (connecté uniquement) -->
@@ -123,6 +138,12 @@
                 <button id="new-chat-btn" class="btn btn-accent" title="Nouvelle conversation">+ Nouveau</button>
             </div>
             <div id="conversations-list" class="conversations-list"></div>
+            <div class="sidebar-donate">
+                <a href="https://www.helloasso.com/" target="_blank" rel="noopener" class="donate-link">
+                    <span class="donate-heart">&#9829;</span>
+                    <span class="donate-text">Vous aimez FidesIA ? Faites un don pour contribuer aux frais d'hébergement et d'IA</span>
+                </a>
+            </div>
             <div id="sidebar-footer" class="sidebar-footer">
                 <div class="sidebar-user">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0112 0v1"/></svg>
@@ -192,11 +213,11 @@
     <!-- Scripts -->
     <script src="/js/vendor/marked.min.js"></script>
     <script src="/js/vendor/purify.min.js"></script>
-    <script src="/js/api.js?v=3"></script>
-    <script src="/js/auth.js?v=3"></script>
-    <script src="/js/profile.js?v=3"></script>
-    <script src="/js/corpus.js?v=3"></script>
-    <script src="/js/chat.js?v=3"></script>
-    <script src="/js/app.js?v=3"></script>
+    <script src="/js/api.js?v=4"></script>
+    <script src="/js/auth.js?v=4"></script>
+    <script src="/js/profile.js?v=4"></script>
+    <script src="/js/corpus.js?v=4"></script>
+    <script src="/js/chat.js?v=4"></script>
+    <script src="/js/app.js?v=4"></script>
 </body>
 </html>

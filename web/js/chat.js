@@ -125,6 +125,9 @@ const Chat = {
                     sources,
                 });
 
+                // Track for donation popup
+                Donation.onExchange();
+
                 // Save exchange to server
                 this._saveExchange(question, fullResponse, sources, elapsed, ratingEl);
 
