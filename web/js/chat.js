@@ -92,14 +92,13 @@ const Chat = {
         let fullResponse = '';
         let sources = [];
 
-        // Show stop button
-        const stopBtn = this._createStopButton();
-        msgEl.appendChild(stopBtn);
+        // Replace send button with stop button in input area
+        this._showStopButton();
 
         this.streamController = API.streamQuestion(payload, {
             onChunk: (text) => {
                 fullResponse += text;
-                contentEl.innerHTML = DOMPurify.sanitize(marked.parse(fullResponse)) + '<span class="streaming-cursor"></span>';
+                contentEl.innerHTML = DOMPurify.sanitize(marked.parse(fullResponse));
                 this._scrollToBottom();
             },
             onSources: (s) => {
@@ -110,14 +109,14 @@ const Chat = {
                 this.streamController = null;
                 const elapsed = Date.now() - startTime;
 
-                // Remove stop button
-                stopBtn.remove();
+                // Restore send button
+                this._hideStopButton();
 
                 // Final render (no cursor)
                 contentEl.innerHTML = DOMPurify.sanitize(marked.parse(fullResponse));
 
-                // Add copy button
-                msgEl.appendChild(this._createCopyButton(fullResponse));
+                // Add actions (share, copy, delete)
+                msgEl.appendChild(this._createMessageActions(fullResponse, msgEl));
 
                 // Add sources
                 if (sources.length > 0) {
@@ -147,7 +146,7 @@ const Chat = {
             onError: (err) => {
                 this.isStreaming = false;
                 this.streamController = null;
-                stopBtn.remove();
+                this._hideStopButton();
                 contentEl.innerHTML = `<span style="color:var(--accent)">Erreur : ${DOMPurify.sanitize(err)}</span>`;
                 this._scrollToBottom();
             }
@@ -181,6 +180,7 @@ const Chat = {
             this.streamController.abort();
             this.streamController = null;
             this.isStreaming = false;
+            this._hideStopButton();
         }
     },
 
@@ -214,7 +214,7 @@ const Chat = {
                 } else {
                     const el = this._createAssistantMessage();
                     el.querySelector('.message-content').innerHTML = DOMPurify.sanitize(marked.parse(msg.content));
-                    el.appendChild(this._createCopyButton(msg.content));
+                    el.appendChild(this._createMessageActions(msg.content, el));
                     if (msg.sources_with_scores && msg.sources_with_scores.length > 0) {
                         el.appendChild(this._createSourcesEl(msg.sources_with_scores));
                     }
@@ -241,7 +241,13 @@ const Chat = {
         const container = document.getElementById('messages');
         const div = document.createElement('div');
         div.className = 'message message-user';
-        div.innerHTML = `<div class="message-content">${DOMPurify.sanitize(content)}</div>`;
+
+        const bubble = document.createElement('div');
+        bubble.className = 'message-content';
+        bubble.textContent = content;
+
+        div.appendChild(bubble);
+        div.appendChild(this._createMessageActions(content, div));
         container.appendChild(div);
         this._scrollToBottom();
     },
@@ -255,31 +261,79 @@ const Chat = {
         return div;
     },
 
-    _createStopButton() {
-        const btn = document.createElement('button');
-        btn.className = 'stop-btn';
-        btn.setAttribute('aria-label', 'Arrêter la génération');
-        btn.innerHTML = '&#9632; Arrêter';
-        btn.addEventListener('click', () => this.cancelStream());
-        return btn;
+    _showStopButton() {
+        const sendBtn = document.getElementById('send-btn');
+        sendBtn.hidden = true;
+        let stopBtn = document.getElementById('stop-btn');
+        if (!stopBtn) {
+            stopBtn = document.createElement('button');
+            stopBtn.type = 'button';
+            stopBtn.id = 'stop-btn';
+            stopBtn.className = 'btn stop-btn-input';
+            stopBtn.title = 'Arrêter';
+            stopBtn.setAttribute('aria-label', 'Arrêter la génération');
+            stopBtn.innerHTML = '<svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1" fill="white"/></svg>';
+            stopBtn.addEventListener('click', () => this.cancelStream());
+            sendBtn.parentNode.insertBefore(stopBtn, sendBtn.nextSibling);
+        }
+        stopBtn.hidden = false;
     },
 
-    _createCopyButton(text) {
-        const btn = document.createElement('button');
-        btn.className = 'copy-btn';
-        btn.title = 'Copier la réponse';
-        btn.setAttribute('aria-label', 'Copier la réponse');
-        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
-        btn.addEventListener('click', async () => {
+    _hideStopButton() {
+        const sendBtn = document.getElementById('send-btn');
+        const stopBtn = document.getElementById('stop-btn');
+        if (stopBtn) stopBtn.hidden = true;
+        sendBtn.hidden = false;
+    },
+
+    _createMessageActions(text, msgEl) {
+        const actions = document.createElement('div');
+        actions.className = 'message-actions';
+
+        // Share
+        const shareBtn = document.createElement('button');
+        shareBtn.className = 'btn-mini-action';
+        shareBtn.title = 'Partager';
+        shareBtn.setAttribute('aria-label', 'Partager');
+        shareBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+        shareBtn.addEventListener('click', () => {
+            if (navigator.share) {
+                navigator.share({ title: 'FidesIA', text }).catch(() => {});
+            } else {
+                navigator.clipboard.writeText(text).catch(() => {});
+            }
+        });
+
+        // Copy
+        const copyBtn = document.createElement('button');
+        copyBtn.className = 'btn-mini-action';
+        copyBtn.title = 'Copier';
+        copyBtn.setAttribute('aria-label', 'Copier');
+        const copyIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
+        copyBtn.innerHTML = copyIcon;
+        copyBtn.addEventListener('click', async () => {
             try {
                 await navigator.clipboard.writeText(text);
-                btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
-                setTimeout(() => {
-                    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
-                }, 2000);
-            } catch (_) { /* clipboard not available */ }
+                copyBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+                setTimeout(() => { copyBtn.innerHTML = copyIcon; }, 2000);
+            } catch (_) {}
         });
-        return btn;
+
+        // Delete (DOM-only, for reshaping before export)
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'btn-mini-action btn-mini-danger';
+        deleteBtn.title = 'Supprimer';
+        deleteBtn.setAttribute('aria-label', 'Supprimer');
+        deleteBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>';
+        deleteBtn.addEventListener('click', () => {
+            const el = msgEl || deleteBtn.closest('.message');
+            if (el) el.remove();
+        });
+
+        actions.appendChild(shareBtn);
+        actions.appendChild(copyBtn);
+        actions.appendChild(deleteBtn);
+        return actions;
     },
 
     _createSourcesEl(sources) {

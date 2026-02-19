@@ -19,7 +19,8 @@
 
 .message-user {
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 .message-user .message-content {
@@ -223,41 +224,44 @@
     color: var(--gold-light);
 }
 
-/* === Copy button === */
-.copy-btn {
-    display: inline-flex;
-    align-items: center;
+/* === Message Actions (copy, share) — hidden by default, shown on hover === */
+.message-actions {
+    display: none;
+    justify-content: center;
     gap: 4px;
-    padding: 4px 8px;
-    background: none;
-    border: 1px solid var(--border);
-    border-radius: 6px;
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border);
+}
+
+.message:hover .message-actions {
+    display: flex;
+}
+
+.btn-mini-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
     color: var(--text-muted);
+    background: transparent;
+    border: none;
+    border-radius: 6px;
     cursor: pointer;
     transition: all var(--transition);
 }
 
-.copy-btn:hover {
+.btn-mini-action:hover {
+    color: var(--text-primary);
     background: var(--bg-secondary);
-    color: var(--text-secondary);
-    border-color: var(--text-muted);
 }
 
-/* === Streaming indicator === */
-.streaming-cursor {
-    display: inline-block;
-    width: 8px;
-    height: 16px;
-    background: var(--accent);
-    margin-left: 2px;
-    animation: blink 1s infinite;
-    vertical-align: text-bottom;
+.btn-mini-action svg {
+    flex-shrink: 0;
 }
 
-@keyframes blink {
-    0%, 50% { opacity: 1; }
-    51%, 100% { opacity: 0; }
-}
 
 /* === Loading dots === */
 .loading-dots {
@@ -282,23 +286,29 @@
     40% { transform: scale(1); opacity: 1; }
 }
 
-/* === Stop button === */
-.stop-btn {
-    display: inline-flex;
+/* === Stop button (replaces send button during streaming) === */
+.stop-btn-input {
+    flex-shrink: 0;
+    width: 48px;
+    height: 48px;
+    display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border);
+    justify-content: center;
+    padding: 0;
+    background: var(--text-muted);
+    border: none;
     border-radius: var(--radius);
-    font-size: 12px;
-    color: var(--text-secondary);
     cursor: pointer;
-    margin-top: 8px;
+    transition: background var(--transition);
 }
 
-.stop-btn:hover {
+.stop-btn-input svg {
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    min-height: 28px;
+}
+
+.stop-btn-input:hover {
     background: var(--accent);
-    color: white;
-    border-color: var(--accent);
 }

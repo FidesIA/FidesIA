@@ -213,23 +213,57 @@ const App = {
                 const item = document.createElement('div');
                 item.className = 'conv-item' + (conv.id === Chat.conversationId ? ' active' : '');
                 item.dataset.id = conv.id;
-                item.innerHTML = `
-                    <span class="conv-title">${DOMPurify.sanitize(conv.title)}</span>
-                    <button class="conv-delete" title="Supprimer" aria-label="Supprimer la conversation">&times;</button>
-                `;
 
-                item.querySelector('.conv-title').addEventListener('click', () => {
+                const title = document.createElement('span');
+                title.className = 'conv-title';
+                title.textContent = conv.title;
+                title.addEventListener('click', () => {
                     Chat.loadConversation(conv.id);
                     this.closeSidebar();
                 });
 
-                item.querySelector('.conv-delete').addEventListener('click', async (e) => {
+                const actions = document.createElement('div');
+                actions.className = 'conv-actions';
+
+                // Share
+                const shareBtn = document.createElement('button');
+                shareBtn.className = 'btn-mini-action';
+                shareBtn.title = 'Partager';
+                shareBtn.setAttribute('aria-label', 'Partager la conversation');
+                shareBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
+                shareBtn.addEventListener('click', async (e) => {
+                    e.stopPropagation();
+                    try {
+                        const msgs = await API.getConversation(conv.id);
+                        let text = 'FidesIA\n\n';
+                        for (const m of msgs) {
+                            text += (m.role === 'user' ? 'Q: ' : 'R: ') + m.content + '\n\n';
+                        }
+                        if (navigator.share) {
+                            await navigator.share({ title: 'FidesIA', text });
+                        } else {
+                            await navigator.clipboard.writeText(text);
+                        }
+                    } catch (_) {}
+                });
+
+                // Delete
+                const deleteBtn = document.createElement('button');
+                deleteBtn.className = 'btn-mini-action btn-mini-danger';
+                deleteBtn.title = 'Supprimer';
+                deleteBtn.setAttribute('aria-label', 'Supprimer la conversation');
+                deleteBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>';
+                deleteBtn.addEventListener('click', async (e) => {
                     e.stopPropagation();
                     await API.deleteConversation(conv.id);
                     item.remove();
                     if (Chat.conversationId === conv.id) Chat.newChat();
                 });
 
+                actions.appendChild(shareBtn);
+                actions.appendChild(deleteBtn);
+                item.appendChild(title);
+                item.appendChild(actions);
                 list.appendChild(item);
             }
         } catch (e) {

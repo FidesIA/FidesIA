@@ -118,19 +118,19 @@ html, body {
     white-space: nowrap;
 }
 
-.conv-item .conv-delete {
+.conv-actions {
+    display: flex;
+    gap: 2px;
     opacity: 0;
-    color: var(--text-muted);
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    padding: 2px 6px;
-    border-radius: 4px;
+    transition: opacity var(--transition);
 }
 
-.conv-item:hover .conv-delete { opacity: 1; }
-.conv-item .conv-delete:hover { background: var(--accent); color: white; }
+.conv-item:hover .conv-actions { opacity: 1; }
+
+.btn-mini-danger:hover {
+    color: var(--accent) !important;
+    background: rgba(139, 26, 43, 0.1) !important;
+}
 
 /* Sidebar saint du jour */
 .saint-du-jour {

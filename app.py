@@ -20,7 +20,7 @@ from slowapi.errors import RateLimitExceeded
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import JSONResponse
 
-from config import HOST, PORT, CORPUS_PATH, INVENTAIRE_PATH, OLLAMA_MODEL, RATE_LIMIT_PUBLIC, RATE_LIMIT_CONNECTED
+from config import HOST, PORT, CORPUS_PATH, INVENTAIRE_PATH, OLLAMA_MODEL, RATE_LIMIT_PUBLIC
 from database import (
     init_db, save_exchange, update_rating, get_exchange_owner,
     get_user_conversations, get_conversation_messages, delete_conversation,
@@ -148,14 +148,8 @@ async def route_reset_password(request: Request, req: ResetPasswordRequest):
 
 # === Chat / RAG ===
 
-def _chat_rate_limit(request: Request) -> str:
-    """Rate limit dynamique : 20/min anonyme, 60/min connecté."""
-    auth = request.headers.get("authorization", "")
-    return RATE_LIMIT_CONNECTED if auth.startswith("Bearer ") else RATE_LIMIT_PUBLIC
-
-
 @app.post("/ask/stream")
-@limiter.limit(_chat_rate_limit)
+@limiter.limit(RATE_LIMIT_PUBLIC)
 async def ask_stream(request: Request, req: QuestionRequest, user: Optional[UserInfo] = Depends(get_current_user)):
     """Question → réponse SSE streaming avec sources."""
     question = req.question.strip()
