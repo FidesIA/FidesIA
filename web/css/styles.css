@@ -950,6 +950,17 @@ html, body {
     text-decoration: underline;
 }
 
+.saint-ask {
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    text-align: center;
+}
+
+.saint-ask .btn {
+    width: 100%;
+}
+
 /* === Donation Popup === */
 .donate-modal-content {
     max-width: 420px;
@@ -1016,6 +1027,10 @@ html, body {
 
     .welcome-examples {
         flex-direction: column;
+    }
+
+    .welcome-examples .example-btn:nth-child(n+4) {
+        display: none;
     }
 
     .modal-content {

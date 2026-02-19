@@ -135,7 +135,21 @@ const Saints = {
             html += `</div>`;
         }
 
+        // Bouton vers le chatbot
+        const safeName = s.nom.replace(/'/g, "\\'");
+        html += `<div class="saint-ask">`;
+        html += `<button class="btn btn-accent" onclick="Saints.askAbout('${safeName}')">Plus d'informations avec l'IA</button>`;
+        html += `</div>`;
+
         body.innerHTML = html;
+    },
+
+    askAbout(name) {
+        this.close();
+        const input = document.getElementById('chat-input');
+        input.value = `Que peux-tu me dire sur ${name} ?`;
+        input.focus();
+        Chat.send();
     },
 
     close() {

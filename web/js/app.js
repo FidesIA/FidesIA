@@ -206,9 +206,15 @@ const App = {
 
     _populateExamples() {
         const container = document.getElementById('welcome-examples');
-        const shuffled = [...EXAMPLE_QUESTIONS].sort(() => Math.random() - 0.5);
-        const picked = shuffled.slice(0, 3);
-        for (const ex of picked) {
+        container.innerHTML = '';
+        // Fisher-Yates shuffle
+        const arr = [...EXAMPLE_QUESTIONS];
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        // 5 on desktop, CSS hides extras on mobile
+        for (const ex of arr.slice(0, 5)) {
             const btn = document.createElement('button');
             btn.className = 'example-btn';
             btn.dataset.q = ex.q;
