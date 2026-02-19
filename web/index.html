@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
     <title>FidesIA — Assistant Théologie Catholique</title>
     <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/css/styles.css">
@@ -10,10 +10,10 @@
 </head>
 <body>
     <!-- Login/Register Modal -->
-    <div id="auth-modal" class="modal" hidden>
+    <div id="auth-modal" class="modal" role="dialog" aria-modal="true" aria-label="Authentification" hidden>
         <div class="modal-backdrop"></div>
         <div class="modal-content auth-modal-content">
-            <button class="modal-close" onclick="AuthUI.close()">&times;</button>
+            <button class="modal-close" aria-label="Fermer">&times;</button>
             <div class="auth-tabs">
                 <button class="auth-tab active" data-tab="login">Connexion</button>
                 <button class="auth-tab" data-tab="register">Inscription</button>
@@ -65,10 +65,10 @@
     </div>
 
     <!-- Profile Modal -->
-    <div id="profile-modal" class="modal" hidden>
+    <div id="profile-modal" class="modal" role="dialog" aria-modal="true" aria-label="Mon profil" hidden>
         <div class="modal-backdrop"></div>
         <div class="modal-content profile-modal-content">
-            <button class="modal-close" onclick="Profile.close()">&times;</button>
+            <button class="modal-close" aria-label="Fermer">&times;</button>
             <h2>Mon profil</h2>
             <div class="profile-section">
                 <h3>Tranche d'âge</h3>
@@ -102,10 +102,10 @@
     </div>
 
     <!-- Corpus Modal -->
-    <div id="corpus-modal" class="modal" hidden>
+    <div id="corpus-modal" class="modal" role="dialog" aria-modal="true" aria-label="Corpus documentaire" hidden>
         <div class="modal-backdrop"></div>
         <div class="modal-content corpus-modal-content">
-            <button class="modal-close" onclick="Corpus.close()">&times;</button>
+            <button class="modal-close" aria-label="Fermer">&times;</button>
             <h2>Corpus documentaire</h2>
             <input type="search" id="corpus-search" placeholder="Rechercher un document..." class="corpus-search">
             <div id="corpus-list" class="corpus-list"></div>
@@ -113,25 +113,25 @@
     </div>
 
     <!-- Saint Detail Modal -->
-    <div id="saint-modal" class="modal" hidden>
-        <div class="modal-backdrop" onclick="Saints.close()"></div>
+    <div id="saint-modal" class="modal" role="dialog" aria-modal="true" aria-label="Saint du jour" hidden>
+        <div class="modal-backdrop"></div>
         <div class="modal-content saint-modal-content">
-            <button class="modal-close" onclick="Saints.close()">&times;</button>
+            <button class="modal-close" aria-label="Fermer">&times;</button>
             <div id="saint-modal-body"></div>
         </div>
     </div>
 
     <!-- Donation Popup -->
-    <div id="donate-modal" class="modal" hidden>
-        <div class="modal-backdrop" onclick="Donation.close()"></div>
+    <div id="donate-modal" class="modal" role="dialog" aria-modal="true" aria-label="Soutenir FidesIA" hidden>
+        <div class="modal-backdrop"></div>
         <div class="modal-content donate-modal-content">
-            <button class="modal-close" onclick="Donation.close()">&times;</button>
+            <button class="modal-close" aria-label="Fermer">&times;</button>
             <div class="donate-icon">&#9829;</div>
             <h2>Soutenez FidesIA</h2>
             <p class="donate-message">Vous aimez FidesIA ? Faites un don de quelques euros pour contribuer aux frais d'hébergement et d'abonnement au moteur d'IA</p>
             <div class="donate-actions">
                 <a href="https://www.helloasso.com/" target="_blank" rel="noopener" class="btn btn-primary donate-btn-primary">Faire un don sur HelloAsso</a>
-                <button class="btn btn-small" onclick="Donation.close()">Plus tard</button>
+                <button id="donate-later-btn" class="btn btn-small">Plus tard</button>
             </div>
         </div>
     </div>
@@ -141,10 +141,10 @@
         <!-- Sidebar (connecté uniquement) -->
         <aside id="sidebar" class="sidebar" hidden>
             <div class="sidebar-header">
-                <button id="sidebar-close" class="sidebar-close-btn header-btn" title="Fermer" onclick="App.closeSidebar()">
+                <button id="sidebar-close" class="sidebar-close-btn header-btn" title="Fermer" aria-label="Fermer la barre latérale">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
                 </button>
-                <button id="new-chat-btn" class="btn btn-accent" title="Nouvelle conversation">+ Nouveau</button>
+                <button id="new-chat-btn" class="btn btn-primary" title="Nouvelle conversation">+ Nouveau</button>
             </div>
             <div id="conversations-list" class="conversations-list"></div>
             <div id="saint-du-jour" class="saint-du-jour" hidden></div>
@@ -159,7 +159,7 @@
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0112 0v1"/></svg>
                     <span id="sidebar-username"></span>
                 </div>
-                <button class="sidebar-logout" onclick="AuthUI.logout()" title="Se déconnecter">
+                <button id="sidebar-logout" class="sidebar-logout" title="Se déconnecter" aria-label="Se déconnecter">
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
                 </button>
             </div>
@@ -169,7 +169,7 @@
         <main class="main">
             <!-- Header -->
             <header class="header">
-                <button id="sidebar-toggle" class="header-btn" title="Conversations" hidden>
+                <button id="sidebar-toggle" class="header-btn" title="Conversations" aria-label="Ouvrir les conversations" hidden>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
                 </button>
                 <div class="header-brand">
@@ -177,20 +177,20 @@
                     <span class="brand-name">FidesIA</span>
                 </div>
                 <div class="header-actions">
-                    <button id="profile-btn" class="header-btn" title="Profil">
+                    <button id="profile-btn" class="header-btn" title="Profil" aria-label="Mon profil">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0112 0v1"/></svg>
                     </button>
-                    <button id="corpus-btn" class="header-btn" title="Corpus">
+                    <button id="corpus-btn" class="header-btn" title="Corpus" aria-label="Corpus documentaire">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
                     </button>
-                    <button id="auth-btn" class="header-btn" title="Se connecter">
+                    <button id="auth-btn" class="header-btn" title="Se connecter" aria-label="Se connecter">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
                     </button>
                 </div>
             </header>
 
             <!-- Chat Area -->
-            <div id="chat-area" class="chat-area">
+            <div id="chat-area" class="chat-area" role="log" aria-live="polite">
                 <!-- Welcome screen -->
                 <div id="welcome" class="welcome">
                     <div class="welcome-icon">&#10013;</div>
@@ -207,14 +207,14 @@
             <!-- Input Area -->
             <div class="input-area">
                 <form id="chat-form" class="chat-form">
-                    <textarea id="chat-input" placeholder="Posez votre question..." rows="1" autofocus></textarea>
-                    <button type="submit" id="send-btn" class="btn btn-accent send-btn" title="Envoyer">
+                    <textarea id="chat-input" placeholder="Posez votre question..." rows="1" autofocus aria-label="Votre question"></textarea>
+                    <button type="submit" id="send-btn" class="btn btn-primary send-btn" title="Envoyer" aria-label="Envoyer">
                         <svg viewBox="0 0 24 24"><path d="M2 21L23 12 2 3v7l15 2-15 2v7z" fill="white"/></svg>
                     </button>
                 </form>
                 <div id="guest-banner" class="guest-banner" hidden>
                     <span>Connectez-vous pour sauvegarder vos conversations</span>
-                    <button class="btn btn-small" onclick="AuthUI.open()">Se connecter</button>
+                    <button id="guest-login-btn" class="btn btn-small">Se connecter</button>
                 </div>
             </div>
         </main>
@@ -223,12 +223,12 @@
     <!-- Scripts -->
     <script src="/js/vendor/marked.min.js"></script>
     <script src="/js/vendor/purify.min.js"></script>
-    <script src="/js/api.js?v=5"></script>
-    <script src="/js/auth.js?v=5"></script>
-    <script src="/js/profile.js?v=5"></script>
-    <script src="/js/corpus.js?v=5"></script>
-    <script src="/js/saints.js?v=5"></script>
-    <script src="/js/chat.js?v=5"></script>
-    <script src="/js/app.js?v=5"></script>
+    <script src="/js/api.js?v=6"></script>
+    <script src="/js/auth.js?v=6"></script>
+    <script src="/js/profile.js?v=6"></script>
+    <script src="/js/corpus.js?v=6"></script>
+    <script src="/js/saints.js?v=6"></script>
+    <script src="/js/chat.js?v=6"></script>
+    <script src="/js/app.js?v=6"></script>
 </body>
 </html>

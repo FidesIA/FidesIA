@@ -33,7 +33,7 @@
         --bg-tertiary: #2e2620;
         --text-primary: #e8ddd0;
         --text-secondary: #b8a898;
-        --text-muted: #7a6a5e;
+        --text-muted: #9a8a7e;
         --accent: #d4475a;
         --accent-hover: #e05a6c;
         --gold: #d4a830;
@@ -51,6 +51,12 @@ html, body {
     line-height: 1.6;
     color: var(--text-primary);
     background: var(--bg-primary);
+}
+
+/* === Focus visible === */
+:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
 }
 
 /* === App Layout === */
@@ -320,6 +326,8 @@ html, body {
     align-items: center;
     justify-content: center;
     transition: all var(--transition);
+    min-width: 44px;
+    min-height: 44px;
 }
 
 .header-btn:hover {
@@ -428,8 +436,9 @@ html, body {
     transition: border-color var(--transition);
 }
 
-#chat-input:focus {
+#chat-input:focus-visible {
     border-color: var(--gold);
+    outline: none;
 }
 
 #chat-input::placeholder {
@@ -479,20 +488,13 @@ html, body {
     gap: 6px;
 }
 
-.btn-primary {
+.btn-primary, .btn-accent {
     background: var(--accent);
     color: white;
 }
 
-.btn-primary:hover { background: var(--accent-hover); }
-.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
-
-.btn-accent {
-    background: var(--accent);
-    color: white;
-}
-
-.btn-accent:hover { background: var(--accent-hover); }
+.btn-primary:hover, .btn-accent:hover { background: var(--accent-hover); }
+.btn-primary:disabled, .btn-accent:disabled { opacity: 0.6; cursor: not-allowed; }
 
 .btn-small {
     padding: 6px 12px;
@@ -541,6 +543,11 @@ html, body {
     font-size: 24px;
     color: var(--text-muted);
     cursor: pointer;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .modal-close:hover { color: var(--text-primary); }
@@ -597,8 +604,9 @@ html, body {
     transition: border-color var(--transition);
 }
 
-.form-group input:focus {
+.form-group input:focus-visible {
     border-color: var(--gold);
+    outline: none;
 }
 
 .form-error {
@@ -756,7 +764,10 @@ html, body {
     margin-bottom: 16px;
 }
 
-.corpus-search:focus { border-color: var(--gold); }
+.corpus-search:focus-visible {
+    border-color: var(--gold);
+    outline: none;
+}
 
 .corpus-list {
     max-height: 55vh;

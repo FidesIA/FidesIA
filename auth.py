@@ -25,6 +25,9 @@ logger = logging.getLogger(__name__)
 
 EMAIL_REGEX = re.compile(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
 
+# Hash factice pour prévenir les timing attacks sur login
+_DUMMY_HASH = bcrypt.hashpw(b"dummy-timing-constant", bcrypt.gensalt(rounds=12)).decode()
+
 
 # === Modèles Pydantic ===
 
@@ -101,8 +104,11 @@ def register(email: str, password: str, display_name: str) -> AuthResponse:
     if len(password) < 6:
         return AuthResponse(success=False, message="Le mot de passe doit faire au moins 6 caractères")
 
-    if not display_name or len(display_name) < 2:
-        return AuthResponse(success=False, message="Le nom d'affichage doit faire au moins 2 caractères")
+    if not display_name or len(display_name) < 2 or len(display_name) > 50:
+        return AuthResponse(success=False, message="Le nom d'affichage doit faire entre 2 et 50 caractères")
+
+    if len(email) > 254:
+        return AuthResponse(success=False, message="Adresse email trop longue")
 
     existing = get_user_by_email(email)
     if existing:
@@ -127,7 +133,12 @@ def login(email: str, password: str) -> AuthResponse:
     email = email.strip().lower()
     user = get_user_by_email(email)
 
-    if not user or not verify_password(password, user["password_hash"]):
+    if not user:
+        # Appel bcrypt factice pour prévenir la timing attack
+        verify_password(password, _DUMMY_HASH)
+        return AuthResponse(success=False, message="Email ou mot de passe incorrect")
+
+    if not verify_password(password, user["password_hash"]):
         return AuthResponse(success=False, message="Email ou mot de passe incorrect")
 
     token = create_jwt(user["id"], user["email"], user["display_name"])

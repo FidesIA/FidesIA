@@ -3,6 +3,7 @@ email_utils.py - Envoi d'emails pour FidesIA
 Utilise smtplib (bibliothèque standard).
 """
 
+import html as html_mod
 import logging
 import smtplib
 from email.mime.text import MIMEText
@@ -20,6 +21,8 @@ def send_reset_email(to_email: str, display_name: str, reset_url: str) -> bool:
         return False
 
     subject = "FidesIA — Réinitialisation de votre mot de passe"
+    safe_name = html_mod.escape(display_name)
+    safe_url = html_mod.escape(reset_url)
 
     html = f"""\
 <html>
@@ -28,10 +31,10 @@ def send_reset_email(to_email: str, display_name: str, reset_url: str) -> bool:
     <span style="color: #8b1a2b; font-size: 32px;">&#10013;</span>
     <h1 style="font-size: 24px; margin: 8px 0 0;">FidesIA</h1>
   </div>
-  <p>Bonjour {display_name},</p>
+  <p>Bonjour {safe_name},</p>
   <p>Vous avez demandé la réinitialisation de votre mot de passe. Cliquez sur le bouton ci-dessous pour choisir un nouveau mot de passe :</p>
   <div style="text-align: center; margin: 32px 0;">
-    <a href="{reset_url}" style="background: #8b1a2b; color: white; text-decoration: none; padding: 12px 32px; border-radius: 10px; font-weight: 500; font-size: 16px;">Réinitialiser mon mot de passe</a>
+    <a href="{safe_url}" style="background: #8b1a2b; color: white; text-decoration: none; padding: 12px 32px; border-radius: 10px; font-weight: 500; font-size: 16px;">Réinitialiser mon mot de passe</a>
   </div>
   <p style="font-size: 13px; color: #5a4a3e;">Ce lien expire dans <strong>1 heure</strong>. Si vous n'avez pas fait cette demande, ignorez simplement cet email.</p>
   <hr style="border: none; border-top: 1px solid #e0d5c8; margin: 24px 0;">

@@ -5,7 +5,6 @@ Chatbot RAG Théologie Catholique
 
 import json
 import logging
-import time
 import uuid
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -14,14 +13,18 @@ from typing import Optional
 from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.responses import StreamingResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
+from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import JSONResponse
 
 from config import HOST, PORT, CORPUS_PATH, INVENTAIRE_PATH, OLLAMA_MODEL, RATE_LIMIT_PUBLIC, RATE_LIMIT_CONNECTED
-from database import init_db, save_exchange, update_rating, get_user_conversations, get_conversation_messages, delete_conversation
+from database import (
+    init_db, save_exchange, update_rating, get_exchange_owner,
+    get_user_conversations, get_conversation_messages, delete_conversation,
+)
 from auth import (
     RegisterRequest, LoginRequest, AuthResponse, UserInfo,
     ForgotPasswordRequest, ResetPasswordRequest,
@@ -33,6 +36,18 @@ from saints import init_saints, get_saint_today, get_saint_by_id
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(name)s] %(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
+
+
+# === Security Headers Middleware ===
+
+class SecurityHeadersMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next):
+        response = await call_next(request)
+        response.headers["X-Content-Type-Options"] = "nosniff"
+        response.headers["X-Frame-Options"] = "DENY"
+        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+        response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
+        return response
 
 
 # === Lifespan ===
@@ -50,6 +65,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="FidesIA", version="1.0.0", lifespan=lifespan)
+app.add_middleware(SecurityHeadersMiddleware)
 
 # Rate limiting
 limiter = Limiter(key_func=get_remote_address)
@@ -67,40 +83,42 @@ async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
 # === Modèles Pydantic ===
 
 class QuestionRequest(BaseModel):
-    question: str
-    conversation_id: Optional[str] = None
-    session_id: Optional[str] = None
+    question: str = Field(..., min_length=1, max_length=5000)
+    conversation_id: Optional[str] = Field(None, max_length=100)
+    session_id: Optional[str] = Field(None, max_length=100)
     chat_history: Optional[list] = None
-    age_group: Optional[str] = None
-    knowledge_level: Optional[str] = None
-    response_length: Optional[str] = None
+    age_group: Optional[str] = Field(None, max_length=30)
+    knowledge_level: Optional[str] = Field(None, max_length=30)
+    response_length: Optional[str] = Field(None, max_length=30)
 
 
 class ExchangeRequest(BaseModel):
-    conversation_id: str
-    session_id: Optional[str] = None
-    question: str
-    response: str
+    conversation_id: str = Field(..., max_length=100)
+    session_id: Optional[str] = Field(None, max_length=100)
+    question: str = Field(..., max_length=5000)
+    response: str = Field(..., max_length=50000)
     sources: Optional[list] = None
-    age_group: Optional[str] = None
-    knowledge_level: Optional[str] = None
-    response_time_ms: Optional[int] = 0
+    age_group: Optional[str] = Field(None, max_length=30)
+    knowledge_level: Optional[str] = Field(None, max_length=30)
+    response_time_ms: Optional[int] = Field(0, ge=0, le=600000)
 
 
 class RatingRequest(BaseModel):
-    exchange_id: int
-    rating: int
+    exchange_id: int = Field(..., gt=0)
+    rating: int = Field(..., ge=1, le=5)
 
 
 # === Auth Routes ===
 
 @app.post("/auth/register", response_model=AuthResponse)
-async def route_register(req: RegisterRequest):
+@limiter.limit("5/minute")
+async def route_register(request: Request, req: RegisterRequest):
     return register(req.email, req.password, req.display_name)
 
 
 @app.post("/auth/login", response_model=AuthResponse)
-async def route_login(req: LoginRequest):
+@limiter.limit("10/minute")
+async def route_login(request: Request, req: LoginRequest):
     return login(req.email, req.password)
 
 
@@ -130,17 +148,27 @@ async def route_reset_password(request: Request, req: ResetPasswordRequest):
 
 # === Chat / RAG ===
 
+def _chat_rate_limit(request: Request) -> str:
+    """Rate limit dynamique : 20/min anonyme, 60/min connecté."""
+    auth = request.headers.get("authorization", "")
+    return RATE_LIMIT_CONNECTED if auth.startswith("Bearer ") else RATE_LIMIT_PUBLIC
+
+
 @app.post("/ask/stream")
-@limiter.limit(RATE_LIMIT_CONNECTED)
+@limiter.limit(_chat_rate_limit)
 async def ask_stream(request: Request, req: QuestionRequest, user: Optional[UserInfo] = Depends(get_current_user)):
     """Question → réponse SSE streaming avec sources."""
-    if not req.question.strip():
+    question = req.question.strip()
+    if not question:
         raise HTTPException(status_code=400, detail="Question vide")
+
+    # Limiter l'historique à 20 messages max
+    chat_history = (req.chat_history or [])[:20]
 
     return StreamingResponse(
         query_stream(
-            question=req.question,
-            chat_history=req.chat_history,
+            question=question,
+            chat_history=chat_history if chat_history else None,
             age_group=req.age_group,
             knowledge_level=req.knowledge_level,
             response_length=req.response_length,
@@ -192,13 +220,24 @@ async def delete_conv(conv_id: str, user: UserInfo = Depends(require_auth)):
 # === Rating ===
 
 @app.post("/rate")
-async def rate_exchange(req: RatingRequest):
-    """Note un échange (public ou connecté)."""
-    try:
-        update_rating(req.exchange_id, req.rating)
-        return {"success": True}
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+async def rate_exchange(req: RatingRequest, user: Optional[UserInfo] = Depends(get_current_user)):
+    """Note un échange. Vérifie que l'échange appartient à l'utilisateur/session."""
+    owner = get_exchange_owner(req.exchange_id)
+    if not owner:
+        raise HTTPException(status_code=404, detail="Échange non trouvé")
+
+    # Vérifier l'appartenance : user connecté ou session anonyme
+    if owner["user_id"] and user and owner["user_id"] == user.user_id:
+        pass  # OK
+    elif not owner["user_id"] and not user:
+        pass  # Échange anonyme, accès public
+    elif user and owner["user_id"] == user.user_id:
+        pass  # OK
+    else:
+        raise HTTPException(status_code=403, detail="Accès interdit")
+
+    update_rating(req.exchange_id, req.rating)
+    return {"success": True}
 
 
 # === Corpus ===
@@ -229,10 +268,15 @@ async def serve_corpus_file(file_path: str):
     if not full_path.exists() or not full_path.is_file():
         filename = Path(file_path).name
         matches = list(corpus_root.rglob(filename))
-        if matches:
-            full_path = matches[0]
-        else:
+        if not matches:
             raise HTTPException(status_code=404, detail="Fichier non trouvé")
+        full_path = matches[0]
+
+    # Re-vérifier path traversal (symlinks, rglob)
+    try:
+        full_path.resolve().relative_to(corpus_root)
+    except ValueError:
+        raise HTTPException(status_code=403, detail="Accès interdit")
 
     return FileResponse(
         str(full_path),

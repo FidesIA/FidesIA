@@ -210,6 +210,8 @@
     transition: color var(--transition);
     padding: 2px;
     line-height: 1;
+    min-width: 28px;
+    min-height: 28px;
 }
 
 .rating-star:hover,
@@ -219,6 +221,26 @@
 
 .rating-star.hovered {
     color: var(--gold-light);
+}
+
+/* === Copy button === */
+.copy-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all var(--transition);
+}
+
+.copy-btn:hover {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border-color: var(--text-muted);
 }
 
 /* === Streaming indicator === */

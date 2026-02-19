@@ -84,6 +84,53 @@ const App = {
             e.stopPropagation();
             this.toggleSidebar();
         });
+        document.getElementById('sidebar-close').addEventListener('click', () => this.closeSidebar());
+        document.getElementById('sidebar-logout').addEventListener('click', () => AuthUI.logout());
+        document.getElementById('guest-login-btn').addEventListener('click', () => AuthUI.open());
+        document.getElementById('donate-later-btn').addEventListener('click', () => Donation.close());
+
+        // Modal close buttons (event delegation)
+        document.querySelectorAll('.modal-close').forEach(btn => {
+            const modal = btn.closest('.modal');
+            btn.addEventListener('click', () => {
+                const id = modal.id;
+                if (id === 'auth-modal') AuthUI.close();
+                else if (id === 'profile-modal') Profile.close();
+                else if (id === 'corpus-modal') Corpus.close();
+                else if (id === 'saint-modal') Saints.close();
+                else if (id === 'donate-modal') Donation.close();
+            });
+        });
+
+        // Modal backdrop close
+        document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
+            const modal = backdrop.closest('.modal');
+            backdrop.addEventListener('click', () => {
+                const id = modal.id;
+                if (id === 'saint-modal') Saints.close();
+                else if (id === 'donate-modal') Donation.close();
+                else if (id === 'profile-modal') Profile.close();
+                else if (id === 'corpus-modal') Corpus.close();
+                else if (id === 'auth-modal') AuthUI.close();
+            });
+        });
+
+        // Global Escape key to close modals
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape') return;
+            const modals = ['saint-modal', 'donate-modal', 'corpus-modal', 'profile-modal', 'auth-modal'];
+            for (const id of modals) {
+                const modal = document.getElementById(id);
+                if (modal && !modal.hidden) {
+                    if (id === 'auth-modal') AuthUI.close();
+                    else if (id === 'profile-modal') Profile.close();
+                    else if (id === 'corpus-modal') Corpus.close();
+                    else if (id === 'saint-modal') Saints.close();
+                    else if (id === 'donate-modal') Donation.close();
+                    break;
+                }
+            }
+        });
 
         // Close sidebar when clicking on main area (mobile)
         document.querySelector('.main').addEventListener('click', () => this.closeSidebar());
@@ -128,6 +175,7 @@ const App = {
         // Update auth button to logout
         const authBtn = document.getElementById('auth-btn');
         authBtn.title = 'Se déconnecter';
+        authBtn.setAttribute('aria-label', 'Se déconnecter');
         authBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>`;
 
         // Hide guest banner
@@ -147,6 +195,7 @@ const App = {
 
         const authBtn = document.getElementById('auth-btn');
         authBtn.title = 'Se connecter';
+        authBtn.setAttribute('aria-label', 'Se connecter');
         authBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>`;
 
         // Show guest banner
@@ -166,7 +215,7 @@ const App = {
                 item.dataset.id = conv.id;
                 item.innerHTML = `
                     <span class="conv-title">${DOMPurify.sanitize(conv.title)}</span>
-                    <button class="conv-delete" title="Supprimer">&times;</button>
+                    <button class="conv-delete" title="Supprimer" aria-label="Supprimer la conversation">&times;</button>
                 `;
 
                 item.querySelector('.conv-title').addEventListener('click', () => {

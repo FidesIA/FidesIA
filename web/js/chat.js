@@ -92,6 +92,10 @@ const Chat = {
         let fullResponse = '';
         let sources = [];
 
+        // Show stop button
+        const stopBtn = this._createStopButton();
+        msgEl.appendChild(stopBtn);
+
         this.streamController = API.streamQuestion(payload, {
             onChunk: (text) => {
                 fullResponse += text;
@@ -106,8 +110,14 @@ const Chat = {
                 this.streamController = null;
                 const elapsed = Date.now() - startTime;
 
+                // Remove stop button
+                stopBtn.remove();
+
                 // Final render (no cursor)
                 contentEl.innerHTML = DOMPurify.sanitize(marked.parse(fullResponse));
+
+                // Add copy button
+                msgEl.appendChild(this._createCopyButton(fullResponse));
 
                 // Add sources
                 if (sources.length > 0) {
@@ -137,6 +147,7 @@ const Chat = {
             onError: (err) => {
                 this.isStreaming = false;
                 this.streamController = null;
+                stopBtn.remove();
                 contentEl.innerHTML = `<span style="color:var(--accent)">Erreur : ${DOMPurify.sanitize(err)}</span>`;
                 this._scrollToBottom();
             }
@@ -161,7 +172,6 @@ const Chat = {
             // Refresh sidebar conversations
             App.loadConversations();
         } catch (e) {
-            // Non-critical
             console.warn('Save exchange failed:', e);
         }
     },
@@ -204,6 +214,7 @@ const Chat = {
                 } else {
                     const el = this._createAssistantMessage();
                     el.querySelector('.message-content').innerHTML = DOMPurify.sanitize(marked.parse(msg.content));
+                    el.appendChild(this._createCopyButton(msg.content));
                     if (msg.sources_with_scores && msg.sources_with_scores.length > 0) {
                         el.appendChild(this._createSourcesEl(msg.sources_with_scores));
                     }
@@ -244,6 +255,33 @@ const Chat = {
         return div;
     },
 
+    _createStopButton() {
+        const btn = document.createElement('button');
+        btn.className = 'stop-btn';
+        btn.setAttribute('aria-label', 'Arrêter la génération');
+        btn.innerHTML = '&#9632; Arrêter';
+        btn.addEventListener('click', () => this.cancelStream());
+        return btn;
+    },
+
+    _createCopyButton(text) {
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.title = 'Copier la réponse';
+        btn.setAttribute('aria-label', 'Copier la réponse');
+        btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
+        btn.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText(text);
+                btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+                setTimeout(() => {
+                    btn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
+                }, 2000);
+            } catch (_) { /* clipboard not available */ }
+        });
+        return btn;
+    },
+
     _createSourcesEl(sources) {
         const wrapper = document.createElement('div');
         wrapper.className = 'sources-container';
@@ -266,20 +304,38 @@ const Chat = {
             const name = src.file_name || src.relative_path || 'Document';
             const score = src.score ? `${Math.round(src.score * 100)}%` : '';
 
-            // Find vatican.va link
+            // Find vatican.va link (with URL validation)
             const corpusMatch = corpusData.find(c => c.fichier === name);
-            const vatLink = corpusMatch && corpusMatch.url
-                ? `<a class="source-vatican" href="${corpusMatch.url}" target="_blank" rel="noopener">vatican.va</a>`
-                : '';
+            let vatLink = null;
+            if (corpusMatch && corpusMatch.url) {
+                try {
+                    const parsed = new URL(corpusMatch.url);
+                    if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
+                        vatLink = document.createElement('a');
+                        vatLink.className = 'source-vatican';
+                        vatLink.href = corpusMatch.url;
+                        vatLink.target = '_blank';
+                        vatLink.rel = 'noopener';
+                        vatLink.textContent = 'vatican.va';
+                    }
+                } catch (_) { /* skip invalid URLs */ }
+            }
 
             // Build PDF path for click
             const pdfFile = src.relative_path || name;
 
-            item.innerHTML = `
-                <span class="source-name" onclick="Corpus.openPdf('${pdfFile.replace(/'/g, "\\'")}')">${DOMPurify.sanitize(name)}</span>
-                ${vatLink}
-                <span class="source-score">${score}</span>
-            `;
+            const nameSpan = document.createElement('span');
+            nameSpan.className = 'source-name';
+            nameSpan.textContent = name;
+            nameSpan.addEventListener('click', () => Corpus.openPdf(pdfFile));
+
+            item.appendChild(nameSpan);
+            if (vatLink) item.appendChild(vatLink);
+            const scoreSpan = document.createElement('span');
+            scoreSpan.className = 'source-score';
+            scoreSpan.textContent = score;
+            item.appendChild(scoreSpan);
+
             list.appendChild(item);
         }
 
@@ -303,6 +359,7 @@ const Chat = {
             star.className = 'rating-star' + (currentRating && i <= currentRating ? ' active' : '');
             star.textContent = '\u2605';
             star.dataset.value = i;
+            star.setAttribute('aria-label', `${i} étoile${i > 1 ? 's' : ''}`);
 
             star.addEventListener('mouseenter', () => {
                 container.querySelectorAll('.rating-star').forEach(s => {

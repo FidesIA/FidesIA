@@ -22,10 +22,14 @@ OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "mistral-large-3:675b-cloud")
 
 # === Embedding ===
 EMBEDDING_MODEL = "OrdalieTech/Solon-embeddings-large-0.1"
-EMBEDDING_DIM = 1024
 
 # === JWT ===
-JWT_SECRET = os.getenv("JWT_SECRET", "change-me-in-production")
+JWT_SECRET = os.getenv("JWT_SECRET", "")
+if not JWT_SECRET or len(JWT_SECRET) < 32:
+    raise RuntimeError(
+        "JWT_SECRET manquant ou trop court (min 32 caractères). "
+        "Générez-en un : python -c \"import secrets; print(secrets.token_hex(64))\""
+    )
 JWT_ALGORITHM = "HS256"
 JWT_EXPIRE_DAYS = 7
 
@@ -46,8 +50,8 @@ RATE_LIMIT_PUBLIC = "20/minute"
 RATE_LIMIT_CONNECTED = "60/minute"
 
 # === RAG ===
-SIMILARITY_TOP_K = 8       # Retrieval large
-CONTEXT_TOP_K = 5           # Envoyé au LLM après rerank
+SIMILARITY_TOP_K = 8
+CONTEXT_TOP_K = 5
 CHUNK_SIZE = 1024
 CHUNK_OVERLAP = 200
-LLM_TIMEOUT = 300.0         # 5 minutes
+LLM_TIMEOUT = 300.0

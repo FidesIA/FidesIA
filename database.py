@@ -6,7 +6,7 @@ Thread-safe avec lock.
 
 import sqlite3
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional, List, Dict, Any
 import threading
@@ -129,7 +129,7 @@ def update_last_login(user_id: int):
         try:
             conn.execute(
                 "UPDATE users SET last_login = ? WHERE id = ?",
-                (datetime.now().isoformat(), user_id)
+                (datetime.now(timezone.utc).isoformat(), user_id)
             )
             conn.commit()
         finally:
@@ -197,16 +197,16 @@ def save_exchange(
     conversation_id: str,
     question: str,
     response: str,
-    user_id: int = None,
-    sources: List[Dict] = None,
-    rating: int = None,
-    age_group: str = None,
-    knowledge_level: str = None,
+    user_id: Optional[int] = None,
+    sources: Optional[List[Dict]] = None,
+    rating: Optional[int] = None,
+    age_group: Optional[str] = None,
+    knowledge_level: Optional[str] = None,
     response_time_ms: int = 0,
-    model: str = None,
+    model: Optional[str] = None,
 ) -> int:
     """Enregistre un échange Q/R. Retourne l'ID."""
-    timestamp = datetime.now().isoformat()
+    timestamp = datetime.now(timezone.utc).isoformat()
     sources_json = json.dumps(sources, ensure_ascii=False) if sources else None
 
     with _db_lock:
@@ -223,6 +223,20 @@ def save_exchange(
                   age_group, knowledge_level, response_time_ms, model))
             conn.commit()
             return cursor.lastrowid
+        finally:
+            conn.close()
+
+
+def get_exchange_owner(exchange_id: int) -> Optional[Dict[str, Any]]:
+    """Retourne user_id et session_id d'un échange."""
+    with _db_lock:
+        conn = get_connection()
+        try:
+            row = conn.execute(
+                "SELECT user_id, session_id FROM exchanges WHERE id = ?",
+                (exchange_id,)
+            ).fetchone()
+            return dict(row) if row else None
         finally:
             conn.close()
 

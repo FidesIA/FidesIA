@@ -8,6 +8,17 @@ const Corpus = {
     init() {
         document.querySelector('#corpus-modal .modal-backdrop').addEventListener('click', () => this.close());
         document.getElementById('corpus-search').addEventListener('input', (e) => this.filter(e.target.value));
+
+        // Event delegation for corpus items and links
+        document.getElementById('corpus-list').addEventListener('click', (e) => {
+            const link = e.target.closest('.corpus-link');
+            if (link) return; // Let the <a> handle it natively
+
+            const item = e.target.closest('.corpus-item');
+            if (item && item.dataset.pdf) {
+                this.openPdf(item.dataset.pdf);
+            }
+        });
     },
 
     async open() {
@@ -47,7 +58,6 @@ const Corpus = {
 
         let html = '';
         for (const [source, docs] of Object.entries(groups)) {
-            // Sort by year
             docs.sort((a, b) => (a.annee || 0) - (b.annee || 0));
 
             html += `<div class="corpus-group">`;
@@ -56,13 +66,12 @@ const Corpus = {
             for (const doc of docs) {
                 const title = doc.titre || doc.fichier || 'Sans titre';
                 const year = doc.annee ? `<span class="corpus-year">${doc.annee}</span>` : '';
-                const vatLink = doc.url
+                const vatLink = doc.url && this._isValidUrl(doc.url)
                     ? `<a class="corpus-link" href="${this._esc(doc.url)}" target="_blank" rel="noopener" title="Vatican.va">vatican.va</a>`
                     : '';
-                const pdfPath = doc.fichier ? this._buildPdfPath(doc) : '';
-                const pdfClick = pdfPath ? `onclick="Corpus.openPdf('${this._escAttr(pdfPath)}')"` : '';
+                const pdfPath = doc.fichier || '';
 
-                html += `<div class="corpus-item" ${pdfClick}>
+                html += `<div class="corpus-item" ${pdfPath ? `data-pdf="${this._escAttr(pdfPath)}"` : ''}>
                     ${year}
                     <span class="source-name">${this._esc(title)}</span>
                     ${vatLink}
@@ -92,11 +101,13 @@ const Corpus = {
         window.open(`/corpus/file/${encodeURIComponent(path)}`, '_blank');
     },
 
-    _buildPdfPath(doc) {
-        // The fichier field contains just the filename
-        // We need to find which folder it's in
-        // For now, just use the filename directly — the backend serves from corpus/
-        return doc.fichier || '';
+    _isValidUrl(str) {
+        try {
+            const url = new URL(str);
+            return url.protocol === 'http:' || url.protocol === 'https:';
+        } catch (_) {
+            return false;
+        }
     },
 
     _esc(str) {
@@ -106,6 +117,6 @@ const Corpus = {
     },
 
     _escAttr(str) {
-        return str.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     }
 };

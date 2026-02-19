@@ -118,7 +118,7 @@ def get_index() -> VectorStoreIndex:
 
 # === Condensation de question ===
 
-def condense_question(question: str, chat_history: list, max_exchanges: int = 3) -> str:
+async def condense_question(question: str, chat_history: list, max_exchanges: int = 3) -> str:
     """Reformule une question de suivi en question autonome."""
     if not chat_history:
         return question
@@ -140,7 +140,7 @@ def condense_question(question: str, chat_history: list, max_exchanges: int = 3)
     )
 
     try:
-        response = Settings.llm.complete(prompt)
+        response = await asyncio.to_thread(Settings.llm.complete, prompt)
         condensed = response.text.strip()
         if condensed.startswith('"') and condensed.endswith('"'):
             condensed = condensed[1:-1]
@@ -178,7 +178,7 @@ async def query_stream(
         # Condenser si historique
         effective_question = question
         if chat_history:
-            effective_question = condense_question(question, chat_history)
+            effective_question = await condense_question(question, chat_history)
 
         # System prompt personnalisé
         system_prompt = build_system_prompt(age_group, knowledge_level, response_length)
@@ -201,7 +201,7 @@ Réponds en te basant uniquement sur les documents fournis. Cite tes sources."""
             text_qa_template=PromptTemplate(qa_template_str),
         )
 
-        streaming_response = query_engine.query(effective_question)
+        streaming_response = await asyncio.to_thread(query_engine.query, effective_question)
 
         # Stream les chunks
         for text in streaming_response.response_gen:
@@ -242,7 +242,7 @@ Réponds en te basant uniquement sur les documents fournis. Cite tes sources."""
 
     except Exception as e:
         logger.error(f"RAG streaming error: {e}", exc_info=True)
-        yield f"data: {json.dumps({'type': 'error', 'content': str(e)})}\n\n"
+        yield f"data: {json.dumps({'type': 'error', 'content': 'Une erreur est survenue lors du traitement de votre question.'})}\n\n"
 
 
 def get_collection_stats() -> dict:
