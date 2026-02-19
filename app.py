@@ -29,6 +29,7 @@ from auth import (
     get_current_user, require_auth,
 )
 from rag import init_settings, init_index, query_stream, get_collection_stats
+from saints import init_saints, get_saint_today, get_saint_by_id
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(name)s] %(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -42,6 +43,7 @@ async def lifespan(app: FastAPI):
     init_db()
     init_settings()
     init_index()
+    init_saints()
     logger.info("FidesIA prêt")
     yield
     logger.info("FidesIA arrêt")
@@ -237,6 +239,23 @@ async def serve_corpus_file(file_path: str):
         media_type="application/pdf",
         headers={"Content-Disposition": f"inline; filename=\"{full_path.name}\""},
     )
+
+
+# === Saints ===
+
+@app.get("/api/saint-du-jour")
+async def saint_du_jour():
+    """Retourne le(s) saint(s) fêté(s) aujourd'hui."""
+    return get_saint_today()
+
+
+@app.get("/api/saint/{saint_id}")
+async def saint_detail(saint_id: str):
+    """Retourne les détails complets d'un saint."""
+    saint = get_saint_by_id(saint_id)
+    if not saint:
+        raise HTTPException(status_code=404, detail="Saint non trouvé")
+    return saint
 
 
 # === Health ===

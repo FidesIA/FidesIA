@@ -126,6 +126,64 @@ html, body {
 .conv-item:hover .conv-delete { opacity: 1; }
 .conv-item .conv-delete:hover { background: var(--accent); color: white; }
 
+/* Sidebar saint du jour */
+.saint-du-jour {
+    padding: 8px 12px;
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+}
+
+.saint-widget {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: background var(--transition);
+}
+
+.saint-widget:hover {
+    background: var(--bg-tertiary);
+}
+
+.saint-widget-icon {
+    color: var(--gold);
+    font-size: 20px;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.saint-widget-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.saint-widget-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+}
+
+.saint-widget-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.saint-widget-subtitle {
+    font-size: 11px;
+    color: var(--text-muted);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 /* Sidebar donate banner */
 .sidebar-donate {
     padding: 12px;
@@ -749,6 +807,148 @@ html, body {
 }
 
 .corpus-item .corpus-link:hover { text-decoration: underline; }
+
+/* === Saint Detail Modal === */
+.saint-modal-content {
+    max-width: 580px;
+    max-height: 85vh;
+    overflow-y: auto;
+}
+
+.saint-header {
+    text-align: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.saint-header h2 {
+    font-size: 22px;
+    margin-bottom: 4px;
+}
+
+.saint-latin {
+    font-style: italic;
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.saint-titres {
+    color: var(--gold);
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.saint-meta {
+    font-size: 12px;
+    color: var(--text-muted);
+}
+
+.saint-fete {
+    font-weight: 600;
+    color: var(--accent);
+}
+
+.saint-section {
+    margin-bottom: 20px;
+}
+
+.saint-section h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.saint-bio {
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-primary);
+    text-align: justify;
+}
+
+.saint-quote {
+    margin: 0 0 12px;
+    padding: 12px 16px;
+    background: var(--bg-secondary);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 var(--radius) var(--radius) 0;
+}
+
+.saint-quote p {
+    font-size: 14px;
+    font-style: italic;
+    line-height: 1.6;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.saint-quote cite {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-style: normal;
+}
+
+.saint-ecrits {
+    list-style: none;
+    padding: 0;
+}
+
+.saint-ecrits li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.saint-ecrits li:last-child {
+    border-bottom: none;
+}
+
+.saint-annee {
+    color: var(--text-muted);
+    font-size: 12px;
+}
+
+.saint-desc {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.saint-themes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.saint-theme {
+    padding: 4px 10px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.saint-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.saint-links a {
+    font-size: 12px;
+    color: var(--gold);
+    text-decoration: none;
+}
+
+.saint-links a:hover {
+    text-decoration: underline;
+}
 
 /* === Donation Popup === */
 .donate-modal-content {

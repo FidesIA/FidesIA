@@ -112,6 +112,15 @@
         </div>
     </div>
 
+    <!-- Saint Detail Modal -->
+    <div id="saint-modal" class="modal" hidden>
+        <div class="modal-backdrop" onclick="Saints.close()"></div>
+        <div class="modal-content saint-modal-content">
+            <button class="modal-close" onclick="Saints.close()">&times;</button>
+            <div id="saint-modal-body"></div>
+        </div>
+    </div>
+
     <!-- Donation Popup -->
     <div id="donate-modal" class="modal" hidden>
         <div class="modal-backdrop" onclick="Donation.close()"></div>
@@ -138,6 +147,7 @@
                 <button id="new-chat-btn" class="btn btn-accent" title="Nouvelle conversation">+ Nouveau</button>
             </div>
             <div id="conversations-list" class="conversations-list"></div>
+            <div id="saint-du-jour" class="saint-du-jour" hidden></div>
             <div class="sidebar-donate">
                 <a href="https://www.helloasso.com/" target="_blank" rel="noopener" class="donate-link">
                     <span class="donate-heart">&#9829;</span>
@@ -213,11 +223,12 @@
     <!-- Scripts -->
     <script src="/js/vendor/marked.min.js"></script>
     <script src="/js/vendor/purify.min.js"></script>
-    <script src="/js/api.js?v=4"></script>
-    <script src="/js/auth.js?v=4"></script>
-    <script src="/js/profile.js?v=4"></script>
-    <script src="/js/corpus.js?v=4"></script>
-    <script src="/js/chat.js?v=4"></script>
-    <script src="/js/app.js?v=4"></script>
+    <script src="/js/api.js?v=5"></script>
+    <script src="/js/auth.js?v=5"></script>
+    <script src="/js/profile.js?v=5"></script>
+    <script src="/js/corpus.js?v=5"></script>
+    <script src="/js/saints.js?v=5"></script>
+    <script src="/js/chat.js?v=5"></script>
+    <script src="/js/app.js?v=5"></script>
 </body>
 </html>

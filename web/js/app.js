@@ -136,8 +136,9 @@ const App = {
         // Show user name in sidebar footer
         document.getElementById('sidebar-username').textContent = this.state.displayName || 'Connecté';
 
-        // Load conversations
+        // Load conversations and saint du jour
         this.loadConversations();
+        Saints.init();
     },
 
     _showGuestUI() {
