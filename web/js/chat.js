@@ -113,20 +113,34 @@ const Chat = {
                         setTimeout(() => { actionBtn.innerHTML = original; }, 2000);
                     }).catch(() => {});
                 } else if (action === 'delete') {
-                    // Find exchange_id from rating container
-                    const ratingEl = msgEl.querySelector('.rating-container');
-                    const exchangeId = ratingEl ? ratingEl.dataset.exchangeId : null;
+                    let pairEl = null;
+                    let targetMsg = msgEl;
 
-                    // Remove paired messages (assistant + its preceding user message, or just user)
-                    if (msgEl.classList.contains('message-assistant')) {
+                    if (msgEl.classList.contains('message-user')) {
+                        // Deleting user → pair with the next assistant msg
+                        const next = msgEl.nextElementSibling;
+                        if (next && next.classList.contains('message-assistant')) {
+                            pairEl = next;
+                            targetMsg = next;
+                        }
+                    } else {
+                        // Deleting assistant → pair with preceding user msg
                         const prev = msgEl.previousElementSibling;
-                        if (prev && prev.classList.contains('message-user')) prev.remove();
+                        if (prev && prev.classList.contains('message-user')) pairEl = prev;
                     }
+
+                    // Find exchange_id: rating container OR data attribute on assistant msg
+                    const ratingEl = targetMsg.querySelector('.rating-container');
+                    const exchangeId = (ratingEl && ratingEl.dataset.exchangeId)
+                        || targetMsg.dataset.exchangeId || null;
+
+                    if (pairEl) pairEl.remove();
                     msgEl.remove();
 
-                    // Persist deletion in DB
                     if (exchangeId) {
-                        API.deleteExchange(parseInt(exchangeId)).catch(() => {});
+                        API.deleteExchange(parseInt(exchangeId)).catch(err => {
+                            console.warn('Delete exchange failed:', err);
+                        });
                     }
                 }
                 return;
@@ -247,7 +261,7 @@ const Chat = {
 
                 this.messages.push({ role: 'assistant', content: ctx.response, sources: ctx.sources });
                 Donation.onExchange();
-                this._saveExchange(ctx.question, ctx.response, ctx.sources, elapsed, ratingEl);
+                this._saveExchange(ctx.question, ctx.response, ctx.sources, elapsed, msgEl, ratingEl);
 
                 this._scrollToBottom(true);
                 document.getElementById('chat-input').focus();
@@ -266,7 +280,7 @@ const Chat = {
                     contentEl.innerHTML = DOMPurify.sanitize(marked.parse(finalText));
                     msgEl.dataset.text = finalText;
                     this.messages.push({ role: 'assistant', content: finalText, sources: errCtx.sources });
-                    this._saveExchange(errCtx.question, finalText, errCtx.sources, Date.now() - errCtx.startTime, null);
+                    this._saveExchange(errCtx.question, finalText, errCtx.sources, Date.now() - errCtx.startTime, msgEl, null);
                 } else {
                     contentEl.innerHTML = `<span style="color:var(--accent)">Erreur : ${DOMPurify.sanitize(err)}</span>`;
                 }
@@ -279,7 +293,7 @@ const Chat = {
         });
     },
 
-    async _saveExchange(question, response, sources, elapsed, ratingEl) {
+    async _saveExchange(question, response, sources, elapsed, msgEl, ratingEl) {
         try {
             const data = await API.saveExchange({
                 conversation_id: this.conversationId,
@@ -291,8 +305,9 @@ const Chat = {
                 knowledge_level: Profile.knowledgeLevel,
                 response_time_ms: elapsed,
             });
-            if (data.exchange_id && ratingEl) {
-                ratingEl.dataset.exchangeId = data.exchange_id;
+            if (data.exchange_id) {
+                if (ratingEl) ratingEl.dataset.exchangeId = data.exchange_id;
+                if (msgEl) msgEl.dataset.exchangeId = data.exchange_id;
             }
             App.loadConversations();
         } catch (e) {
@@ -323,7 +338,7 @@ const Chat = {
                         msgEl.dataset.text = finalText;
 
                         this.messages.push({ role: 'assistant', content: finalText, sources: ctx.sources });
-                        this._saveExchange(ctx.question, finalText, ctx.sources, Date.now() - ctx.startTime, null);
+                        this._saveExchange(ctx.question, finalText, ctx.sources, Date.now() - ctx.startTime, msgEl, null);
                     } else {
                         contentEl.innerHTML = '<em style="color:var(--text-muted)">Génération interrompue</em>';
                         msgEl.dataset.text = '';
@@ -367,6 +382,7 @@ const Chat = {
                     const el = this._createAssistantMessage();
                     el.querySelector('.message-content').innerHTML = DOMPurify.sanitize(marked.parse(msg.content));
                     el.dataset.text = msg.content;
+                    if (msg.exchange_id) el.dataset.exchangeId = msg.exchange_id;
                     el.appendChild(this._createMessageActions());
                     if (msg.sources_with_scores && msg.sources_with_scores.length > 0) {
                         el.appendChild(this._createSourcesEl(msg.sources_with_scores));
