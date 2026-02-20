@@ -7,6 +7,7 @@ const Chat = {
     conversationId: null,
     streamController: null,
     isStreaming: false,
+    _streamingMsg: null,
 
     init() {
         const form = document.getElementById('chat-form');
@@ -181,6 +182,7 @@ const Chat = {
         };
 
         const msgEl = this._createAssistantMessage();
+        this._streamingMsg = msgEl;
         const contentEl = msgEl.querySelector('.message-content');
         let fullResponse = '';
         let sources = [];
@@ -190,11 +192,13 @@ const Chat = {
 
         this.streamController = API.streamQuestion(payload, {
             onChunk: (text) => {
+                if (!this.isStreaming) return;
                 fullResponse += text;
                 // Throttle rendering with requestAnimationFrame
                 if (!renderScheduled) {
                     renderScheduled = true;
                     requestAnimationFrame(() => {
+                        if (!this.isStreaming) { renderScheduled = false; return; }
                         contentEl.innerHTML = DOMPurify.sanitize(marked.parse(fullResponse));
                         this._scrollToBottom();
                         renderScheduled = false;
@@ -202,11 +206,14 @@ const Chat = {
                 }
             },
             onSources: (s) => {
+                if (!this.isStreaming) return;
                 sources = s;
             },
             onDone: () => {
+                if (!this.isStreaming) return;
                 this.isStreaming = false;
                 this.streamController = null;
+                this._streamingMsg = null;
                 const elapsed = Date.now() - startTime;
 
                 this._hideStopButton();
@@ -244,8 +251,10 @@ const Chat = {
                 document.getElementById('chat-input').focus();
             },
             onError: (err) => {
+                if (!this.isStreaming) return;
                 this.isStreaming = false;
                 this.streamController = null;
+                this._streamingMsg = null;
                 this._hideStopButton();
                 contentEl.innerHTML = `<span style="color:var(--accent)">Erreur : ${DOMPurify.sanitize(err)}</span>`;
                 msgEl.appendChild(this._createMessageActions());
@@ -277,20 +286,24 @@ const Chat = {
 
     cancelStream() {
         if (this.streamController) {
+            this.isStreaming = false;
             this.streamController.abort();
             this.streamController = null;
-            this.isStreaming = false;
             this._hideStopButton();
 
-            // Finalize the truncated message: add actions so user can delete/copy/share
-            const msgs = document.getElementById('messages');
-            const lastMsg = msgs ? msgs.querySelector('.message-assistant:last-child') : null;
-            if (lastMsg && !lastMsg.querySelector('.message-actions')) {
-                const contentEl = lastMsg.querySelector('.message-content');
+            const msgEl = this._streamingMsg;
+            this._streamingMsg = null;
+            if (msgEl) {
+                const contentEl = msgEl.querySelector('.message-content');
                 if (contentEl) {
-                    lastMsg.dataset.text = contentEl.textContent || '';
+                    // Remove loading dots if no content arrived yet
+                    const dots = contentEl.querySelector('.loading-dots');
+                    if (dots) contentEl.innerHTML = '<em style="color:var(--text-muted)">Génération interrompue</em>';
+                    msgEl.dataset.text = contentEl.textContent || '';
                 }
-                lastMsg.appendChild(this._createMessageActions());
+                if (!msgEl.querySelector('.message-actions')) {
+                    msgEl.appendChild(this._createMessageActions());
+                }
             }
         }
     },
