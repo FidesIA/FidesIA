@@ -8,6 +8,7 @@ const Chat = {
     streamController: null,
     isStreaming: false,
     _streamingMsg: null,
+    _streamCtx: null,
 
     init() {
         const form = document.getElementById('chat-form');
