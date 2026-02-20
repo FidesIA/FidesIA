@@ -113,7 +113,21 @@ const Chat = {
                         setTimeout(() => { actionBtn.innerHTML = original; }, 2000);
                     }).catch(() => {});
                 } else if (action === 'delete') {
-                    if (msgEl) msgEl.remove();
+                    // Find exchange_id from rating container
+                    const ratingEl = msgEl.querySelector('.rating-container');
+                    const exchangeId = ratingEl ? ratingEl.dataset.exchangeId : null;
+
+                    // Remove paired messages (assistant + its preceding user message, or just user)
+                    if (msgEl.classList.contains('message-assistant')) {
+                        const prev = msgEl.previousElementSibling;
+                        if (prev && prev.classList.contains('message-user')) prev.remove();
+                    }
+                    msgEl.remove();
+
+                    // Persist deletion in DB
+                    if (exchangeId) {
+                        API.deleteExchange(parseInt(exchangeId)).catch(() => {});
+                    }
                 }
                 return;
             }

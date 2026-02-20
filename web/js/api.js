@@ -125,6 +125,7 @@ const API = {
     getConversation(id) { return this.get(`/conversations/${encodeURIComponent(id)}/messages`); },
     saveExchange(data) { return this.post('/conversations/exchange', data); },
     deleteConversation(id) { return this.del(`/conversations/${encodeURIComponent(id)}`); },
+    deleteExchange(id) { return this.del(`/exchanges/${encodeURIComponent(id)}`); },
 
     // Password reset
     forgotPassword(email) { return this.post('/auth/forgot-password', { email }); },

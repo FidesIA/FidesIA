@@ -335,6 +335,16 @@ def get_conversation_messages(conversation_id: str, user_id: int = None, session
         return messages
 
 
+def delete_exchange(exchange_id: int, user_id: int) -> bool:
+    """Soft-delete un échange individuel (question + réponse)."""
+    with _db() as conn:
+        result = conn.execute(
+            "UPDATE exchanges SET visible = 0 WHERE id = ? AND user_id = ?",
+            (exchange_id, user_id),
+        )
+        return result.rowcount > 0
+
+
 def delete_conversation(conversation_id: str, user_id: int) -> bool:
     with _db() as conn:
         conn.execute(

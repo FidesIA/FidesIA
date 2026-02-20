@@ -28,7 +28,7 @@ from config import (
 )
 from database import (
     init_db, save_exchange, update_rating, get_exchange_owner,
-    get_user_conversations, get_conversation_messages, delete_conversation,
+    get_user_conversations, get_conversation_messages, delete_exchange, delete_conversation,
     check_conversation_owner, blacklist_jwt,
     cleanup_expired_tokens, cleanup_expired_blacklist,
 )
@@ -302,6 +302,17 @@ async def list_conversations(request: Request, user: UserInfo = Depends(require_
 @limiter.limit(RATE_LIMIT_READ)
 async def get_messages(request: Request, conv_id: str, user: UserInfo = Depends(require_auth)):
     return await asyncio.to_thread(get_conversation_messages, conv_id, user_id=user.user_id)
+
+
+@app.delete("/exchanges/{exchange_id}")
+@limiter.limit(RATE_LIMIT_WRITE)
+async def delete_exchange_route(request: Request, exchange_id: int, user: UserInfo = Depends(require_auth)):
+    """Supprime un échange individuel (soft delete)."""
+    owner = await asyncio.to_thread(get_exchange_owner, exchange_id)
+    if not owner or owner["user_id"] != user.user_id:
+        raise HTTPException(status_code=403, detail="Accès interdit")
+    await asyncio.to_thread(delete_exchange, exchange_id, user.user_id)
+    return {"success": True}
 
 
 @app.delete("/conversations/{conv_id}")
