@@ -121,16 +121,29 @@ def _build_pdf_index():
 # === Lifespan ===
 
 @asynccontextmanager
+_ready = False
+
+
 async def lifespan(app: FastAPI):
     logger.info("FidesIA démarrage...")
     init_db()
-    init_settings()
-    init_index()
-    init_saints()
-    _build_pdf_index()
-    logger.info("FidesIA prêt")
+    # Heavy init in background so static files are served immediately
+    asyncio.create_task(_background_init())
     yield
     logger.info("FidesIA arrêt")
+
+
+async def _background_init():
+    global _ready
+    try:
+        await asyncio.to_thread(init_settings)
+        await asyncio.to_thread(init_index)
+        await asyncio.to_thread(init_saints)
+        await asyncio.to_thread(_build_pdf_index)
+        _ready = True
+        logger.info("FidesIA prêt")
+    except Exception:
+        logger.exception("Erreur fatale lors de l'initialisation")
 
 
 app = FastAPI(title="FidesIA", version=APP_VERSION, lifespan=lifespan)
@@ -231,6 +244,8 @@ async def route_reset_password(request: Request, req: ResetPasswordRequest):
 @limiter.limit(RATE_LIMIT_WRITE)
 async def ask_stream(request: Request, req: QuestionRequest, user: Optional[UserInfo] = Depends(get_current_user)):
     """Question → réponse SSE streaming avec sources."""
+    if not _ready:
+        raise HTTPException(status_code=503, detail="Service en cours de chargement, réessayez dans quelques secondes")
     question = req.question.strip()
     if not question:
         raise HTTPException(status_code=400, detail="Question vide")
@@ -413,6 +428,8 @@ async def saint_detail(request: Request, saint_id: str):
 
 @app.get("/health")
 async def health():
+    if not _ready:
+        return {"status": "loading", "service": "FidesIA", "version": APP_VERSION}
     stats = get_collection_stats()
     return {
         "status": "ok",
