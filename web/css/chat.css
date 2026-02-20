@@ -4,6 +4,8 @@
 .messages {
     flex: 1;
     padding: 20px 16px 0;
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
     display: flex;
     flex-direction: column;
     gap: 4px;
@@ -94,6 +96,7 @@
     padding: 12px;
     border-radius: var(--radius);
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
     margin: 8px 0;
 }
 
@@ -123,11 +126,12 @@
     background: none;
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    padding: 6px 12px;
+    padding: 8px 12px;
     font-size: 12px;
     color: var(--text-muted);
     cursor: pointer;
     transition: all var(--transition);
+    min-height: 44px;
 }
 
 .sources-toggle:hover {
@@ -209,10 +213,13 @@
     cursor: pointer;
     color: var(--border);
     transition: color var(--transition);
-    padding: 2px;
+    padding: 8px;
     line-height: 1;
-    min-width: 28px;
-    min-height: 28px;
+    min-width: 44px;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .rating-star:hover,
@@ -224,9 +231,8 @@
     color: var(--gold-light);
 }
 
-/* === Message Actions (copy, share) — hidden by default, shown on hover === */
+/* === Message Actions (copy, share) === */
 .message-actions {
-    display: none;
     justify-content: center;
     gap: 4px;
     margin-top: 8px;
@@ -234,17 +240,34 @@
     border-top: 1px solid var(--border);
 }
 
-.message:hover .message-actions {
-    display: flex;
+/* Desktop: hide until hover */
+@media (hover: hover) {
+    .message-actions {
+        display: none;
+    }
+    .message:hover .message-actions {
+        display: flex;
+    }
+}
+
+/* Touch devices: always visible, subtle */
+@media (hover: none) {
+    .message-actions {
+        display: flex;
+        opacity: 0.5;
+    }
+    .message-actions:active {
+        opacity: 1;
+    }
 }
 
 .btn-mini-action {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    height: 28px;
-    padding: 0;
+    width: 44px;
+    height: 44px;
+    padding: 8px;
     color: var(--text-muted);
     background: transparent;
     border: none;
@@ -311,4 +334,33 @@
 
 .stop-btn-input:hover {
     background: var(--accent);
+}
+
+/* === Responsive: Mobile === */
+@media (max-width: 768px) {
+    .message-user .message-content {
+        max-width: 88%;
+        padding: 10px 14px;
+    }
+
+    .message { padding: 12px 0; }
+
+    .message-assistant .message-content pre {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .source-item {
+        padding: 10px 12px;
+        min-height: 44px;
+    }
+}
+
+@media (max-width: 374px) {
+    .source-item {
+        gap: 6px;
+        font-size: 12px;
+    }
+
+    .source-score { min-width: 35px; }
 }

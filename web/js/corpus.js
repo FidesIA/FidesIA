@@ -27,6 +27,7 @@ const Corpus = {
     },
 
     async open() {
+        document.body.style.overflow = 'hidden';
         document.getElementById('corpus-modal').hidden = false;
         if (!this.loaded) await this.load();
     },

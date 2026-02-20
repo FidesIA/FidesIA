@@ -43,6 +43,7 @@ const Donation = {
         this._count++;
         if (this._count >= 5 && !this._shown && !sessionStorage.getItem('fidesia_donate_dismissed')) {
             this._shown = true;
+            document.body.style.overflow = 'hidden';
             document.getElementById('donate-modal').hidden = false;
         }
     },
@@ -65,6 +66,18 @@ const _MODAL_MAP = {
 function _closeModal(modalId) {
     const fn = _MODAL_MAP[modalId];
     if (fn) fn();
+    // Restore body scroll if no other modal is open
+    const anyOpen = Object.keys(_MODAL_MAP).some(id => {
+        const el = document.getElementById(id);
+        return el && !el.hidden;
+    });
+    if (!anyOpen) document.body.style.overflow = '';
+}
+
+function _openModal(modalId) {
+    document.body.style.overflow = 'hidden';
+    const el = document.getElementById(modalId);
+    if (el) el.hidden = false;
 }
 
 const _LOGIN_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>';

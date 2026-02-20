@@ -18,9 +18,16 @@ const Chat = {
         });
 
         // Auto-resize textarea
-        input.addEventListener('input', () => {
+        const _resizeInput = () => {
             input.style.height = 'auto';
             input.style.height = Math.min(input.scrollHeight, 150) + 'px';
+        };
+        input.addEventListener('input', _resizeInput);
+
+        // Recalc on orientation change / keyboard show
+        window.addEventListener('orientationchange', () => setTimeout(_resizeInput, 150));
+        input.addEventListener('focus', () => {
+            setTimeout(() => input.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 300);
         });
 
         // Enter to send, Shift+Enter for newline
@@ -40,8 +47,8 @@ const Chat = {
             }
         });
 
-        // Event delegation for ratings (on messages container)
-        document.getElementById('messages').addEventListener('mouseenter', (e) => {
+        // Event delegation for ratings (pointer events work on both mouse + touch)
+        document.getElementById('messages').addEventListener('pointerenter', (e) => {
             const star = e.target.closest('.rating-star');
             if (!star) return;
             const container = star.closest('.rating-container');
@@ -52,7 +59,7 @@ const Chat = {
             });
         }, true);
 
-        document.getElementById('messages').addEventListener('mouseleave', (e) => {
+        document.getElementById('messages').addEventListener('pointerleave', (e) => {
             const star = e.target.closest('.rating-star');
             if (!star) return;
             const container = star.closest('.rating-container');
@@ -233,7 +240,7 @@ const Chat = {
                 // Save exchange to server
                 this._saveExchange(question, fullResponse, sources, elapsed, ratingEl);
 
-                this._scrollToBottom();
+                this._scrollToBottom(true);
                 document.getElementById('chat-input').focus();
             },
             onError: (err) => {
@@ -241,7 +248,7 @@ const Chat = {
                 this.streamController = null;
                 this._hideStopButton();
                 contentEl.innerHTML = `<span style="color:var(--accent)">Erreur : ${DOMPurify.sanitize(err)}</span>`;
-                this._scrollToBottom();
+                this._scrollToBottom(true);
             },
         });
     },
@@ -316,7 +323,7 @@ const Chat = {
                 }
             }
 
-            this._scrollToBottom();
+            this._scrollToBottom(true);
 
             document.querySelectorAll('.conv-item').forEach(el => {
                 el.classList.toggle('active', el.dataset.id === convId);
@@ -341,7 +348,7 @@ const Chat = {
         div.appendChild(bubble);
         div.appendChild(this._createMessageActions());
         container.appendChild(div);
-        this._scrollToBottom();
+        this._scrollToBottom(true);
     },
 
     _createAssistantMessage() {
@@ -453,8 +460,13 @@ const Chat = {
         return container;
     },
 
-    _scrollToBottom() {
+    _scrollToBottom(force) {
         const area = document.getElementById('chat-area');
+        // Don't force scroll if user has scrolled up to read earlier messages
+        if (!force) {
+            const distFromBottom = area.scrollHeight - area.scrollTop - area.clientHeight;
+            if (distFromBottom > 150) return;
+        }
         requestAnimationFrame(() => {
             area.scrollTop = area.scrollHeight;
         });

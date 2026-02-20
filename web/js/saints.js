@@ -76,6 +76,7 @@ const Saints = {
         try {
             const saint = await API.get(`/api/saint/${encodeURIComponent(id)}`);
             this._renderModal(saint);
+            document.body.style.overflow = 'hidden';
             document.getElementById('saint-modal').hidden = false;
         } catch (e) {
             console.warn('Saint detail failed:', e);

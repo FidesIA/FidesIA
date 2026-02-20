@@ -3,6 +3,7 @@
 /* === Reset & Base === */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 [hidden] { display: none !important; }
+button, a, [role="button"] { touch-action: manipulation; }
 
 :root {
     --bg-primary: #faf8f5;
@@ -93,6 +94,8 @@ html, body {
 .conversations-list {
     flex: 1;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
     padding: 8px;
 }
 
@@ -106,6 +109,7 @@ html, body {
     justify-content: space-between;
     align-items: center;
     transition: background var(--transition);
+    min-height: 44px;
 }
 
 .conv-item:hover { background: var(--bg-tertiary); }
@@ -121,11 +125,19 @@ html, body {
 .conv-actions {
     display: flex;
     gap: 2px;
-    opacity: 0;
     transition: opacity var(--transition);
 }
 
-.conv-item:hover .conv-actions { opacity: 1; }
+/* Desktop: hide until hover */
+@media (hover: hover) {
+    .conv-actions { opacity: 0; }
+    .conv-item:hover .conv-actions { opacity: 1; }
+}
+
+/* Touch devices: always visible */
+@media (hover: none) {
+    .conv-actions { opacity: 0.6; }
+}
 
 .btn-mini-danger:hover {
     color: var(--accent);
@@ -258,12 +270,14 @@ html, body {
     border: none;
     color: var(--text-muted);
     cursor: pointer;
-    padding: 6px;
+    padding: 8px;
     border-radius: 6px;
     display: flex;
     align-items: center;
     flex-shrink: 0;
     transition: all var(--transition);
+    min-width: 44px;
+    min-height: 44px;
 }
 
 .sidebar-logout:hover {
@@ -286,6 +300,9 @@ html, body {
     display: flex;
     align-items: center;
     padding: 0 16px;
+    padding-top: env(safe-area-inset-top);
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
     border-bottom: 1px solid var(--border);
     background: var(--bg-primary);
     gap: 8px;
@@ -348,6 +365,8 @@ html, body {
 .chat-area {
     flex: 1;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
     display: flex;
     flex-direction: column;
 }
@@ -416,6 +435,9 @@ html, body {
 /* === Input Area === */
 .input-area {
     padding: 12px 16px 16px;
+    padding-left: max(16px, env(safe-area-inset-left));
+    padding-right: max(16px, env(safe-area-inset-right));
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
     border-top: 1px solid var(--border-light);
     background: var(--bg-primary);
     flex-shrink: 0;
@@ -435,11 +457,13 @@ html, body {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 12px 16px;
-    font-size: 15px;
+    font-size: 16px;
     font-family: inherit;
     color: var(--text-primary);
     background: var(--bg-secondary);
     max-height: 150px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     line-height: 1.5;
     transition: border-color var(--transition);
 }
@@ -538,6 +562,8 @@ html, body {
     width: 90%;
     max-height: 85vh;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
     box-shadow: 0 20px 60px var(--shadow);
 }
 
@@ -600,10 +626,10 @@ html, body {
 }
 
 .form-group input {
-    padding: 10px 14px;
+    padding: 12px 14px;
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    font-size: 14px;
+    font-size: 16px;
     color: var(--text-primary);
     background: var(--bg-secondary);
     transition: border-color var(--transition);
@@ -758,10 +784,10 @@ html, body {
 
 .corpus-search {
     width: 100%;
-    padding: 10px 14px;
+    padding: 12px 14px;
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    font-size: 14px;
+    font-size: 16px;
     color: var(--text-primary);
     background: var(--bg-secondary);
     margin-bottom: 16px;
@@ -775,6 +801,8 @@ html, body {
 .corpus-list {
     max-height: 55vh;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
 }
 
 .corpus-group {
@@ -1072,7 +1100,14 @@ html, body {
     display: none;
 }
 
-/* === Responsive === */
+/* === Responsive: Tablet (768-1023px) === */
+@media (max-width: 1023px) and (min-width: 769px) {
+    .sidebar { width: 240px; }
+    .welcome h1 { font-size: 28px; }
+    .welcome-icon { font-size: 48px; }
+}
+
+/* === Responsive: Mobile (<= 768px) === */
 @media (max-width: 768px) {
     #sidebar-toggle:not([hidden]) {
         display: flex;
@@ -1088,12 +1123,18 @@ html, body {
         left: -100%;
         top: 0;
         bottom: 0;
+        max-width: 300px;
+        width: 85%;
         transition: left 0.3s ease;
     }
 
     .sidebar.open {
         left: 0;
     }
+
+    .welcome h1 { font-size: 24px; }
+    .welcome-icon { font-size: 40px; margin-bottom: 12px; }
+    .welcome-sub { font-size: 13px; }
 
     .welcome-examples {
         flex-direction: column;
@@ -1105,6 +1146,53 @@ html, body {
 
     .modal-content {
         width: 95%;
-        padding: 24px;
+        padding: 20px;
+        max-height: 90vh;
     }
+
+    .corpus-modal-content,
+    .saint-modal-content {
+        max-width: 100%;
+    }
+
+    .donate-icon { font-size: 36px; }
+}
+
+/* === Responsive: Small mobile (<= 374px, iPhone SE) === */
+@media (max-width: 374px) {
+    html, body { font-size: 14px; }
+
+    .header { padding: 0 10px; gap: 4px; }
+
+    .input-area { padding: 8px 10px 10px; }
+    .chat-form { gap: 6px; }
+
+    .modal-content { padding: 16px; }
+
+    .guest-banner {
+        flex-direction: column;
+        gap: 4px;
+        font-size: 12px;
+    }
+
+    .saint-widget-label { font-size: 11px; }
+}
+
+/* === Responsive: Landscape on small screens === */
+@media (max-height: 500px) and (orientation: landscape) {
+    .header {
+        height: 44px;
+        padding: 0 12px;
+    }
+
+    .input-area { padding: 8px 12px; }
+
+    .modal-content {
+        max-height: 92vh;
+        padding: 16px;
+    }
+
+    .welcome { padding: 16px; }
+    .welcome-icon { font-size: 32px; margin-bottom: 8px; }
+    .welcome h1 { font-size: 22px; }
 }
