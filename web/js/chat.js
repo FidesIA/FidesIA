@@ -248,6 +248,7 @@ const Chat = {
                 this.streamController = null;
                 this._hideStopButton();
                 contentEl.innerHTML = `<span style="color:var(--accent)">Erreur : ${DOMPurify.sanitize(err)}</span>`;
+                msgEl.appendChild(this._createMessageActions());
                 this._scrollToBottom(true);
             },
         });
@@ -280,6 +281,17 @@ const Chat = {
             this.streamController = null;
             this.isStreaming = false;
             this._hideStopButton();
+
+            // Finalize the truncated message: add actions so user can delete/copy/share
+            const msgs = document.getElementById('messages');
+            const lastMsg = msgs ? msgs.querySelector('.message-assistant:last-child') : null;
+            if (lastMsg && !lastMsg.querySelector('.message-actions')) {
+                const contentEl = lastMsg.querySelector('.message-content');
+                if (contentEl) {
+                    lastMsg.dataset.text = contentEl.textContent || '';
+                }
+                lastMsg.appendChild(this._createMessageActions());
+            }
         }
     },
 
