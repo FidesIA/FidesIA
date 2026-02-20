@@ -184,8 +184,8 @@ const Chat = {
         const msgEl = this._createAssistantMessage();
         this._streamingMsg = msgEl;
         const contentEl = msgEl.querySelector('.message-content');
-        let fullResponse = '';
-        let sources = [];
+        const ctx = { question, startTime, response: '', sources: [] };
+        this._streamCtx = ctx;
         let renderScheduled = false;
 
         this._showStopButton();
@@ -193,13 +193,12 @@ const Chat = {
         this.streamController = API.streamQuestion(payload, {
             onChunk: (text) => {
                 if (!this.isStreaming) return;
-                fullResponse += text;
-                // Throttle rendering with requestAnimationFrame
+                ctx.response += text;
                 if (!renderScheduled) {
                     renderScheduled = true;
                     requestAnimationFrame(() => {
                         if (!this.isStreaming) { renderScheduled = false; return; }
-                        contentEl.innerHTML = DOMPurify.sanitize(marked.parse(fullResponse));
+                        contentEl.innerHTML = DOMPurify.sanitize(marked.parse(ctx.response));
                         this._scrollToBottom();
                         renderScheduled = false;
                     });
@@ -207,45 +206,33 @@ const Chat = {
             },
             onSources: (s) => {
                 if (!this.isStreaming) return;
-                sources = s;
+                ctx.sources = s;
             },
             onDone: () => {
                 if (!this.isStreaming) return;
                 this.isStreaming = false;
                 this.streamController = null;
                 this._streamingMsg = null;
-                const elapsed = Date.now() - startTime;
+                this._streamCtx = null;
+                const elapsed = Date.now() - ctx.startTime;
 
                 this._hideStopButton();
 
-                // Final render
-                contentEl.innerHTML = DOMPurify.sanitize(marked.parse(fullResponse));
-                msgEl.dataset.text = fullResponse;
+                contentEl.innerHTML = DOMPurify.sanitize(marked.parse(ctx.response));
+                msgEl.dataset.text = ctx.response;
 
-                // Add actions
                 msgEl.appendChild(this._createMessageActions());
 
-                // Add sources
-                if (sources.length > 0) {
-                    msgEl.appendChild(this._createSourcesEl(sources));
+                if (ctx.sources.length > 0) {
+                    msgEl.appendChild(this._createSourcesEl(ctx.sources));
                 }
 
-                // Add rating
                 const ratingEl = this._createRatingEl(null);
                 msgEl.appendChild(ratingEl);
 
-                // Save to messages array
-                this.messages.push({
-                    role: 'assistant',
-                    content: fullResponse,
-                    sources,
-                });
-
-                // Track for donation popup
+                this.messages.push({ role: 'assistant', content: ctx.response, sources: ctx.sources });
                 Donation.onExchange();
-
-                // Save exchange to server
-                this._saveExchange(question, fullResponse, sources, elapsed, ratingEl);
+                this._saveExchange(ctx.question, ctx.response, ctx.sources, elapsed, ratingEl);
 
                 this._scrollToBottom(true);
                 document.getElementById('chat-input').focus();
@@ -255,9 +242,23 @@ const Chat = {
                 this.isStreaming = false;
                 this.streamController = null;
                 this._streamingMsg = null;
+                const errCtx = this._streamCtx;
+                this._streamCtx = null;
                 this._hideStopButton();
-                contentEl.innerHTML = `<span style="color:var(--accent)">Erreur : ${DOMPurify.sanitize(err)}</span>`;
-                msgEl.appendChild(this._createMessageActions());
+
+                if (errCtx && errCtx.response) {
+                    const finalText = errCtx.response + '\n\n*[Réponse interrompue — erreur réseau]*';
+                    contentEl.innerHTML = DOMPurify.sanitize(marked.parse(finalText));
+                    msgEl.dataset.text = finalText;
+                    this.messages.push({ role: 'assistant', content: finalText, sources: errCtx.sources });
+                    this._saveExchange(errCtx.question, finalText, errCtx.sources, Date.now() - errCtx.startTime, null);
+                } else {
+                    contentEl.innerHTML = `<span style="color:var(--accent)">Erreur : ${DOMPurify.sanitize(err)}</span>`;
+                }
+
+                const actions = this._createMessageActions();
+                actions.style.display = 'flex';
+                msgEl.appendChild(actions);
                 this._scrollToBottom(true);
             },
         });
@@ -275,7 +276,7 @@ const Chat = {
                 knowledge_level: Profile.knowledgeLevel,
                 response_time_ms: elapsed,
             });
-            if (data.exchange_id) {
+            if (data.exchange_id && ratingEl) {
                 ratingEl.dataset.exchangeId = data.exchange_id;
             }
             App.loadConversations();
@@ -293,13 +294,27 @@ const Chat = {
 
             const msgEl = this._streamingMsg;
             this._streamingMsg = null;
+            const ctx = this._streamCtx;
+            this._streamCtx = null;
+
             if (msgEl) {
                 const contentEl = msgEl.querySelector('.message-content');
+                const partialText = ctx ? ctx.response : '';
+
                 if (contentEl) {
-                    const dots = contentEl.querySelector('.loading-dots');
-                    if (dots) contentEl.innerHTML = '<em style="color:var(--text-muted)">Génération interrompue</em>';
-                    msgEl.dataset.text = contentEl.textContent || '';
+                    if (partialText) {
+                        const finalText = partialText + '\n\n*[Réponse interrompue par l\'utilisateur]*';
+                        contentEl.innerHTML = DOMPurify.sanitize(marked.parse(finalText));
+                        msgEl.dataset.text = finalText;
+
+                        this.messages.push({ role: 'assistant', content: finalText, sources: ctx.sources });
+                        this._saveExchange(ctx.question, finalText, ctx.sources, Date.now() - ctx.startTime, null);
+                    } else {
+                        contentEl.innerHTML = '<em style="color:var(--text-muted)">Génération interrompue</em>';
+                        msgEl.dataset.text = '';
+                    }
                 }
+
                 const actions = this._createMessageActions();
                 actions.style.display = 'flex';
                 msgEl.appendChild(actions);
