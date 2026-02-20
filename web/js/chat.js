@@ -296,14 +296,13 @@ const Chat = {
             if (msgEl) {
                 const contentEl = msgEl.querySelector('.message-content');
                 if (contentEl) {
-                    // Remove loading dots if no content arrived yet
                     const dots = contentEl.querySelector('.loading-dots');
                     if (dots) contentEl.innerHTML = '<em style="color:var(--text-muted)">Génération interrompue</em>';
                     msgEl.dataset.text = contentEl.textContent || '';
                 }
-                if (!msgEl.querySelector('.message-actions')) {
-                    msgEl.appendChild(this._createMessageActions());
-                }
+                const actions = this._createMessageActions();
+                actions.style.display = 'flex';
+                msgEl.appendChild(actions);
             }
         }
     },
