@@ -120,10 +120,10 @@ def _build_pdf_index():
 
 # === Lifespan ===
 
-@asynccontextmanager
 _ready = False
 
 
+@asynccontextmanager
 async def lifespan(app: FastAPI):
     logger.info("FidesIA démarrage...")
     init_db()
