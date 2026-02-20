@@ -1,5 +1,6 @@
 /**
  * App — Init, state, routing
+ * DRY modal management, event delegation for sidebar conversations.
  */
 const EXAMPLE_QUESTIONS = [
     { q: "Qu'est-ce que la Trinité ?", label: "La Trinité" },
@@ -49,8 +50,27 @@ const Donation = {
     close() {
         document.getElementById('donate-modal').hidden = true;
         sessionStorage.setItem('fidesia_donate_dismissed', '1');
-    }
+    },
 };
+
+// Modal registry — DRY close logic
+const _MODAL_MAP = {
+    'auth-modal': () => AuthUI.close(),
+    'profile-modal': () => Profile.close(),
+    'corpus-modal': () => Corpus.close(),
+    'saint-modal': () => Saints.close(),
+    'donate-modal': () => Donation.close(),
+};
+
+function _closeModal(modalId) {
+    const fn = _MODAL_MAP[modalId];
+    if (fn) fn();
+}
+
+const _LOGIN_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>';
+const _LOGOUT_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>';
+const _HAMBURGER_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>';
+const _CLOSE_SVG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
 
 const App = {
     state: {
@@ -60,24 +80,21 @@ const App = {
     },
 
     async init() {
-        // Random example questions
-        this._populateExamples();
-
         // Init modules
         AuthUI.init();
         Profile.init();
         Corpus.init();
         Chat.init();
 
+        // Random example questions
+        this._populateExamples();
+
         // Header buttons
         document.getElementById('profile-btn').addEventListener('click', () => Profile.open());
         document.getElementById('corpus-btn').addEventListener('click', () => Corpus.open());
         document.getElementById('auth-btn').addEventListener('click', () => {
-            if (this.state.authenticated) {
-                AuthUI.logout();
-            } else {
-                AuthUI.open();
-            }
+            if (this.state.authenticated) AuthUI.logout();
+            else AuthUI.open();
         });
         document.getElementById('new-chat-btn').addEventListener('click', () => Chat.newChat());
         document.getElementById('sidebar-toggle').addEventListener('click', (e) => {
@@ -89,44 +106,29 @@ const App = {
         document.getElementById('guest-login-btn').addEventListener('click', () => AuthUI.open());
         document.getElementById('donate-later-btn').addEventListener('click', () => Donation.close());
 
-        // Modal close buttons (event delegation)
-        document.querySelectorAll('.modal-close').forEach(btn => {
-            const modal = btn.closest('.modal');
-            btn.addEventListener('click', () => {
-                const id = modal.id;
-                if (id === 'auth-modal') AuthUI.close();
-                else if (id === 'profile-modal') Profile.close();
-                else if (id === 'corpus-modal') Corpus.close();
-                else if (id === 'saint-modal') Saints.close();
-                else if (id === 'donate-modal') Donation.close();
-            });
+        // Unified modal close: close buttons + backdrops
+        document.addEventListener('click', (e) => {
+            const closeBtn = e.target.closest('.modal-close');
+            if (closeBtn) {
+                const modal = closeBtn.closest('.modal');
+                if (modal) _closeModal(modal.id);
+                return;
+            }
+            const backdrop = e.target.closest('.modal-backdrop');
+            if (backdrop) {
+                const modal = backdrop.closest('.modal');
+                if (modal) _closeModal(modal.id);
+            }
         });
 
-        // Modal backdrop close
-        document.querySelectorAll('.modal-backdrop').forEach(backdrop => {
-            const modal = backdrop.closest('.modal');
-            backdrop.addEventListener('click', () => {
-                const id = modal.id;
-                if (id === 'saint-modal') Saints.close();
-                else if (id === 'donate-modal') Donation.close();
-                else if (id === 'profile-modal') Profile.close();
-                else if (id === 'corpus-modal') Corpus.close();
-                else if (id === 'auth-modal') AuthUI.close();
-            });
-        });
-
-        // Global Escape key to close modals
+        // Global Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key !== 'Escape') return;
-            const modals = ['saint-modal', 'donate-modal', 'corpus-modal', 'profile-modal', 'auth-modal'];
-            for (const id of modals) {
+            const modalIds = ['saint-modal', 'donate-modal', 'corpus-modal', 'profile-modal', 'auth-modal'];
+            for (const id of modalIds) {
                 const modal = document.getElementById(id);
                 if (modal && !modal.hidden) {
-                    if (id === 'auth-modal') AuthUI.close();
-                    else if (id === 'profile-modal') Profile.close();
-                    else if (id === 'corpus-modal') Corpus.close();
-                    else if (id === 'saint-modal') Saints.close();
-                    else if (id === 'donate-modal') Donation.close();
+                    _closeModal(id);
                     break;
                 }
             }
@@ -134,6 +136,48 @@ const App = {
 
         // Close sidebar when clicking on main area (mobile)
         document.querySelector('.main').addEventListener('click', () => this.closeSidebar());
+
+        // Event delegation for sidebar conversations
+        document.getElementById('conversations-list').addEventListener('click', (e) => {
+            const deleteBtn = e.target.closest('.conv-delete-btn');
+            if (deleteBtn) {
+                e.stopPropagation();
+                const item = deleteBtn.closest('.conv-item');
+                if (!item) return;
+                const convId = item.dataset.id;
+                API.deleteConversation(convId).then(() => {
+                    item.remove();
+                    if (Chat.conversationId === convId) Chat.newChat();
+                }).catch(() => {});
+                return;
+            }
+            const shareBtn = e.target.closest('.conv-share-btn');
+            if (shareBtn) {
+                e.stopPropagation();
+                const item = shareBtn.closest('.conv-item');
+                if (!item) return;
+                API.getConversation(item.dataset.id).then(msgs => {
+                    let text = 'FidesIA\n\n';
+                    for (const m of msgs) {
+                        text += (m.role === 'user' ? 'Q: ' : 'R: ') + m.content + '\n\n';
+                    }
+                    if (navigator.share) navigator.share({ title: 'FidesIA', text }).catch(() => {});
+                    else navigator.clipboard.writeText(text).catch(() => {});
+                }).catch(() => {});
+                return;
+            }
+            const title = e.target.closest('.conv-title');
+            if (title) {
+                const item = title.closest('.conv-item');
+                if (item) {
+                    Chat.loadConversation(item.dataset.id);
+                    this.closeSidebar();
+                }
+            }
+        });
+
+        // Saint du jour (visible pour tous)
+        Saints.init();
 
         // Check existing session
         const session = await AuthUI.checkSession();
@@ -168,25 +212,18 @@ const App = {
     },
 
     _showConnectedUI() {
-        // Show sidebar
         document.getElementById('sidebar').hidden = false;
         document.getElementById('sidebar-toggle').hidden = false;
 
-        // Update auth button to logout
         const authBtn = document.getElementById('auth-btn');
         authBtn.title = 'Se déconnecter';
         authBtn.setAttribute('aria-label', 'Se déconnecter');
-        authBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>`;
+        authBtn.innerHTML = _LOGOUT_SVG;
 
-        // Hide guest banner
         document.getElementById('guest-banner').hidden = true;
-
-        // Show user name in sidebar footer
         document.getElementById('sidebar-username').textContent = this.state.displayName || 'Connecté';
 
-        // Load conversations and saint du jour
         this.loadConversations();
-        Saints.init();
     },
 
     _showGuestUI() {
@@ -196,9 +233,8 @@ const App = {
         const authBtn = document.getElementById('auth-btn');
         authBtn.title = 'Se connecter';
         authBtn.setAttribute('aria-label', 'Se connecter');
-        authBtn.innerHTML = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 3h4a2 2 0 012 2v14a2 2 0 01-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>`;
+        authBtn.innerHTML = _LOGIN_SVG;
 
-        // Show guest banner
         document.getElementById('guest-banner').hidden = false;
     },
 
@@ -214,56 +250,17 @@ const App = {
                 item.className = 'conv-item' + (conv.id === Chat.conversationId ? ' active' : '');
                 item.dataset.id = conv.id;
 
-                const title = document.createElement('span');
-                title.className = 'conv-title';
-                title.textContent = conv.title;
-                title.addEventListener('click', () => {
-                    Chat.loadConversation(conv.id);
-                    this.closeSidebar();
-                });
+                item.innerHTML = `
+                    <span class="conv-title">${DOMPurify.sanitize(conv.title)}</span>
+                    <div class="conv-actions">
+                        <button class="btn-mini-action conv-share-btn" title="Partager" aria-label="Partager la conversation">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+                        </button>
+                        <button class="btn-mini-action btn-mini-danger conv-delete-btn" title="Supprimer" aria-label="Supprimer la conversation">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+                        </button>
+                    </div>`;
 
-                const actions = document.createElement('div');
-                actions.className = 'conv-actions';
-
-                // Share
-                const shareBtn = document.createElement('button');
-                shareBtn.className = 'btn-mini-action';
-                shareBtn.title = 'Partager';
-                shareBtn.setAttribute('aria-label', 'Partager la conversation');
-                shareBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
-                shareBtn.addEventListener('click', async (e) => {
-                    e.stopPropagation();
-                    try {
-                        const msgs = await API.getConversation(conv.id);
-                        let text = 'FidesIA\n\n';
-                        for (const m of msgs) {
-                            text += (m.role === 'user' ? 'Q: ' : 'R: ') + m.content + '\n\n';
-                        }
-                        if (navigator.share) {
-                            await navigator.share({ title: 'FidesIA', text });
-                        } else {
-                            await navigator.clipboard.writeText(text);
-                        }
-                    } catch (_) {}
-                });
-
-                // Delete
-                const deleteBtn = document.createElement('button');
-                deleteBtn.className = 'btn-mini-action btn-mini-danger';
-                deleteBtn.title = 'Supprimer';
-                deleteBtn.setAttribute('aria-label', 'Supprimer la conversation');
-                deleteBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>';
-                deleteBtn.addEventListener('click', async (e) => {
-                    e.stopPropagation();
-                    await API.deleteConversation(conv.id);
-                    item.remove();
-                    if (Chat.conversationId === conv.id) Chat.newChat();
-                });
-
-                actions.appendChild(shareBtn);
-                actions.appendChild(deleteBtn);
-                item.appendChild(title);
-                item.appendChild(actions);
                 list.appendChild(item);
             }
         } catch (e) {
@@ -274,10 +271,7 @@ const App = {
     toggleSidebar() {
         const sidebar = document.getElementById('sidebar');
         const isOpen = sidebar.classList.toggle('open');
-        const btn = document.getElementById('sidebar-toggle');
-        btn.innerHTML = isOpen
-            ? `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`
-            : `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>`;
+        document.getElementById('sidebar-toggle').innerHTML = isOpen ? _CLOSE_SVG : _HAMBURGER_SVG;
     },
 
     closeSidebar() {
@@ -296,7 +290,6 @@ const App = {
             const j = Math.floor(Math.random() * (i + 1));
             [arr[i], arr[j]] = [arr[j], arr[i]];
         }
-        // 5 on desktop, CSS hides extras on mobile
         for (const ex of arr.slice(0, 5)) {
             const btn = document.createElement('button');
             btn.className = 'example-btn';
@@ -304,11 +297,10 @@ const App = {
             btn.textContent = ex.label;
             container.appendChild(btn);
         }
-    }
+    },
 };
 
-// Boot
-App._populateExamples();
+// Boot (single call)
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => App.init());
 } else {

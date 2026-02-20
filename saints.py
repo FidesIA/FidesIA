@@ -2,12 +2,17 @@
 saints.py - Calendrier des saints pour FidesIA
 Charge le fichier saints.json et fournit le saint du jour
 selon le calendrier catholique romain.
+
+Rangs liturgiques (par ordre d'importance) :
+  Solennité > Fête > Mémoire obligatoire > Mémoire facultative
 """
 
 import json
 import logging
+import re
 from datetime import date
 from pathlib import Path
+from typing import Optional
 
 logger = logging.getLogger(__name__)
 
@@ -19,23 +24,38 @@ MONTHS_FR = {
 
 MONTHS_FR_REV = {v: k for k, v in MONTHS_FR.items()}
 
+# Tri par importance liturgique (plus petit = plus important)
+RANG_ORDER = {
+    "Solennité": 0,
+    "Fête": 1,
+    "Mémoire obligatoire": 2,
+    "Mémoire facultative": 3,
+}
+
 _saints: list[dict] = []
 _by_date: dict[tuple[int, int], list[dict]] = {}
 _by_id: dict[str, dict] = {}
 
 
-def _parse_fete(fete_str: str):
-    """Parse '19 mars' → (3, 19) ou None."""
+def _parse_fete(fete_str: str) -> Optional[tuple[int, int]]:
+    """Parse '19 mars' ou '1er janvier' → (month, day) ou None."""
     parts = fete_str.strip().split(" ", 1)
-    if len(parts) == 2:
-        try:
-            day = int(parts[0])
-            month = MONTHS_FR.get(parts[1].lower())
-            if month:
-                return (month, day)
-        except ValueError:
-            pass
-    return None
+    if len(parts) != 2:
+        return None
+    day_str = parts[0]
+    month_str = parts[1].lower()
+
+    # Extraire le jour : "1er" → 1, "25" → 25
+    match = re.match(r"(\d+)", day_str)
+    if not match:
+        return None
+    day = int(match.group(1))
+
+    month = MONTHS_FR.get(month_str)
+    if not month:
+        return None
+
+    return (month, day)
 
 
 def init_saints(json_path: str = None):
@@ -62,6 +82,10 @@ def init_saints(json_path: str = None):
         if parsed:
             _by_date.setdefault(parsed, []).append(s)
 
+    # Trier chaque jour par rang liturgique (solennités d'abord)
+    for key in _by_date:
+        _by_date[key].sort(key=lambda s: RANG_ORDER.get(s.get("rang_liturgique", ""), 99))
+
     logger.info(f"Saints chargés: {len(_saints)} saints, {len(_by_date)} dates")
 
 
@@ -72,7 +96,7 @@ def get_saint_today() -> list[dict]:
     return [_compact(s) for s in saints]
 
 
-def get_saint_by_id(saint_id: str) -> dict | None:
+def get_saint_by_id(saint_id: str) -> Optional[dict]:
     """Retourne les détails complets d'un saint."""
     return _by_id.get(saint_id)
 
@@ -84,4 +108,5 @@ def _compact(s: dict) -> dict:
         "nom": s["nom"],
         "titres": s.get("titres", []),
         "fete": s.get("fete", ""),
+        "rang_liturgique": s.get("rang_liturgique", ""),
     }

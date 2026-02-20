@@ -33,9 +33,6 @@ const AuthUI = {
         document.getElementById('forgot-email').addEventListener('keydown', (e) => {
             if (e.key === 'Enter') this.handleForgotPassword();
         });
-
-        // Backdrop close
-        document.querySelector('#auth-modal .modal-backdrop').addEventListener('click', () => this.close());
     },
 
     open() {
@@ -73,7 +70,6 @@ const AuthUI = {
         try {
             const data = await API.login(email, password);
             if (data.success && data.token) {
-                document.getElementById('login-password').value = '';
                 API.setToken(data.token);
                 API.setUserId(data.user_id);
                 API.setDisplayName(data.display_name || '');
@@ -82,13 +78,12 @@ const AuthUI = {
             } else {
                 errDiv.textContent = data.message || 'Identifiants incorrects';
                 errDiv.hidden = false;
-                document.getElementById('login-password').value = '';
             }
         } catch (e) {
             errDiv.textContent = e.message || 'Erreur de connexion';
             errDiv.hidden = false;
-            document.getElementById('login-password').value = '';
         } finally {
+            document.getElementById('login-password').value = '';
             btn.disabled = false;
             btn.textContent = 'Se connecter';
         }
@@ -110,20 +105,20 @@ const AuthUI = {
         try {
             const data = await API.register(email, password, name);
             if (data.success && data.token) {
-                document.getElementById('register-password').value = '';
                 API.setToken(data.token);
                 API.setUserId(data.user_id);
                 API.setDisplayName(data.display_name || name);
                 this.close();
                 App.onLogin(data);
             } else {
-                errDiv.textContent = data.message || 'Erreur lors de l\'inscription';
+                errDiv.textContent = data.message || "Erreur lors de l'inscription";
                 errDiv.hidden = false;
             }
         } catch (e) {
             errDiv.textContent = e.message || 'Erreur de connexion';
             errDiv.hidden = false;
         } finally {
+            document.getElementById('register-password').value = '';
             btn.disabled = false;
             btn.textContent = 'Créer mon compte';
         }
@@ -164,7 +159,7 @@ const AuthUI = {
             successDiv.hidden = false;
             btn.hidden = true;
         } catch (e) {
-            errDiv.textContent = e.message || 'Erreur lors de l\'envoi';
+            errDiv.textContent = e.message || "Erreur lors de l'envoi";
             errDiv.hidden = false;
         } finally {
             btn.disabled = false;
@@ -174,17 +169,15 @@ const AuthUI = {
 
     async checkSession() {
         const token = API.getToken();
-        if (!token) return false;
+        if (!token) return null;
 
         try {
             const data = await API.checkSession();
-            if (data.authenticated) {
-                return data;
-            }
-        } catch (e) { /* invalid session */ }
+            if (data.authenticated) return data;
+        } catch (_) { /* invalid session */ }
 
         API.clearToken();
-        return false;
+        return null;
     },
 
     async logout() {
@@ -194,5 +187,5 @@ const AuthUI = {
         localStorage.removeItem('fidesia_user_id');
         localStorage.removeItem('fidesia_display_name');
         App.onLogout();
-    }
+    },
 };

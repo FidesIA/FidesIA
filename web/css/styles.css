@@ -128,8 +128,8 @@ html, body {
 .conv-item:hover .conv-actions { opacity: 1; }
 
 .btn-mini-danger:hover {
-    color: var(--accent) !important;
-    background: rgba(139, 26, 43, 0.1) !important;
+    color: var(--accent);
+    background: rgba(139, 26, 43, 0.1);
 }
 
 /* Sidebar saint du jour */
@@ -335,6 +335,15 @@ html, body {
     color: var(--text-primary);
 }
 
+#saint-header-btn {
+    color: var(--gold);
+}
+
+#saint-header-btn:hover {
+    background: var(--bg-secondary);
+    color: var(--gold-light);
+}
+
 /* === Chat Area === */
 .chat-area {
     flex: 1;
@@ -374,8 +383,8 @@ html, body {
 
 .welcome-sub {
     margin-top: 8px;
-    font-size: 14px !important;
-    color: var(--text-muted) !important;
+    font-size: 14px;
+    color: var(--text-muted);
     max-width: 400px;
 }
 
@@ -430,7 +439,6 @@ html, body {
     font-family: inherit;
     color: var(--text-primary);
     background: var(--bg-secondary);
-    outline: none;
     max-height: 150px;
     line-height: 1.5;
     transition: border-color var(--transition);
@@ -438,7 +446,6 @@ html, body {
 
 #chat-input:focus-visible {
     border-color: var(--gold);
-    outline: none;
 }
 
 #chat-input::placeholder {
@@ -555,7 +562,6 @@ html, body {
 /* === Auth Modal === */
 .auth-tabs {
     display: flex;
-    gap: 0;
     margin-bottom: 24px;
     border-bottom: 2px solid var(--border);
 }
@@ -600,13 +606,11 @@ html, body {
     font-size: 14px;
     color: var(--text-primary);
     background: var(--bg-secondary);
-    outline: none;
     transition: border-color var(--transition);
 }
 
 .form-group input:focus-visible {
     border-color: var(--gold);
-    outline: none;
 }
 
 .form-error {
@@ -760,13 +764,12 @@ html, body {
     font-size: 14px;
     color: var(--text-primary);
     background: var(--bg-secondary);
-    outline: none;
     margin-bottom: 16px;
+    transition: border-color var(--transition);
 }
 
 .corpus-search:focus-visible {
     border-color: var(--gold);
-    outline: none;
 }
 
 .corpus-list {
@@ -862,6 +865,50 @@ html, body {
     color: var(--accent);
 }
 
+/* Liturgical rank badges */
+.saint-rank {
+    display: inline-block;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    padding: 1px 6px;
+    border-radius: 8px;
+    vertical-align: middle;
+    margin-left: 4px;
+    text-transform: uppercase;
+}
+
+.saint-rank-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+}
+
+.saint-rank-solennite {
+    background: var(--gold);
+    color: #fff;
+}
+
+.saint-rank-fete {
+    background: var(--accent);
+    color: #fff;
+}
+
+.saint-rank-memoire-obligatoire {
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+}
+
+.saint-rank-memoire-facultative {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+}
+
 .saint-section {
     margin-bottom: 20px;
 }
@@ -945,6 +992,18 @@ html, body {
     color: var(--text-secondary);
 }
 
+.saint-theme-btn {
+    cursor: pointer;
+    font-family: inherit;
+    transition: all var(--transition);
+}
+
+.saint-theme-btn:hover {
+    background: var(--gold);
+    color: #fff;
+    border-color: var(--gold);
+}
+
 .saint-links {
     display: flex;
     flex-wrap: wrap;
@@ -1010,17 +1069,17 @@ html, body {
 
 /* Hamburger masqué sur desktop */
 #sidebar-toggle {
-    display: none !important;
+    display: none;
 }
 
 /* === Responsive === */
 @media (max-width: 768px) {
     #sidebar-toggle:not([hidden]) {
-        display: flex !important;
+        display: flex;
     }
 
     .sidebar-close-btn {
-        display: flex !important;
+        display: flex;
     }
 
     .sidebar {

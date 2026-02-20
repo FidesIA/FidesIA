@@ -1,5 +1,6 @@
 /**
  * Chat — Messages, streaming, sources, rating
+ * Throttled markdown rendering (requestAnimationFrame), event delegation for ratings.
  */
 const Chat = {
     messages: [],
@@ -30,12 +31,99 @@ const Chat = {
             }
         });
 
-        // Example questions (event delegation for dynamically created buttons)
+        // Example questions (event delegation)
         document.getElementById('welcome-examples').addEventListener('click', (e) => {
             const btn = e.target.closest('.example-btn');
             if (btn) {
                 input.value = btn.dataset.q;
                 this.send();
+            }
+        });
+
+        // Event delegation for ratings (on messages container)
+        document.getElementById('messages').addEventListener('mouseenter', (e) => {
+            const star = e.target.closest('.rating-star');
+            if (!star) return;
+            const container = star.closest('.rating-container');
+            if (!container) return;
+            const val = parseInt(star.dataset.value);
+            container.querySelectorAll('.rating-star').forEach(s => {
+                s.classList.toggle('hovered', parseInt(s.dataset.value) <= val);
+            });
+        }, true);
+
+        document.getElementById('messages').addEventListener('mouseleave', (e) => {
+            const star = e.target.closest('.rating-star');
+            if (!star) return;
+            const container = star.closest('.rating-container');
+            if (!container) return;
+            container.querySelectorAll('.rating-star').forEach(s => s.classList.remove('hovered'));
+        }, true);
+
+        document.getElementById('messages').addEventListener('click', (e) => {
+            // Rating star click
+            const star = e.target.closest('.rating-star');
+            if (star) {
+                const container = star.closest('.rating-container');
+                if (!container) return;
+                const exchangeId = container.dataset.exchangeId;
+                if (!exchangeId) return;
+                const val = parseInt(star.dataset.value);
+                container.dataset.rating = val;
+                container.querySelectorAll('.rating-star').forEach(s => {
+                    s.classList.toggle('active', parseInt(s.dataset.value) <= val);
+                });
+                API.rate({
+                    exchange_id: parseInt(exchangeId),
+                    rating: val,
+                    session_id: API.getSessionId(),
+                }).catch(err => console.warn('Rating failed:', err));
+                return;
+            }
+
+            // Message action buttons (share, copy, delete)
+            const actionBtn = e.target.closest('.btn-mini-action');
+            if (actionBtn) {
+                const action = actionBtn.dataset.action;
+                const msgEl = actionBtn.closest('.message');
+                if (!msgEl) return;
+
+                if (action === 'share') {
+                    const text = msgEl.dataset.text || '';
+                    if (navigator.share) {
+                        navigator.share({ title: 'FidesIA', text }).catch(() => {});
+                    } else {
+                        navigator.clipboard.writeText(text).catch(() => {});
+                    }
+                } else if (action === 'copy') {
+                    const text = msgEl.dataset.text || '';
+                    navigator.clipboard.writeText(text).then(() => {
+                        const icon = actionBtn.querySelector('svg');
+                        const original = actionBtn.innerHTML;
+                        actionBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
+                        setTimeout(() => { actionBtn.innerHTML = original; }, 2000);
+                    }).catch(() => {});
+                } else if (action === 'delete') {
+                    if (msgEl) msgEl.remove();
+                }
+                return;
+            }
+
+            // Source name click → open PDF
+            const sourceName = e.target.closest('.source-name');
+            if (sourceName && sourceName.dataset.pdf) {
+                Corpus.openPdf(sourceName.dataset.pdf);
+                return;
+            }
+
+            // Sources toggle
+            const toggle = e.target.closest('.sources-toggle');
+            if (toggle) {
+                const list = toggle.nextElementSibling;
+                if (list) {
+                    list.hidden = !list.hidden;
+                    toggle.classList.toggle('open');
+                }
             }
         });
     },
@@ -45,9 +133,9 @@ const Chat = {
         const question = input.value.trim();
         if (!question || this.isStreaming) return;
 
-        // Generate conversation ID if new
+        // Generate conversation ID if new (crypto-random)
         if (!this.conversationId) {
-            this.conversationId = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+            this.conversationId = crypto.randomUUID();
         }
 
         // Hide welcome, show messages
@@ -70,10 +158,9 @@ const Chat = {
         this.isStreaming = true;
         const startTime = Date.now();
 
-        // Build chat history for context
         const chatHistory = this.messages.slice(0, -1).map(m => ({
             role: m.role,
-            content: m.content
+            content: m.content,
         }));
 
         const payload = {
@@ -86,20 +173,26 @@ const Chat = {
             response_length: Profile.responseLength,
         };
 
-        // Create assistant message placeholder
         const msgEl = this._createAssistantMessage();
         const contentEl = msgEl.querySelector('.message-content');
         let fullResponse = '';
         let sources = [];
+        let renderScheduled = false;
 
-        // Replace send button with stop button in input area
         this._showStopButton();
 
         this.streamController = API.streamQuestion(payload, {
             onChunk: (text) => {
                 fullResponse += text;
-                contentEl.innerHTML = DOMPurify.sanitize(marked.parse(fullResponse));
-                this._scrollToBottom();
+                // Throttle rendering with requestAnimationFrame
+                if (!renderScheduled) {
+                    renderScheduled = true;
+                    requestAnimationFrame(() => {
+                        contentEl.innerHTML = DOMPurify.sanitize(marked.parse(fullResponse));
+                        this._scrollToBottom();
+                        renderScheduled = false;
+                    });
+                }
             },
             onSources: (s) => {
                 sources = s;
@@ -109,14 +202,14 @@ const Chat = {
                 this.streamController = null;
                 const elapsed = Date.now() - startTime;
 
-                // Restore send button
                 this._hideStopButton();
 
-                // Final render (no cursor)
+                // Final render
                 contentEl.innerHTML = DOMPurify.sanitize(marked.parse(fullResponse));
+                msgEl.dataset.text = fullResponse;
 
-                // Add actions (share, copy, delete)
-                msgEl.appendChild(this._createMessageActions(fullResponse, msgEl));
+                // Add actions
+                msgEl.appendChild(this._createMessageActions());
 
                 // Add sources
                 if (sources.length > 0) {
@@ -149,7 +242,7 @@ const Chat = {
                 this._hideStopButton();
                 contentEl.innerHTML = `<span style="color:var(--accent)">Erreur : ${DOMPurify.sanitize(err)}</span>`;
                 this._scrollToBottom();
-            }
+            },
         });
     },
 
@@ -168,7 +261,6 @@ const Chat = {
             if (data.exchange_id) {
                 ratingEl.dataset.exchangeId = data.exchange_id;
             }
-            // Refresh sidebar conversations
             App.loadConversations();
         } catch (e) {
             console.warn('Save exchange failed:', e);
@@ -193,7 +285,6 @@ const Chat = {
         document.getElementById('welcome').hidden = false;
         document.getElementById('chat-input').focus();
 
-        // Deselect sidebar
         document.querySelectorAll('.conv-item.active').forEach(el => el.classList.remove('active'));
     },
 
@@ -214,7 +305,8 @@ const Chat = {
                 } else {
                     const el = this._createAssistantMessage();
                     el.querySelector('.message-content').innerHTML = DOMPurify.sanitize(marked.parse(msg.content));
-                    el.appendChild(this._createMessageActions(msg.content, el));
+                    el.dataset.text = msg.content;
+                    el.appendChild(this._createMessageActions());
                     if (msg.sources_with_scores && msg.sources_with_scores.length > 0) {
                         el.appendChild(this._createSourcesEl(msg.sources_with_scores));
                     }
@@ -226,7 +318,6 @@ const Chat = {
 
             this._scrollToBottom();
 
-            // Highlight in sidebar
             document.querySelectorAll('.conv-item').forEach(el => {
                 el.classList.toggle('active', el.dataset.id === convId);
             });
@@ -241,13 +332,14 @@ const Chat = {
         const container = document.getElementById('messages');
         const div = document.createElement('div');
         div.className = 'message message-user';
+        div.dataset.text = content;
 
         const bubble = document.createElement('div');
         bubble.className = 'message-content';
         bubble.textContent = content;
 
         div.appendChild(bubble);
-        div.appendChild(this._createMessageActions(content, div));
+        div.appendChild(this._createMessageActions());
         container.appendChild(div);
         this._scrollToBottom();
     },
@@ -256,7 +348,7 @@ const Chat = {
         const container = document.getElementById('messages');
         const div = document.createElement('div');
         div.className = 'message message-assistant';
-        div.innerHTML = `<div class="message-content"><div class="loading-dots"><span></span><span></span><span></span></div></div>`;
+        div.innerHTML = '<div class="message-content"><div class="loading-dots"><span></span><span></span><span></span></div></div>';
         container.appendChild(div);
         return div;
     },
@@ -286,53 +378,21 @@ const Chat = {
         sendBtn.hidden = false;
     },
 
-    _createMessageActions(text, msgEl) {
+    _createMessageActions() {
         const actions = document.createElement('div');
         actions.className = 'message-actions';
 
-        // Share
-        const shareBtn = document.createElement('button');
-        shareBtn.className = 'btn-mini-action';
-        shareBtn.title = 'Partager';
-        shareBtn.setAttribute('aria-label', 'Partager');
-        shareBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
-        shareBtn.addEventListener('click', () => {
-            if (navigator.share) {
-                navigator.share({ title: 'FidesIA', text }).catch(() => {});
-            } else {
-                navigator.clipboard.writeText(text).catch(() => {});
-            }
-        });
+        actions.innerHTML = `
+            <button class="btn-mini-action" data-action="share" title="Partager" aria-label="Partager">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            </button>
+            <button class="btn-mini-action" data-action="copy" title="Copier" aria-label="Copier">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+            </button>
+            <button class="btn-mini-action btn-mini-danger" data-action="delete" title="Supprimer" aria-label="Supprimer">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>
+            </button>`;
 
-        // Copy
-        const copyBtn = document.createElement('button');
-        copyBtn.className = 'btn-mini-action';
-        copyBtn.title = 'Copier';
-        copyBtn.setAttribute('aria-label', 'Copier');
-        const copyIcon = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>';
-        copyBtn.innerHTML = copyIcon;
-        copyBtn.addEventListener('click', async () => {
-            try {
-                await navigator.clipboard.writeText(text);
-                copyBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>';
-                setTimeout(() => { copyBtn.innerHTML = copyIcon; }, 2000);
-            } catch (_) {}
-        });
-
-        // Delete (DOM-only, for reshaping before export)
-        const deleteBtn = document.createElement('button');
-        deleteBtn.className = 'btn-mini-action btn-mini-danger';
-        deleteBtn.title = 'Supprimer';
-        deleteBtn.setAttribute('aria-label', 'Supprimer');
-        deleteBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2"/></svg>';
-        deleteBtn.addEventListener('click', () => {
-            const el = msgEl || deleteBtn.closest('.message');
-            if (el) el.remove();
-        });
-
-        actions.appendChild(shareBtn);
-        actions.appendChild(copyBtn);
-        actions.appendChild(deleteBtn);
         return actions;
     },
 
@@ -348,7 +408,6 @@ const Chat = {
         list.className = 'sources-list';
         list.hidden = true;
 
-        // Lookup vatican.va URLs from corpus data
         const corpusData = Corpus.data || [];
 
         for (const src of sources) {
@@ -357,46 +416,23 @@ const Chat = {
 
             const name = src.file_name || src.relative_path || 'Document';
             const score = src.score ? `${Math.round(src.score * 100)}%` : '';
+            const pdfFile = src.relative_path || name;
 
-            // Find vatican.va link (with URL validation)
+            // Find vatican.va link
             const corpusMatch = corpusData.find(c => c.fichier === name);
-            let vatLink = null;
+            let vatLinkHtml = '';
             if (corpusMatch && corpusMatch.url) {
                 try {
                     const parsed = new URL(corpusMatch.url);
                     if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
-                        vatLink = document.createElement('a');
-                        vatLink.className = 'source-vatican';
-                        vatLink.href = corpusMatch.url;
-                        vatLink.target = '_blank';
-                        vatLink.rel = 'noopener';
-                        vatLink.textContent = 'vatican.va';
+                        vatLinkHtml = `<a class="source-vatican" href="${DOMPurify.sanitize(corpusMatch.url)}" target="_blank" rel="noopener">vatican.va</a>`;
                     }
-                } catch (_) { /* skip invalid URLs */ }
+                } catch (_) {}
             }
 
-            // Build PDF path for click
-            const pdfFile = src.relative_path || name;
-
-            const nameSpan = document.createElement('span');
-            nameSpan.className = 'source-name';
-            nameSpan.textContent = name;
-            nameSpan.addEventListener('click', () => Corpus.openPdf(pdfFile));
-
-            item.appendChild(nameSpan);
-            if (vatLink) item.appendChild(vatLink);
-            const scoreSpan = document.createElement('span');
-            scoreSpan.className = 'source-score';
-            scoreSpan.textContent = score;
-            item.appendChild(scoreSpan);
-
+            item.innerHTML = `<span class="source-name" data-pdf="${DOMPurify.sanitize(pdfFile)}">${DOMPurify.sanitize(name)}</span>${vatLinkHtml}<span class="source-score">${score}</span>`;
             list.appendChild(item);
         }
-
-        toggle.addEventListener('click', () => {
-            list.hidden = !list.hidden;
-            toggle.classList.toggle('open');
-        });
 
         wrapper.appendChild(toggle);
         wrapper.appendChild(list);
@@ -408,42 +444,12 @@ const Chat = {
         container.className = 'rating-container';
         container.dataset.rating = currentRating || 0;
 
+        let html = '';
         for (let i = 1; i <= 5; i++) {
-            const star = document.createElement('button');
-            star.className = 'rating-star' + (currentRating && i <= currentRating ? ' active' : '');
-            star.textContent = '\u2605';
-            star.dataset.value = i;
-            star.setAttribute('aria-label', `${i} étoile${i > 1 ? 's' : ''}`);
-
-            star.addEventListener('mouseenter', () => {
-                container.querySelectorAll('.rating-star').forEach(s => {
-                    s.classList.toggle('hovered', parseInt(s.dataset.value) <= i);
-                });
-            });
-
-            star.addEventListener('mouseleave', () => {
-                container.querySelectorAll('.rating-star').forEach(s => s.classList.remove('hovered'));
-            });
-
-            star.addEventListener('click', async () => {
-                const exchangeId = container.dataset.exchangeId;
-                if (!exchangeId) return;
-
-                container.dataset.rating = i;
-                container.querySelectorAll('.rating-star').forEach(s => {
-                    s.classList.toggle('active', parseInt(s.dataset.value) <= i);
-                });
-
-                try {
-                    await API.rate({ exchange_id: parseInt(exchangeId), rating: i });
-                } catch (e) {
-                    console.warn('Rating failed:', e);
-                }
-            });
-
-            container.appendChild(star);
+            const active = currentRating && i <= currentRating ? ' active' : '';
+            html += `<button class="rating-star${active}" data-value="${i}" aria-label="${i} étoile${i > 1 ? 's' : ''}">\u2605</button>`;
         }
-
+        container.innerHTML = html;
         return container;
     },
 
@@ -452,5 +458,5 @@ const Chat = {
         requestAnimationFrame(() => {
             area.scrollTop = area.scrollHeight;
         });
-    }
+    },
 };

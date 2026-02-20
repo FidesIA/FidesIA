@@ -9,6 +9,9 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+# === App ===
+APP_VERSION = "1.1.0"
+
 # === Chemins ===
 BASE_DIR = Path(__file__).parent
 CHROMA_PATH = BASE_DIR / os.getenv("CHROMA_PATH", "data/chroma_db")
@@ -21,7 +24,7 @@ OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "mistral-large-3:675b-cloud")
 
 # === Embedding ===
-EMBEDDING_MODEL = "OrdalieTech/Solon-embeddings-large-0.1"
+EMBEDDING_MODEL = os.getenv("EMBEDDING_MODEL", "OrdalieTech/Solon-embeddings-large-0.1")
 
 # === JWT ===
 JWT_SECRET = os.getenv("JWT_SECRET", "")
@@ -35,7 +38,10 @@ JWT_EXPIRE_DAYS = 7
 
 # === SMTP ===
 SMTP_HOST = os.getenv("SMTP_HOST", "")
-SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
+try:
+    SMTP_PORT = int(os.getenv("SMTP_PORT", "587"))
+except ValueError:
+    SMTP_PORT = 587
 SMTP_USER = os.getenv("SMTP_USER", "")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
 SMTP_FROM = os.getenv("SMTP_FROM", "FidesIA <noreply@fidesia.fr>")
@@ -43,11 +49,18 @@ APP_URL = os.getenv("APP_URL", "http://localhost:11438").rstrip("/")
 
 # === Serveur ===
 HOST = os.getenv("HOST", "0.0.0.0")
-PORT = int(os.getenv("PORT", "11438"))
+try:
+    PORT = int(os.getenv("PORT", "11438"))
+except ValueError:
+    PORT = 11438
+
+# === Auth ===
+MIN_PASSWORD_LENGTH = 8
+MAX_CHAT_HISTORY = 20
 
 # === Rate limiting ===
-RATE_LIMIT_PUBLIC = "20/minute"
-RATE_LIMIT_CONNECTED = "60/minute"
+RATE_LIMIT_WRITE = "30/minute"
+RATE_LIMIT_READ = "60/minute"
 
 # === RAG ===
 SIMILARITY_TOP_K = 8

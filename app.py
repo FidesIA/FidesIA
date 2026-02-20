@@ -3,12 +3,14 @@ app.py - Serveur FastAPI pour FidesIA
 Chatbot RAG Théologie Catholique
 """
 
+import asyncio
 import json
 import logging
+import time
 import uuid
 from contextlib import asynccontextmanager
 from pathlib import Path
-from typing import Optional
+from typing import Optional, List
 
 from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.responses import StreamingResponse, FileResponse
@@ -17,13 +19,18 @@ from pydantic import BaseModel, Field
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
-from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.responses import JSONResponse
+from starlette.types import ASGIApp, Receive, Scope, Send
 
-from config import HOST, PORT, CORPUS_PATH, INVENTAIRE_PATH, OLLAMA_MODEL, RATE_LIMIT_PUBLIC
+from config import (
+    HOST, PORT, CORPUS_PATH, INVENTAIRE_PATH, OLLAMA_MODEL,
+    APP_VERSION, MAX_CHAT_HISTORY, RATE_LIMIT_WRITE, RATE_LIMIT_READ,
+)
 from database import (
     init_db, save_exchange, update_rating, get_exchange_owner,
     get_user_conversations, get_conversation_messages, delete_conversation,
+    check_conversation_owner, blacklist_jwt,
+    cleanup_expired_tokens, cleanup_expired_blacklist,
 )
 from auth import (
     RegisterRequest, LoginRequest, AuthResponse, UserInfo,
@@ -38,16 +45,77 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(name)s] %(levelna
 logger = logging.getLogger(__name__)
 
 
-# === Security Headers Middleware ===
+# === Pure ASGI Security Headers Middleware ===
 
-class SecurityHeadersMiddleware(BaseHTTPMiddleware):
-    async def dispatch(self, request: Request, call_next):
-        response = await call_next(request)
-        response.headers["X-Content-Type-Options"] = "nosniff"
-        response.headers["X-Frame-Options"] = "DENY"
-        response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
-        response.headers["Permissions-Policy"] = "camera=(), microphone=(), geolocation=()"
-        return response
+class SecurityHeadersMiddleware:
+    """Pure ASGI middleware (no BaseHTTPMiddleware overhead)."""
+
+    def __init__(self, app: ASGIApp):
+        self.app = app
+
+    async def __call__(self, scope: Scope, receive: Receive, send: Send):
+        if scope["type"] != "http":
+            await self.app(scope, receive, send)
+            return
+
+        async def send_with_headers(message):
+            if message["type"] == "http.response.start":
+                headers = dict(message.get("headers", []))
+                extra = [
+                    (b"x-content-type-options", b"nosniff"),
+                    (b"x-frame-options", b"DENY"),
+                    (b"referrer-policy", b"strict-origin-when-cross-origin"),
+                    (b"permissions-policy", b"camera=(), microphone=(), geolocation=()"),
+                    (b"content-security-policy",
+                     b"default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; "
+                     b"img-src 'self' data:; font-src 'self'; connect-src 'self'; "
+                     b"frame-ancestors 'none'; base-uri 'self'; form-action 'self'"),
+                    (b"strict-transport-security", b"max-age=31536000; includeSubDomains"),
+                    (b"x-permitted-cross-domain-policies", b"none"),
+                ]
+                message["headers"] = list(message.get("headers", [])) + extra
+            await send(message)
+
+        await self.app(scope, receive, send_with_headers)
+
+
+# === Corpus Cache ===
+
+class _CorpusCache:
+    """Cache inventaire.json en mémoire avec TTL."""
+
+    def __init__(self, ttl: int = 300):
+        self._data = None
+        self._loaded_at = 0.0
+        self._ttl = ttl
+
+    def get(self) -> list:
+        now = time.monotonic()
+        if self._data is not None and (now - self._loaded_at) < self._ttl:
+            return self._data
+        inv_path = Path(INVENTAIRE_PATH)
+        if not inv_path.exists():
+            self._data = []
+        else:
+            with open(inv_path, "r", encoding="utf-8") as f:
+                self._data = json.load(f)
+        self._loaded_at = now
+        return self._data
+
+
+_corpus_cache = _CorpusCache(ttl=300)
+
+# === PDF file index (avoid rglob on each request) ===
+_pdf_index: dict[str, Path] = {}
+
+
+def _build_pdf_index():
+    """Index all PDF filenames → full paths at startup."""
+    corpus_root = Path(CORPUS_PATH).resolve()
+    if not corpus_root.exists():
+        return
+    for pdf in corpus_root.rglob("*.pdf"):
+        _pdf_index[pdf.name] = pdf
 
 
 # === Lifespan ===
@@ -59,12 +127,13 @@ async def lifespan(app: FastAPI):
     init_settings()
     init_index()
     init_saints()
+    _build_pdf_index()
     logger.info("FidesIA prêt")
     yield
     logger.info("FidesIA arrêt")
 
 
-app = FastAPI(title="FidesIA", version="1.0.0", lifespan=lifespan)
+app = FastAPI(title="FidesIA", version=APP_VERSION, lifespan=lifespan)
 app.add_middleware(SecurityHeadersMiddleware)
 
 # Rate limiting
@@ -82,11 +151,16 @@ async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
 
 # === Modèles Pydantic ===
 
+class ChatHistoryItem(BaseModel):
+    role: str = Field(..., pattern=r"^(user|assistant)$")
+    content: str = Field(..., max_length=10000)
+
+
 class QuestionRequest(BaseModel):
     question: str = Field(..., min_length=1, max_length=5000)
     conversation_id: Optional[str] = Field(None, max_length=100)
     session_id: Optional[str] = Field(None, max_length=100)
-    chat_history: Optional[list] = None
+    chat_history: Optional[List[ChatHistoryItem]] = None
     age_group: Optional[str] = Field(None, max_length=30)
     knowledge_level: Optional[str] = Field(None, max_length=30)
     response_length: Optional[str] = Field(None, max_length=30)
@@ -106,6 +180,7 @@ class ExchangeRequest(BaseModel):
 class RatingRequest(BaseModel):
     exchange_id: int = Field(..., gt=0)
     rating: int = Field(..., ge=1, le=5)
+    session_id: Optional[str] = Field(None, max_length=100)
 
 
 # === Auth Routes ===
@@ -113,17 +188,18 @@ class RatingRequest(BaseModel):
 @app.post("/auth/register", response_model=AuthResponse)
 @limiter.limit("5/minute")
 async def route_register(request: Request, req: RegisterRequest):
-    return register(req.email, req.password, req.display_name)
+    return await asyncio.to_thread(register, req.email, req.password, req.display_name)
 
 
 @app.post("/auth/login", response_model=AuthResponse)
 @limiter.limit("10/minute")
 async def route_login(request: Request, req: LoginRequest):
-    return login(req.email, req.password)
+    return await asyncio.to_thread(login, req.email, req.password)
 
 
 @app.get("/auth/check")
-async def route_check(user: Optional[UserInfo] = Depends(get_current_user)):
+@limiter.limit(RATE_LIMIT_READ)
+async def route_check(request: Request, user: Optional[UserInfo] = Depends(get_current_user)):
     if user:
         return {"authenticated": True, "user_id": user.user_id, "display_name": user.display_name}
     return {"authenticated": False}
@@ -131,38 +207,42 @@ async def route_check(user: Optional[UserInfo] = Depends(get_current_user)):
 
 @app.post("/auth/logout")
 async def route_logout(user: UserInfo = Depends(require_auth)):
+    # Blacklist le JWT pour un vrai logout
+    if user.jti and user.exp:
+        blacklist_jwt(user.jti, user.exp.isoformat())
     return {"success": True, "message": "Déconnexion réussie"}
 
 
 @app.post("/auth/forgot-password")
 @limiter.limit("5/minute")
 async def route_forgot_password(request: Request, req: ForgotPasswordRequest):
-    return forgot_password(req.email)
+    return await asyncio.to_thread(forgot_password, req.email)
 
 
 @app.post("/auth/reset-password")
 @limiter.limit("10/minute")
 async def route_reset_password(request: Request, req: ResetPasswordRequest):
-    return reset_password(req.token, req.password)
+    return await asyncio.to_thread(reset_password, req.token, req.password)
 
 
 # === Chat / RAG ===
 
 @app.post("/ask/stream")
-@limiter.limit(RATE_LIMIT_PUBLIC)
+@limiter.limit(RATE_LIMIT_WRITE)
 async def ask_stream(request: Request, req: QuestionRequest, user: Optional[UserInfo] = Depends(get_current_user)):
     """Question → réponse SSE streaming avec sources."""
     question = req.question.strip()
     if not question:
         raise HTTPException(status_code=400, detail="Question vide")
 
-    # Limiter l'historique à 20 messages max
-    chat_history = (req.chat_history or [])[:20]
+    chat_history = None
+    if req.chat_history:
+        chat_history = [{"role": m.role, "content": m.content} for m in req.chat_history[:MAX_CHAT_HISTORY]]
 
     return StreamingResponse(
         query_stream(
             question=question,
-            chat_history=chat_history if chat_history else None,
+            chat_history=chat_history,
             age_group=req.age_group,
             knowledge_level=req.knowledge_level,
             response_length=req.response_length,
@@ -175,12 +255,29 @@ async def ask_stream(request: Request, req: QuestionRequest, user: Optional[User
 # === Conversations (connecté) ===
 
 @app.post("/conversations/exchange")
-async def save_exchange_route(req: ExchangeRequest, user: Optional[UserInfo] = Depends(get_current_user)):
+@limiter.limit(RATE_LIMIT_WRITE)
+async def save_exchange_route(request: Request, req: ExchangeRequest, user: Optional[UserInfo] = Depends(get_current_user)):
     """Sauvegarde un échange Q/R (public ou connecté)."""
     session_id = f"user:{user.user_id}" if user else (req.session_id or str(uuid.uuid4()))
     user_id = user.user_id if user else None
 
-    exchange_id = save_exchange(
+    # IDOR fix: vérifier que la conversation appartient bien à l'utilisateur
+    if user_id:
+        existing = check_conversation_owner(req.conversation_id, user_id)
+        # Autorise si c'est une nouvelle conversation OU si elle appartient à cet user
+        if existing is False:
+            # Vérifier si d'autres messages existent pour cette conv avec un AUTRE user
+            from database import _db
+            with _db() as conn:
+                row = conn.execute(
+                    "SELECT user_id FROM exchanges WHERE conversation_id = ? AND user_id IS NOT NULL LIMIT 1",
+                    (req.conversation_id,),
+                ).fetchone()
+                if row and row["user_id"] != user_id:
+                    raise HTTPException(status_code=403, detail="Accès interdit à cette conversation")
+
+    exchange_id = await asyncio.to_thread(
+        save_exchange,
         session_id=session_id,
         conversation_id=req.conversation_id,
         question=req.question,
@@ -196,54 +293,54 @@ async def save_exchange_route(req: ExchangeRequest, user: Optional[UserInfo] = D
 
 
 @app.get("/conversations")
-async def list_conversations(user: UserInfo = Depends(require_auth)):
-    return get_user_conversations(user.user_id)
+@limiter.limit(RATE_LIMIT_READ)
+async def list_conversations(request: Request, user: UserInfo = Depends(require_auth)):
+    return await asyncio.to_thread(get_user_conversations, user.user_id)
 
 
 @app.get("/conversations/{conv_id}/messages")
-async def get_messages(conv_id: str, user: UserInfo = Depends(require_auth)):
-    return get_conversation_messages(conv_id, user_id=user.user_id)
+@limiter.limit(RATE_LIMIT_READ)
+async def get_messages(request: Request, conv_id: str, user: UserInfo = Depends(require_auth)):
+    return await asyncio.to_thread(get_conversation_messages, conv_id, user_id=user.user_id)
 
 
 @app.delete("/conversations/{conv_id}")
-async def delete_conv(conv_id: str, user: UserInfo = Depends(require_auth)):
-    delete_conversation(conv_id, user.user_id)
+@limiter.limit(RATE_LIMIT_WRITE)
+async def delete_conv(request: Request, conv_id: str, user: UserInfo = Depends(require_auth)):
+    await asyncio.to_thread(delete_conversation, conv_id, user.user_id)
     return {"success": True}
 
 
 # === Rating ===
 
 @app.post("/rate")
-async def rate_exchange(req: RatingRequest, user: Optional[UserInfo] = Depends(get_current_user)):
-    """Note un échange. Vérifie que l'échange appartient à l'utilisateur/session."""
-    owner = get_exchange_owner(req.exchange_id)
+@limiter.limit(RATE_LIMIT_WRITE)
+async def rate_exchange(request: Request, req: RatingRequest, user: Optional[UserInfo] = Depends(get_current_user)):
+    """Note un échange. Vérifie l'appartenance."""
+    owner = await asyncio.to_thread(get_exchange_owner, req.exchange_id)
     if not owner:
         raise HTTPException(status_code=404, detail="Échange non trouvé")
 
-    # Vérifier l'appartenance : user connecté ou session anonyme
-    if owner["user_id"] and user and owner["user_id"] == user.user_id:
-        pass  # OK
-    elif not owner["user_id"] and not user:
-        pass  # Échange anonyme, accès public
-    elif user and owner["user_id"] == user.user_id:
-        pass  # OK
+    if user and owner["user_id"] and owner["user_id"] == user.user_id:
+        pass  # Utilisateur connecté, son propre échange
+    elif not owner["user_id"] and not user and req.session_id and owner["session_id"] == req.session_id:
+        pass  # Échange anonyme, même session
+    elif not owner["user_id"] and user:
+        pass  # User connecté note un échange qui n'avait pas de user (transition)
     else:
         raise HTTPException(status_code=403, detail="Accès interdit")
 
-    update_rating(req.exchange_id, req.rating)
+    await asyncio.to_thread(update_rating, req.exchange_id, req.rating)
     return {"success": True}
 
 
 # === Corpus ===
 
 @app.get("/corpus")
-async def get_corpus():
-    """Retourne l'inventaire du corpus."""
-    inv_path = Path(INVENTAIRE_PATH)
-    if not inv_path.exists():
-        return []
-    with open(inv_path, "r", encoding="utf-8") as f:
-        return json.load(f)
+@limiter.limit(RATE_LIMIT_READ)
+async def get_corpus(request: Request):
+    """Retourne l'inventaire du corpus (cached)."""
+    return _corpus_cache.get()
 
 
 @app.get("/corpus/file/{file_path:path}")
@@ -258,15 +355,15 @@ async def serve_corpus_file(file_path: str):
     except ValueError:
         raise HTTPException(status_code=403, detail="Accès interdit")
 
-    # Si pas trouvé directement, chercher récursivement par nom de fichier
+    # Chercher dans l'index pré-construit si pas trouvé directement
     if not full_path.exists() or not full_path.is_file():
         filename = Path(file_path).name
-        matches = list(corpus_root.rglob(filename))
-        if not matches:
+        indexed_path = _pdf_index.get(filename)
+        if not indexed_path or not indexed_path.exists():
             raise HTTPException(status_code=404, detail="Fichier non trouvé")
-        full_path = matches[0]
+        full_path = indexed_path
 
-    # Re-vérifier path traversal (symlinks, rglob)
+    # Re-vérifier path traversal
     try:
         full_path.resolve().relative_to(corpus_root)
     except ValueError:
@@ -275,20 +372,25 @@ async def serve_corpus_file(file_path: str):
     return FileResponse(
         str(full_path),
         media_type="application/pdf",
-        headers={"Content-Disposition": f"inline; filename=\"{full_path.name}\""},
+        headers={
+            "Content-Disposition": f"inline; filename=\"{full_path.name}\"",
+            "Cache-Control": "public, max-age=86400",
+        },
     )
 
 
 # === Saints ===
 
 @app.get("/api/saint-du-jour")
-async def saint_du_jour():
+@limiter.limit(RATE_LIMIT_READ)
+async def saint_du_jour(request: Request):
     """Retourne le(s) saint(s) fêté(s) aujourd'hui."""
     return get_saint_today()
 
 
 @app.get("/api/saint/{saint_id}")
-async def saint_detail(saint_id: str):
+@limiter.limit(RATE_LIMIT_READ)
+async def saint_detail(request: Request, saint_id: str):
     """Retourne les détails complets d'un saint."""
     saint = get_saint_by_id(saint_id)
     if not saint:
@@ -304,9 +406,19 @@ async def health():
     return {
         "status": "ok",
         "service": "FidesIA",
-        "version": "1.0.0",
+        "version": APP_VERSION,
         **stats,
     }
+
+
+# === Cleanup (tokens/blacklist expirés) ===
+
+@app.post("/admin/cleanup")
+async def admin_cleanup(user: UserInfo = Depends(require_auth)):
+    """Nettoyage des tokens expirés (admin seulement pour l'instant)."""
+    await asyncio.to_thread(cleanup_expired_tokens)
+    await asyncio.to_thread(cleanup_expired_blacklist)
+    return {"success": True, "message": "Nettoyage effectué"}
 
 
 # === Static Files (SPA) ===

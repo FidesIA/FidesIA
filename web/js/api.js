@@ -16,14 +16,7 @@ const API = {
     getSessionId() {
         let sid = sessionStorage.getItem('fidesia_session');
         if (!sid) {
-            if (typeof crypto !== 'undefined' && crypto.randomUUID) {
-                sid = crypto.randomUUID();
-            } else {
-                sid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
-                    const r = Math.random() * 16 | 0;
-                    return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-                });
-            }
+            sid = crypto.randomUUID();
             sessionStorage.setItem('fidesia_session', sid);
         }
         return sid;
@@ -44,7 +37,7 @@ const API = {
 
         if (res.status === 401) {
             this.clearToken();
-            App.onSessionExpired();
+            if (typeof App !== 'undefined') App.onSessionExpired();
             throw new Error('Session expirée');
         }
         if (!res.ok) {
@@ -81,6 +74,17 @@ const API = {
             let buffer = '';
             let gotDone = false;
 
+            const processLine = (line) => {
+                if (!line.startsWith('data: ')) return;
+                try {
+                    const event = JSON.parse(line.slice(6));
+                    if (event.type === 'chunk' && event.content) onChunk(event.content);
+                    else if (event.type === 'sources') onSources(event.sources_with_scores || []);
+                    else if (event.type === 'error') onError(event.content || 'Erreur inconnue');
+                    else if (event.type === 'done') { gotDone = true; onDone(); }
+                } catch (_) { /* skip malformed SSE */ }
+            };
+
             while (true) {
                 const { done, value } = await reader.read();
                 if (done) break;
@@ -89,27 +93,11 @@ const API = {
                 const lines = buffer.split('\n');
                 buffer = lines.pop();
 
-                for (const line of lines) {
-                    if (!line.startsWith('data: ')) continue;
-                    try {
-                        const event = JSON.parse(line.slice(6));
-                        if (event.type === 'chunk' && event.content) onChunk(event.content);
-                        else if (event.type === 'sources') onSources(event.sources_with_scores || []);
-                        else if (event.type === 'error') onError(event.content || 'Erreur inconnue');
-                        else if (event.type === 'done') { gotDone = true; onDone(); }
-                    } catch (e) { /* skip */ }
-                }
+                for (const line of lines) processLine(line);
             }
 
-            if (buffer.startsWith('data: ')) {
-                try {
-                    const event = JSON.parse(buffer.slice(6));
-                    if (event.type === 'chunk' && event.content) onChunk(event.content);
-                    else if (event.type === 'sources') onSources(event.sources_with_scores || []);
-                    else if (event.type === 'done') { gotDone = true; onDone(); }
-                } catch (e) { /* ignore */ }
-            }
-
+            // Process remaining buffer
+            if (buffer) processLine(buffer);
             if (!gotDone) onDone();
         }).catch((err) => {
             if (err.name !== 'AbortError') onError(err.message);
@@ -125,7 +113,11 @@ const API = {
     login(email, password) {
         return this.post('/auth/login', { email, password });
     },
-    logout() { return this.post('/auth/logout', {}).catch(() => {}); },
+    logout() {
+        return this.post('/auth/logout', {}).catch((e) => {
+            console.warn('Logout request failed:', e.message);
+        });
+    },
     checkSession() { return this.get('/auth/check'); },
 
     // Conversations

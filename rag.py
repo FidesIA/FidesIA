@@ -8,6 +8,7 @@ La base ChromaDB est pré-indexée via Domicil-IA (collection share_CathIA).
 import json
 import logging
 import asyncio
+import threading
 from pathlib import Path
 from typing import Optional
 
@@ -32,9 +33,10 @@ from prompts import build_system_prompt, CONDENSE_QUESTION_PROMPT
 
 logger = logging.getLogger(__name__)
 
-# === Globals ===
+# === Globals (thread-safe) ===
 _index: Optional[VectorStoreIndex] = None
 _chroma_client: Optional[chromadb.PersistentClient] = None
+_init_lock = threading.Lock()
 COLLECTION_NAME = "share_CathIA"
 
 
@@ -76,8 +78,9 @@ def init_settings():
 
 def _get_chroma_client() -> chromadb.PersistentClient:
     global _chroma_client
-    if _chroma_client is None:
-        _chroma_client = chromadb.PersistentClient(path=str(CHROMA_PATH))
+    with _init_lock:
+        if _chroma_client is None:
+            _chroma_client = chromadb.PersistentClient(path=str(CHROMA_PATH))
     return _chroma_client
 
 
@@ -96,7 +99,8 @@ def init_index() -> VectorStoreIndex:
         if count > 0:
             logger.info(f"Collection '{COLLECTION_NAME}' chargée: {count} chunks")
             vector_store = ChromaVectorStore(chroma_collection=collection)
-            _index = VectorStoreIndex.from_vector_store(vector_store=vector_store)
+            with _init_lock:
+                _index = VectorStoreIndex.from_vector_store(vector_store=vector_store)
             return _index
         else:
             raise ValueError(f"Collection '{COLLECTION_NAME}' est vide (0 chunks)")
@@ -112,7 +116,9 @@ def get_index() -> VectorStoreIndex:
     """Retourne l'index (le crée si nécessaire)."""
     global _index
     if _index is None:
-        _index = init_index()
+        with _init_lock:
+            if _index is None:
+                _index = init_index()
     return _index
 
 
@@ -256,7 +262,8 @@ def get_collection_stats() -> dict:
             "model": OLLAMA_MODEL,
             "embedding_model": EMBEDDING_MODEL,
         }
-    except Exception:
+    except Exception as e:
+        logger.warning(f"Impossible de lire les stats ChromaDB: {e}")
         return {
             "collection": COLLECTION_NAME,
             "chunks": 0,

@@ -1,10 +1,17 @@
 /**
  * Profile — Age group, knowledge level & response length selection
+ * DRY binding pattern.
  */
 const Profile = {
     ageGroup: 'adulte',
     knowledgeLevel: 'initie',
     responseLength: 'synthetique',
+
+    _optionsConfig: [
+        { containerId: 'age-options', prop: 'ageGroup', storageKey: 'fidesia_age' },
+        { containerId: 'level-options', prop: 'knowledgeLevel', storageKey: 'fidesia_level' },
+        { containerId: 'length-options', prop: 'responseLength', storageKey: 'fidesia_length' },
+    ],
 
     init() {
         // Load from localStorage
@@ -12,40 +19,24 @@ const Profile = {
         this.knowledgeLevel = localStorage.getItem('fidesia_level') || 'initie';
         this.responseLength = localStorage.getItem('fidesia_length') || 'synthetique';
 
-        // Bind age buttons
-        document.querySelectorAll('#age-options .profile-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                this.ageGroup = btn.dataset.value;
-                localStorage.setItem('fidesia_age', this.ageGroup);
-                this._updateButtons('#age-options', this.ageGroup);
+        // Bind all option groups via event delegation
+        for (const cfg of this._optionsConfig) {
+            const container = document.getElementById(cfg.containerId);
+            container.addEventListener('click', (e) => {
+                const btn = e.target.closest('.profile-btn');
+                if (!btn) return;
+                this[cfg.prop] = btn.dataset.value;
+                localStorage.setItem(cfg.storageKey, this[cfg.prop]);
+                container.querySelectorAll('.profile-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.value === this[cfg.prop]);
+                });
             });
-        });
 
-        // Bind level buttons
-        document.querySelectorAll('#level-options .profile-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                this.knowledgeLevel = btn.dataset.value;
-                localStorage.setItem('fidesia_level', this.knowledgeLevel);
-                this._updateButtons('#level-options', this.knowledgeLevel);
+            // Set initial active states
+            container.querySelectorAll('.profile-btn').forEach(b => {
+                b.classList.toggle('active', b.dataset.value === this[cfg.prop]);
             });
-        });
-
-        // Bind length buttons
-        document.querySelectorAll('#length-options .profile-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                this.responseLength = btn.dataset.value;
-                localStorage.setItem('fidesia_length', this.responseLength);
-                this._updateButtons('#length-options', this.responseLength);
-            });
-        });
-
-        // Set initial active states
-        this._updateButtons('#age-options', this.ageGroup);
-        this._updateButtons('#level-options', this.knowledgeLevel);
-        this._updateButtons('#length-options', this.responseLength);
-
-        // Backdrop close
-        document.querySelector('#profile-modal .modal-backdrop').addEventListener('click', () => this.close());
+        }
     },
 
     open() {
@@ -55,10 +46,4 @@ const Profile = {
     close() {
         document.getElementById('profile-modal').hidden = true;
     },
-
-    _updateButtons(selector, value) {
-        document.querySelectorAll(`${selector} .profile-btn`).forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.value === value);
-        });
-    }
 };

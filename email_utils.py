@@ -8,10 +8,26 @@ import logging
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+from email.utils import parseaddr
 
 from config import SMTP_HOST, SMTP_PORT, SMTP_USER, SMTP_PASSWORD, SMTP_FROM
 
 logger = logging.getLogger(__name__)
+
+# Extraire l'adresse email nue du SMTP_FROM (ex: "FidesIA <noreply@fidesia.fr>" → "noreply@fidesia.fr")
+_, _SMTP_FROM_ADDR = parseaddr(SMTP_FROM)
+
+
+def _mask_email(email: str) -> str:
+    """Masque un email pour les logs RGPD."""
+    parts = email.split("@")
+    if len(parts) != 2:
+        return "***"
+    local = parts[0][0] + "***" if parts[0] else "***"
+    domain_parts = parts[1].split(".")
+    domain = domain_parts[0][0] + "***" if domain_parts[0] else "***"
+    tld = domain_parts[-1] if len(domain_parts) > 1 else ""
+    return f"{local}@{domain}.{tld}"
 
 
 def send_reset_email(to_email: str, display_name: str, reset_url: str) -> bool:
@@ -55,9 +71,9 @@ def send_reset_email(to_email: str, display_name: str, reset_url: str) -> bool:
         with smtplib.SMTP(SMTP_HOST, SMTP_PORT, timeout=10) as server:
             server.starttls()
             server.login(SMTP_USER, SMTP_PASSWORD)
-            server.sendmail(SMTP_FROM, to_email, msg.as_string())
-        logger.info(f"Email de réinitialisation envoyé à {to_email}")
+            server.sendmail(_SMTP_FROM_ADDR, to_email, msg.as_string())
+        logger.info(f"Email de réinitialisation envoyé à {_mask_email(to_email)}")
         return True
     except Exception as e:
-        logger.error(f"Échec envoi email à {to_email}: {e}")
+        logger.error(f"Échec envoi email à {_mask_email(to_email)}: {e}")
         return False

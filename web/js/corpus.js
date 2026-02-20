@@ -1,13 +1,18 @@
 /**
  * Corpus Browser — Browse and search the document corpus
+ * Debounced filter, cached _esc via textContent.
  */
 const Corpus = {
     data: null,
     loaded: false,
+    _filterTimer: null,
 
     init() {
-        document.querySelector('#corpus-modal .modal-backdrop').addEventListener('click', () => this.close());
-        document.getElementById('corpus-search').addEventListener('input', (e) => this.filter(e.target.value));
+        // Debounced search (300ms)
+        document.getElementById('corpus-search').addEventListener('input', (e) => {
+            clearTimeout(this._filterTimer);
+            this._filterTimer = setTimeout(() => this.filter(e.target.value), 300);
+        });
 
         // Event delegation for corpus items and links
         document.getElementById('corpus-list').addEventListener('click', (e) => {
@@ -60,14 +65,14 @@ const Corpus = {
         for (const [source, docs] of Object.entries(groups)) {
             docs.sort((a, b) => (a.annee || 0) - (b.annee || 0));
 
-            html += `<div class="corpus-group">`;
+            html += '<div class="corpus-group">';
             html += `<div class="corpus-group-title">${this._esc(source)} (${docs.length})</div>`;
 
             for (const doc of docs) {
                 const title = doc.titre || doc.fichier || 'Sans titre';
                 const year = doc.annee ? `<span class="corpus-year">${doc.annee}</span>` : '';
                 const vatLink = doc.url && this._isValidUrl(doc.url)
-                    ? `<a class="corpus-link" href="${this._esc(doc.url)}" target="_blank" rel="noopener" title="Vatican.va">vatican.va</a>`
+                    ? `<a class="corpus-link" href="${this._escAttr(doc.url)}" target="_blank" rel="noopener" title="Vatican.va">vatican.va</a>`
                     : '';
                 const pdfPath = doc.fichier || '';
 
@@ -118,5 +123,5 @@ const Corpus = {
 
     _escAttr(str) {
         return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    }
+    },
 };

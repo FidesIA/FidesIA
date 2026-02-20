@@ -3,12 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
+    <meta name="description" content="FidesIA — Assistant en théologie catholique. Posez vos questions sur la foi, le Magistère, les sacrements, la morale.">
     <title>FidesIA — Assistant Théologie Catholique</title>
     <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
     <link rel="stylesheet" href="/css/styles.css">
     <link rel="stylesheet" href="/css/chat.css">
 </head>
 <body>
+    <noscript>
+        <div style="text-align:center;padding:40px;font-family:sans-serif;">
+            <h1>FidesIA</h1>
+            <p>JavaScript est requis pour utiliser FidesIA.</p>
+        </div>
+    </noscript>
+
     <!-- Login/Register Modal -->
     <div id="auth-modal" class="modal" role="dialog" aria-modal="true" aria-label="Authentification" hidden>
         <div class="modal-backdrop"></div>
@@ -56,7 +64,7 @@
                 </div>
                 <div class="form-group">
                     <label for="register-password">Mot de passe</label>
-                    <input type="password" id="register-password" required minlength="6" autocomplete="new-password">
+                    <input type="password" id="register-password" required minlength="8" autocomplete="new-password">
                 </div>
                 <div id="register-error" class="form-error" hidden></div>
                 <button type="submit" id="register-btn" class="btn btn-primary">Créer mon compte</button>
@@ -177,6 +185,9 @@
                     <span class="brand-name">FidesIA</span>
                 </div>
                 <div class="header-actions">
+                    <button id="saint-header-btn" class="header-btn" title="Saint du jour" aria-label="Saint du jour" hidden>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/><circle cx="12" cy="12" r="3"/></svg>
+                    </button>
                     <button id="profile-btn" class="header-btn" title="Profil" aria-label="Mon profil">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0112 0v1"/></svg>
                     </button>
@@ -220,15 +231,15 @@
         </main>
     </div>
 
-    <!-- Scripts -->
-    <script src="/js/vendor/marked.min.js"></script>
-    <script src="/js/vendor/purify.min.js"></script>
-    <script src="/js/api.js?v=6"></script>
-    <script src="/js/auth.js?v=6"></script>
-    <script src="/js/profile.js?v=6"></script>
-    <script src="/js/corpus.js?v=6"></script>
-    <script src="/js/saints.js?v=6"></script>
-    <script src="/js/chat.js?v=6"></script>
-    <script src="/js/app.js?v=6"></script>
+    <!-- Scripts (defer for non-blocking load) -->
+    <script defer src="/js/vendor/marked.min.js"></script>
+    <script defer src="/js/vendor/purify.min.js"></script>
+    <script defer src="/js/api.js"></script>
+    <script defer src="/js/auth.js"></script>
+    <script defer src="/js/profile.js"></script>
+    <script defer src="/js/corpus.js"></script>
+    <script defer src="/js/saints.js"></script>
+    <script defer src="/js/chat.js"></script>
+    <script defer src="/js/app.js"></script>
 </body>
 </html>
