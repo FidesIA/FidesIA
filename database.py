@@ -140,6 +140,7 @@ def init_db():
         conn.execute("CREATE INDEX IF NOT EXISTS idx_ae_type ON analytics_events(event_type)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_ae_created ON analytics_events(created_at)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_ae_ip ON analytics_events(ip)")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_ae_type_created ON analytics_events(event_type, created_at)")
 
 
 # === Users ===
@@ -435,14 +436,14 @@ def get_events_summary(days: int = 30) -> Dict[str, Any]:
             GROUP BY day ORDER BY day
         """, (cutoff,)).fetchall()
 
-        # Clicks par type
-        click_stats = conn.execute("""
+        # Consolidated counts: all event types in one query
+        all_counts = conn.execute("""
             SELECT event_type, COUNT(*) as cnt
             FROM analytics_events
-            WHERE event_type LIKE 'click_%'
-              AND created_at >= datetime('now', ?)
+            WHERE created_at >= datetime('now', ?)
             GROUP BY event_type
         """, (cutoff,)).fetchall()
+        counts = {r["event_type"]: r["cnt"] for r in all_counts}
 
         # Top exemples cliqués
         top_examples = conn.execute("""
@@ -466,42 +467,19 @@ def get_events_summary(days: int = 30) -> Dict[str, Any]:
             GROUP BY ip ORDER BY visits DESC LIMIT 50
         """, (cutoff,)).fetchall()
 
-        # Guest vs auth sessions
-        guest_questions = conn.execute(
-            "SELECT COUNT(*) as c FROM analytics_events WHERE event_type = 'question_guest' AND created_at >= datetime('now', ?)",
-            (cutoff,),
-        ).fetchone()["c"]
-        auth_questions = conn.execute(
-            "SELECT COUNT(*) as c FROM analytics_events WHERE event_type = 'question_auth' AND created_at >= datetime('now', ?)",
-            (cutoff,),
-        ).fetchone()["c"]
-
-        # Total page views
-        total_views = conn.execute(
-            "SELECT COUNT(*) as c FROM analytics_events WHERE event_type = 'page_view' AND created_at >= datetime('now', ?)",
-            (cutoff,),
-        ).fetchone()["c"]
-
-        # Logins & registers
-        logins = conn.execute(
-            "SELECT COUNT(*) as c FROM analytics_events WHERE event_type = 'login' AND created_at >= datetime('now', ?)",
-            (cutoff,),
-        ).fetchone()["c"]
-        registers = conn.execute(
-            "SELECT COUNT(*) as c FROM analytics_events WHERE event_type = 'register' AND created_at >= datetime('now', ?)",
-            (cutoff,),
-        ).fetchone()["c"]
+        # Extract click stats from consolidated counts
+        click_stats = {k: counts.get(k, 0) for k in _VALID_EVENTS if k.startswith("click_")}
 
         return {
             "questions_per_day": [dict(r) for r in questions_per_day],
-            "click_stats": {r["event_type"]: r["cnt"] for r in click_stats},
+            "click_stats": click_stats,
             "top_examples": [{"label": r["label"] or "?", "count": r["cnt"]} for r in top_examples],
             "ip_connections": [dict(r) for r in ip_connections],
-            "guest_questions": guest_questions,
-            "auth_questions": auth_questions,
-            "total_views": total_views,
-            "logins": logins,
-            "registers": registers,
+            "guest_questions": counts.get("question_guest", 0),
+            "auth_questions": counts.get("question_auth", 0),
+            "total_views": counts.get("page_view", 0),
+            "logins": counts.get("login", 0),
+            "registers": counts.get("register", 0),
         }
 
 
@@ -527,10 +505,17 @@ def save_ip_geo(ip: str, country: str, city: str, region: str):
         )
 
 
-def get_ip_geo_map() -> Dict[str, Dict[str, str]]:
-    """Retourne {ip: {country, city, region}} pour toutes les IPs cachées."""
+def get_ip_geo_map(ips: Optional[List[str]] = None) -> Dict[str, Dict[str, str]]:
+    """Retourne {ip: {country, city, region}}. Filtre par liste d'IPs si fournie."""
     with _db() as conn:
-        rows = conn.execute("SELECT ip, country, city, region FROM ip_geo_cache").fetchall()
+        if ips:
+            placeholders = ",".join("?" * len(ips))
+            rows = conn.execute(
+                f"SELECT ip, country, city, region FROM ip_geo_cache WHERE ip IN ({placeholders})",
+                ips,
+            ).fetchall()
+        else:
+            rows = conn.execute("SELECT ip, country, city, region FROM ip_geo_cache").fetchall()
         return {r["ip"]: {"country": r["country"], "city": r["city"], "region": r["region"]} for r in rows}
 
 

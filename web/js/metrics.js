@@ -5,6 +5,7 @@
 const Metrics = {
     _charts: [],
     _days: 30,
+    _bound: false,
 
     async open(days) {
         if (days) this._days = days;
@@ -19,6 +20,8 @@ const Metrics = {
     },
 
     _bindPeriod() {
+        if (this._bound) return;
+        this._bound = true;
         const btns = document.querySelectorAll('.metrics-period-btn');
         btns.forEach(btn => {
             btn.addEventListener('click', () => {
@@ -93,7 +96,7 @@ const Metrics = {
         for (const item of items) {
             const kpi = document.createElement('div');
             kpi.className = 'metrics-kpi';
-            kpi.innerHTML = `<div class="metrics-kpi-value">${item.value}</div><div class="metrics-kpi-label">${item.label}</div>`;
+            kpi.innerHTML = `<div class="metrics-kpi-value">${Number(item.value) || 0}</div><div class="metrics-kpi-label">${item.label}</div>`;
             grid.appendChild(kpi);
         }
         parent.appendChild(grid);
@@ -135,7 +138,7 @@ const Metrics = {
                 maintainAspectRatio: false,
                 plugins: { legend: { position: 'top', labels: { boxWidth: 12, font: { size: 11 } } } },
                 scales: {
-                    y: { beginAtZero: true, ticks: { stepSize: 1 } },
+                    y: { beginAtZero: true, ticks: { precision: 0 } },
                     x: { ticks: { font: { size: 10 }, maxRotation: 45 } },
                 },
             },
@@ -178,7 +181,7 @@ const Metrics = {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: { legend: { display: false } },
-                scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } },
+                scales: { y: { beginAtZero: true, ticks: { precision: 0 } } },
             },
         });
         this._charts.push(chart);
@@ -209,7 +212,7 @@ const Metrics = {
                 maintainAspectRatio: false,
                 indexAxis: 'y',
                 plugins: { legend: { display: false } },
-                scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } },
+                scales: { x: { beginAtZero: true, ticks: { precision: 0 } } },
             },
         });
         this._charts.push(chart);
@@ -240,7 +243,7 @@ const Metrics = {
                 maintainAspectRatio: false,
                 indexAxis: 'y',
                 plugins: { legend: { display: false } },
-                scales: { x: { beginAtZero: true, ticks: { stepSize: 1 } } },
+                scales: { x: { beginAtZero: true, ticks: { precision: 0 } } },
             },
         });
         this._charts.push(chart);

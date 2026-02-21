@@ -3,6 +3,7 @@ analytics.py - Agrégation des métriques admin pour FidesIA
 Dashboard data: KPIs, questions/jour, keywords, géoloc IP, reconnexion.
 """
 
+import ipaddress
 import json
 import logging
 import re
@@ -46,12 +47,25 @@ def _extract_keywords(questions: List[str], top_n: int = 10) -> List[Dict[str, A
     return [{"word": w, "count": c} for w, c in counter.most_common(top_n)]
 
 
+def _is_valid_public_ip(ip_str: str) -> bool:
+    """Vérifie qu'une IP est valide et publique (pas privée/loopback/link-local)."""
+    try:
+        addr = ipaddress.ip_address(ip_str)
+        return addr.is_global
+    except ValueError:
+        return False
+
+
 def _resolve_ips(ips: List[str]):
-    """Résout les IPs via ip-api.com batch API (stdlib) et cache les résultats."""
-    if not ips:
+    """Résout les IPs via ip-api.com batch API (stdlib) et cache les résultats.
+    Note: ip-api.com free tier is HTTP-only (HTTPS requires paid plan).
+    """
+    # Filter to valid public IPs only
+    valid_ips = [ip for ip in ips if _is_valid_public_ip(ip)]
+    if not valid_ips:
         return
-    for i in range(0, len(ips), 100):
-        batch = ips[i:i + 100]
+    for i in range(0, len(valid_ips), 100):
+        batch = valid_ips[i:i + 100]
         try:
             payload = json.dumps([{"query": ip} for ip in batch]).encode()
             req = urllib.request.Request(
@@ -83,8 +97,9 @@ def get_dashboard_data(days: int = 30) -> Dict[str, Any]:
     if unresolved:
         _resolve_ips(unresolved)
 
-    # Enrichir les IPs avec les données géo
-    geo_map = get_ip_geo_map()
+    # Enrichir les IPs avec les données géo (filtrées)
+    relevant_ips = [row["ip"] for row in summary["ip_connections"]]
+    geo_map = get_ip_geo_map(relevant_ips)
     ip_connections = []
     for ip_row in summary["ip_connections"]:
         ip = ip_row["ip"]

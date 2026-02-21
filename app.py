@@ -448,14 +448,17 @@ async def health():
 # === Analytics Tracking ===
 
 class TrackRequest(BaseModel):
-    event_type: str
-    session_id: str = ""
-    metadata: dict = {}
+    event_type: str = Field(..., max_length=30)
+    session_id: str = Field("", max_length=100)
+    metadata: dict = Field(default_factory=dict)
 
 
 @app.post("/api/track")
 @limiter.limit("120/minute")
 async def track_event(request: Request, req: TrackRequest, user: Optional[UserInfo] = Depends(get_current_user)):
+    # Cap metadata size to prevent storage abuse
+    if req.metadata and len(json.dumps(req.metadata, ensure_ascii=False)) > 1024:
+        raise HTTPException(status_code=400, detail="Metadata trop volumineuse")
     ip = request.client.host if request.client else ""
     user_agent = request.headers.get("user-agent", "")
     await asyncio.to_thread(
@@ -466,7 +469,8 @@ async def track_event(request: Request, req: TrackRequest, user: Optional[UserIn
 
 
 @app.get("/api/admin/metrics")
-async def admin_metrics(user: UserInfo = Depends(require_admin), days: int = 30):
+@limiter.limit("10/minute")
+async def admin_metrics(request: Request, user: UserInfo = Depends(require_admin), days: int = 30):
     days = min(max(days, 1), 365)
     data = await asyncio.to_thread(get_dashboard_data, days)
     return data

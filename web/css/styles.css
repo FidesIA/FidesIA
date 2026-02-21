@@ -379,15 +379,6 @@ html, body {
     color: var(--text-primary);
 }
 
-#saint-header-btn {
-    color: var(--gold);
-}
-
-#saint-header-btn:hover {
-    background: var(--bg-secondary);
-    color: var(--gold-light);
-}
-
 /* === Chat Area === */
 .chat-area {
     flex: 1;
@@ -1189,9 +1180,13 @@ html, body {
     }
 
     .corpus-modal-content,
-    .saint-modal-content {
+    .saint-modal-content,
+    .metrics-modal-content {
         max-width: 100%;
     }
+
+    .metrics-row { grid-template-columns: 1fr; }
+    .metrics-modal-content { padding: 16px; }
 
     .donate-icon { font-size: 36px; }
 }
