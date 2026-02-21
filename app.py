@@ -6,11 +6,12 @@ Chatbot RAG Théologie Catholique
 import asyncio
 import json
 import logging
+import re
 import time
 import uuid
 from contextlib import asynccontextmanager
 from pathlib import Path
-from typing import Optional, List
+from typing import Literal, Optional, List
 
 from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.responses import StreamingResponse, FileResponse
@@ -40,7 +41,7 @@ from auth import (
     get_current_user, require_auth, is_admin, require_admin,
 )
 from analytics import get_dashboard_data
-from rag import init_settings, init_index, query_stream, get_collection_stats
+from rag import init_settings, init_index, query_stream
 from saints import init_saints, get_saint_today, get_saint_by_id
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(name)s] %(levelname)s: %(message)s")
@@ -148,7 +149,14 @@ async def _background_init():
         logger.exception("Erreur fatale lors de l'initialisation")
 
 
-app = FastAPI(title="FidesIA", version=APP_VERSION, lifespan=lifespan)
+app = FastAPI(
+    title="FidesIA",
+    version=APP_VERSION,
+    lifespan=lifespan,
+    docs_url=None,
+    redoc_url=None,
+    openapi_url=None,
+)
 app.add_middleware(SecurityHeadersMiddleware)
 
 # Rate limiting
@@ -221,7 +229,8 @@ async def route_check(request: Request, user: Optional[UserInfo] = Depends(get_c
 
 
 @app.post("/auth/logout")
-async def route_logout(user: UserInfo = Depends(require_auth)):
+@limiter.limit(RATE_LIMIT_WRITE)
+async def route_logout(request: Request, user: UserInfo = Depends(require_auth)):
     # Blacklist le JWT pour un vrai logout
     if user.jti and user.exp:
         blacklist_jwt(user.jti, user.exp.isoformat())
@@ -367,12 +376,13 @@ async def rate_exchange(request: Request, req: RatingRequest, user: Optional[Use
 @app.get("/corpus")
 @limiter.limit(RATE_LIMIT_READ)
 async def get_corpus(request: Request):
-    """Retourne l'inventaire du corpus (cached)."""
+    """Retourne l'inventaire du corpus (public, rate-limité)."""
     return _corpus_cache.get()
 
 
 @app.get("/corpus/file/{file_path:path}")
-async def serve_corpus_file(file_path: str):
+@limiter.limit(RATE_LIMIT_READ)
+async def serve_corpus_file(request: Request, file_path: str):
     """Sert un PDF du corpus (ouverture inline dans le navigateur)."""
     corpus_root = Path(CORPUS_PATH).resolve()
     full_path = corpus_root / file_path
@@ -433,22 +443,39 @@ async def saint_detail(request: Request, saint_id: str):
 # === Health ===
 
 @app.get("/health")
-async def health():
-    if not _ready:
-        return {"status": "loading", "service": "FidesIA", "version": APP_VERSION}
-    stats = get_collection_stats()
-    return {
-        "status": "ok",
-        "service": "FidesIA",
-        "version": APP_VERSION,
-        **stats,
-    }
+@limiter.limit(RATE_LIMIT_READ)
+async def health(request: Request):
+    return {"status": "ok" if _ready else "loading"}
 
 
 # === Analytics Tracking ===
 
+_VALID_EVENT_TYPES = Literal[
+    "page_view", "question_guest", "question_auth",
+    "login", "register",
+    "click_donate", "click_saint", "click_corpus",
+    "click_profile", "click_share", "click_example",
+]
+
+_HTML_TAG_RE = re.compile(r'<[^>]+>')
+_ALLOWED_META_KEYS = {"label", "id", "doc"}
+
+
+def _sanitize_metadata(meta: dict) -> dict:
+    """Whitelist keys, strip HTML tags, and limit string length."""
+    clean = {}
+    for k, v in meta.items():
+        if k not in _ALLOWED_META_KEYS:
+            continue
+        if isinstance(v, str):
+            clean[k] = _HTML_TAG_RE.sub('', v)[:200]
+        elif isinstance(v, (int, float, bool)):
+            clean[k] = v
+    return clean
+
+
 class TrackRequest(BaseModel):
-    event_type: str = Field(..., max_length=30)
+    event_type: _VALID_EVENT_TYPES
     session_id: str = Field("", max_length=100)
     metadata: dict = Field(default_factory=dict)
 
@@ -456,14 +483,12 @@ class TrackRequest(BaseModel):
 @app.post("/api/track")
 @limiter.limit("120/minute")
 async def track_event(request: Request, req: TrackRequest, user: Optional[UserInfo] = Depends(get_current_user)):
-    # Cap metadata size to prevent storage abuse
-    if req.metadata and len(json.dumps(req.metadata, ensure_ascii=False)) > 1024:
-        raise HTTPException(status_code=400, detail="Metadata trop volumineuse")
+    meta = _sanitize_metadata(req.metadata) if req.metadata else {}
     ip = request.client.host if request.client else ""
     user_agent = request.headers.get("user-agent", "")
     await asyncio.to_thread(
         save_event, req.event_type, ip, user_agent,
-        user.user_id if user else None, req.session_id, req.metadata,
+        user.user_id if user else None, req.session_id, meta,
     )
     return {"ok": True}
 
@@ -479,7 +504,8 @@ async def admin_metrics(request: Request, user: UserInfo = Depends(require_admin
 # === Cleanup (tokens/blacklist expirés) ===
 
 @app.post("/admin/cleanup")
-async def admin_cleanup(user: UserInfo = Depends(require_admin)):
+@limiter.limit("5/minute")
+async def admin_cleanup(request: Request, user: UserInfo = Depends(require_admin)):
     """Nettoyage des tokens expirés."""
     await asyncio.to_thread(cleanup_expired_tokens)
     await asyncio.to_thread(cleanup_expired_blacklist)
