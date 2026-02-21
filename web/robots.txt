@@ -1,0 +1,8 @@
+User-agent: *
+Disallow: /api/
+Disallow: /auth/
+Disallow: /admin/
+Disallow: /conversations
+Disallow: /ask/
+Disallow: /corpus/file/
+Allow: /

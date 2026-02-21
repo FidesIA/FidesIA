@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Literal, Optional, List
 
 from fastapi import FastAPI, HTTPException, Depends, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import StreamingResponse, FileResponse
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
@@ -169,6 +170,14 @@ async def rate_limit_handler(request: Request, exc: RateLimitExceeded):
     return JSONResponse(
         status_code=429,
         content={"detail": "Trop de requêtes. Veuillez patienter."},
+    )
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_handler(request: Request, exc: RequestValidationError):
+    return JSONResponse(
+        status_code=422,
+        content={"detail": "Données invalides."},
     )
 
 
@@ -391,7 +400,7 @@ async def serve_corpus_file(request: Request, file_path: str):
     try:
         full_path.resolve().relative_to(corpus_root)
     except ValueError:
-        raise HTTPException(status_code=403, detail="Accès interdit")
+        raise HTTPException(status_code=404, detail="Fichier non trouvé")
 
     # Chercher dans l'index pré-construit si pas trouvé directement
     if not full_path.exists() or not full_path.is_file():
@@ -405,7 +414,7 @@ async def serve_corpus_file(request: Request, file_path: str):
     try:
         full_path.resolve().relative_to(corpus_root)
     except ValueError:
-        raise HTTPException(status_code=403, detail="Accès interdit")
+        raise HTTPException(status_code=404, detail="Fichier non trouvé")
 
     # RFC 5987: filename* pour les noms non-ASCII (œ, é, etc.)
     from urllib.parse import quote
