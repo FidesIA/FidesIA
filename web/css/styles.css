@@ -104,7 +104,7 @@ html, body {
 }
 
 .conv-item {
-    padding: 10px 12px;
+    padding: 6px 12px;
     border-radius: var(--radius);
     cursor: pointer;
     font-size: 13px;
@@ -113,7 +113,7 @@ html, body {
     justify-content: space-between;
     align-items: center;
     transition: background var(--transition);
-    min-height: 44px;
+    min-height: 36px;
 }
 
 .conv-item:hover { background: var(--bg-tertiary); }
@@ -134,8 +134,8 @@ html, body {
 
 /* Desktop: hide until hover */
 @media (hover: hover) {
-    .conv-actions { opacity: 0; }
-    .conv-item:hover .conv-actions { opacity: 1; }
+    .conv-actions { display: none; }
+    .conv-item:hover .conv-actions { display: flex; }
 }
 
 /* Touch devices: always visible */
