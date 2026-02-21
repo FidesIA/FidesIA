@@ -75,6 +75,7 @@ const AuthUI = {
                 API.setDisplayName(data.display_name || '');
                 this.close();
                 App.onLogin(data);
+                API.track('login');
             } else {
                 errDiv.textContent = data.message || 'Identifiants incorrects';
                 errDiv.hidden = false;
@@ -110,6 +111,7 @@ const AuthUI = {
                 API.setDisplayName(data.display_name || name);
                 this.close();
                 App.onLogin(data);
+                API.track('register');
             } else {
                 errDiv.textContent = data.message || "Erreur lors de l'inscription";
                 errDiv.hidden = false;

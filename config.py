@@ -58,6 +58,9 @@ except ValueError:
 MIN_PASSWORD_LENGTH = 8
 MAX_CHAT_HISTORY = 20
 
+# === Admin ===
+ADMIN_USERS = {e.strip().lower() for e in os.getenv("ADMIN_USERS", "").split(",") if e.strip()}
+
 # === Rate limiting ===
 RATE_LIMIT_WRITE = "30/minute"
 RATE_LIMIT_READ = "60/minute"

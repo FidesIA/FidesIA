@@ -139,4 +139,13 @@ const API = {
 
     // Health
     health() { return this.get('/health'); },
+
+    // Analytics tracking (fire-and-forget)
+    track(eventType, metadata = {}) {
+        const body = { event_type: eventType, session_id: this.getSessionId(), metadata };
+        fetch('/api/track', { method: 'POST', headers: this.headers(), body: JSON.stringify(body) }).catch(() => {});
+    },
+
+    // Admin metrics
+    getMetrics(days = 30) { return this.get(`/api/admin/metrics?days=${days}`); },
 };

@@ -103,6 +103,7 @@ const Corpus = {
     },
 
     openPdf(path) {
+        API.track('click_corpus', { doc: path });
         window.open(`/corpus/file/${encodeURIComponent(path)}`, '_blank');
     },
 

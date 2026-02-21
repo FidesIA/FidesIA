@@ -1233,4 +1233,145 @@ html, body {
     .welcome { padding: 16px; }
     .welcome-icon { font-size: 32px; margin-bottom: 8px; }
     .welcome h1 { font-size: 22px; }
+
+    .metrics-row { grid-template-columns: 1fr; }
+    .metrics-modal-content { padding: 16px; }
+    .metrics-kpis { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* ===================== */
+/* Admin Metrics Dashboard */
+/* ===================== */
+
+.metrics-modal-content {
+    max-width: 960px;
+    max-height: 85vh;
+    max-height: 85svh;
+}
+
+.metrics-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.metrics-header h2 { margin: 0; }
+
+.metrics-period {
+    display: flex;
+    gap: 4px;
+}
+
+.metrics-period-btn {
+    padding: 4px 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    font-size: 12px;
+    cursor: pointer;
+    transition: all var(--transition);
+}
+
+.metrics-period-btn.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+}
+
+.metrics-loading {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.metrics-kpis {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.metrics-kpi {
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
+    padding: 16px 12px;
+    text-align: center;
+}
+
+.metrics-kpi-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1.1;
+}
+
+.metrics-kpi-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.metrics-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.metrics-card {
+    background: var(--bg-secondary);
+    border-radius: var(--radius);
+    padding: 16px;
+    overflow-x: auto;
+}
+
+.metrics-card h3 {
+    font-size: 13px;
+    font-weight: 600;
+    margin: 0 0 12px;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.metrics-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+}
+
+.metrics-table th {
+    text-align: left;
+    padding: 6px 8px;
+    border-bottom: 2px solid var(--border);
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: 11px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.metrics-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.metrics-table code {
+    font-size: 11px;
+    background: var(--bg-tertiary);
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+
+.metrics-empty {
+    color: var(--text-muted);
+    font-size: 13px;
+    font-style: italic;
+    text-align: center;
+    padding: 20px 0;
 }

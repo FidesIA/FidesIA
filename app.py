@@ -31,13 +31,15 @@ from database import (
     get_user_conversations, get_conversation_messages, delete_exchange, delete_conversation,
     check_conversation_owner, blacklist_jwt,
     cleanup_expired_tokens, cleanup_expired_blacklist,
+    save_event,
 )
 from auth import (
     RegisterRequest, LoginRequest, AuthResponse, UserInfo,
     ForgotPasswordRequest, ResetPasswordRequest,
     register, login, forgot_password, reset_password,
-    get_current_user, require_auth,
+    get_current_user, require_auth, is_admin, require_admin,
 )
+from analytics import get_dashboard_data
 from rag import init_settings, init_index, query_stream, get_collection_stats
 from saints import init_saints, get_saint_today, get_saint_by_id
 
@@ -214,7 +216,7 @@ async def route_login(request: Request, req: LoginRequest):
 @limiter.limit(RATE_LIMIT_READ)
 async def route_check(request: Request, user: Optional[UserInfo] = Depends(get_current_user)):
     if user:
-        return {"authenticated": True, "user_id": user.user_id, "display_name": user.display_name}
+        return {"authenticated": True, "user_id": user.user_id, "display_name": user.display_name, "is_admin": is_admin(user)}
     return {"authenticated": False}
 
 
@@ -443,11 +445,38 @@ async def health():
     }
 
 
+# === Analytics Tracking ===
+
+class TrackRequest(BaseModel):
+    event_type: str
+    session_id: str = ""
+    metadata: dict = {}
+
+
+@app.post("/api/track")
+@limiter.limit("120/minute")
+async def track_event(request: Request, req: TrackRequest, user: Optional[UserInfo] = Depends(get_current_user)):
+    ip = request.client.host if request.client else ""
+    user_agent = request.headers.get("user-agent", "")
+    await asyncio.to_thread(
+        save_event, req.event_type, ip, user_agent,
+        user.user_id if user else None, req.session_id, req.metadata,
+    )
+    return {"ok": True}
+
+
+@app.get("/api/admin/metrics")
+async def admin_metrics(user: UserInfo = Depends(require_admin), days: int = 30):
+    days = min(max(days, 1), 365)
+    data = await asyncio.to_thread(get_dashboard_data, days)
+    return data
+
+
 # === Cleanup (tokens/blacklist expirés) ===
 
 @app.post("/admin/cleanup")
-async def admin_cleanup(user: UserInfo = Depends(require_auth)):
-    """Nettoyage des tokens expirés (admin seulement pour l'instant)."""
+async def admin_cleanup(user: UserInfo = Depends(require_admin)):
+    """Nettoyage des tokens expirés."""
     await asyncio.to_thread(cleanup_expired_tokens)
     await asyncio.to_thread(cleanup_expired_blacklist)
     return {"success": True, "message": "Nettoyage effectué"}

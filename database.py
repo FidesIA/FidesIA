@@ -1,6 +1,7 @@
 """
 database.py - Base de données SQLite pour FidesIA
-Tables : users, exchanges, password_reset_tokens, jwt_blacklist
+Tables : users, exchanges, password_reset_tokens, jwt_blacklist,
+         analytics_events, ip_geo_cache
 Thread-safe avec lock + thread-local connection pooling.
 """
 
@@ -101,6 +102,29 @@ def init_db():
             )
         """)
 
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS analytics_events (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                event_type TEXT NOT NULL,
+                ip TEXT,
+                user_agent TEXT,
+                user_id INTEGER,
+                session_id TEXT,
+                metadata TEXT,
+                created_at TEXT DEFAULT (datetime('now'))
+            )
+        """)
+
+        conn.execute("""
+            CREATE TABLE IF NOT EXISTS ip_geo_cache (
+                ip TEXT PRIMARY KEY,
+                country TEXT,
+                city TEXT,
+                region TEXT,
+                resolved_at TEXT DEFAULT (datetime('now'))
+            )
+        """)
+
         # Simple indexes
         conn.execute("CREATE INDEX IF NOT EXISTS idx_ex_session ON exchanges(session_id)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_ex_user ON exchanges(user_id)")
@@ -111,6 +135,11 @@ def init_db():
         conn.execute("CREATE INDEX IF NOT EXISTS idx_ex_user_visible_ts ON exchanges(user_id, visible, timestamp DESC)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_reset_token ON password_reset_tokens(token_hash)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_jwt_bl_exp ON jwt_blacklist(expires_at)")
+
+        # Analytics indexes
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_ae_type ON analytics_events(event_type)")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_ae_created ON analytics_events(created_at)")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_ae_ip ON analytics_events(ip)")
 
 
 # === Users ===
@@ -352,3 +381,190 @@ def delete_conversation(conversation_id: str, user_id: int) -> bool:
             (user_id, conversation_id),
         )
         return True
+
+
+# === Analytics Events ===
+
+_VALID_EVENTS = {
+    "page_view", "question_guest", "question_auth",
+    "login", "register",
+    "click_donate", "click_saint", "click_corpus",
+    "click_profile", "click_share", "click_example",
+}
+
+
+def save_event(
+    event_type: str,
+    ip: str = "",
+    user_agent: str = "",
+    user_id: Optional[int] = None,
+    session_id: str = "",
+    metadata: Optional[Dict] = None,
+):
+    if event_type not in _VALID_EVENTS:
+        return
+    meta_json = json.dumps(metadata, ensure_ascii=False) if metadata else None
+    with _db() as conn:
+        conn.execute(
+            "INSERT INTO analytics_events (event_type, ip, user_agent, user_id, session_id, metadata) VALUES (?, ?, ?, ?, ?, ?)",
+            (event_type, ip, user_agent, user_id, session_id, meta_json),
+        )
+
+
+def get_all_questions(days: int = 30) -> List[str]:
+    """Retourne les textes des questions des N derniers jours."""
+    with _db() as conn:
+        rows = conn.execute(
+            "SELECT question FROM exchanges WHERE created_at >= datetime('now', ?) AND visible = 1",
+            (f"-{days} days",),
+        ).fetchall()
+        return [r["question"] for r in rows]
+
+
+def get_events_summary(days: int = 30) -> Dict[str, Any]:
+    cutoff = f"-{days} days"
+    with _db() as conn:
+        # Questions par jour (guest vs auth)
+        questions_per_day = conn.execute("""
+            SELECT date(created_at) as day,
+                   SUM(CASE WHEN event_type = 'question_guest' THEN 1 ELSE 0 END) as guest,
+                   SUM(CASE WHEN event_type = 'question_auth' THEN 1 ELSE 0 END) as auth
+            FROM analytics_events
+            WHERE event_type IN ('question_guest', 'question_auth')
+              AND created_at >= datetime('now', ?)
+            GROUP BY day ORDER BY day
+        """, (cutoff,)).fetchall()
+
+        # Clicks par type
+        click_stats = conn.execute("""
+            SELECT event_type, COUNT(*) as cnt
+            FROM analytics_events
+            WHERE event_type LIKE 'click_%'
+              AND created_at >= datetime('now', ?)
+            GROUP BY event_type
+        """, (cutoff,)).fetchall()
+
+        # Top exemples cliqués
+        top_examples = conn.execute("""
+            SELECT json_extract(metadata, '$.label') as label, COUNT(*) as cnt
+            FROM analytics_events
+            WHERE event_type = 'click_example'
+              AND created_at >= datetime('now', ?)
+              AND metadata IS NOT NULL
+            GROUP BY label ORDER BY cnt DESC LIMIT 5
+        """, (cutoff,)).fetchall()
+
+        # Sessions uniques par IP
+        ip_connections = conn.execute("""
+            SELECT ip, COUNT(*) as visits,
+                   COUNT(DISTINCT session_id) as sessions,
+                   MAX(created_at) as last_seen
+            FROM analytics_events
+            WHERE event_type = 'page_view'
+              AND created_at >= datetime('now', ?)
+              AND ip IS NOT NULL AND ip != ''
+            GROUP BY ip ORDER BY visits DESC LIMIT 50
+        """, (cutoff,)).fetchall()
+
+        # Guest vs auth sessions
+        guest_questions = conn.execute(
+            "SELECT COUNT(*) as c FROM analytics_events WHERE event_type = 'question_guest' AND created_at >= datetime('now', ?)",
+            (cutoff,),
+        ).fetchone()["c"]
+        auth_questions = conn.execute(
+            "SELECT COUNT(*) as c FROM analytics_events WHERE event_type = 'question_auth' AND created_at >= datetime('now', ?)",
+            (cutoff,),
+        ).fetchone()["c"]
+
+        # Total page views
+        total_views = conn.execute(
+            "SELECT COUNT(*) as c FROM analytics_events WHERE event_type = 'page_view' AND created_at >= datetime('now', ?)",
+            (cutoff,),
+        ).fetchone()["c"]
+
+        # Logins & registers
+        logins = conn.execute(
+            "SELECT COUNT(*) as c FROM analytics_events WHERE event_type = 'login' AND created_at >= datetime('now', ?)",
+            (cutoff,),
+        ).fetchone()["c"]
+        registers = conn.execute(
+            "SELECT COUNT(*) as c FROM analytics_events WHERE event_type = 'register' AND created_at >= datetime('now', ?)",
+            (cutoff,),
+        ).fetchone()["c"]
+
+        return {
+            "questions_per_day": [dict(r) for r in questions_per_day],
+            "click_stats": {r["event_type"]: r["cnt"] for r in click_stats},
+            "top_examples": [{"label": r["label"] or "?", "count": r["cnt"]} for r in top_examples],
+            "ip_connections": [dict(r) for r in ip_connections],
+            "guest_questions": guest_questions,
+            "auth_questions": auth_questions,
+            "total_views": total_views,
+            "logins": logins,
+            "registers": registers,
+        }
+
+
+def get_unresolved_ips(days: int = 30) -> List[str]:
+    """IPs des N derniers jours qui ne sont pas dans ip_geo_cache."""
+    with _db() as conn:
+        rows = conn.execute("""
+            SELECT DISTINCT ae.ip
+            FROM analytics_events ae
+            LEFT JOIN ip_geo_cache gc ON ae.ip = gc.ip
+            WHERE gc.ip IS NULL
+              AND ae.ip IS NOT NULL AND ae.ip != '' AND ae.ip != '127.0.0.1'
+              AND ae.created_at >= datetime('now', ?)
+        """, (f"-{days} days",)).fetchall()
+        return [r["ip"] for r in rows]
+
+
+def save_ip_geo(ip: str, country: str, city: str, region: str):
+    with _db() as conn:
+        conn.execute(
+            "INSERT OR REPLACE INTO ip_geo_cache (ip, country, city, region) VALUES (?, ?, ?, ?)",
+            (ip, country, city, region),
+        )
+
+
+def get_ip_geo_map() -> Dict[str, Dict[str, str]]:
+    """Retourne {ip: {country, city, region}} pour toutes les IPs cachées."""
+    with _db() as conn:
+        rows = conn.execute("SELECT ip, country, city, region FROM ip_geo_cache").fetchall()
+        return {r["ip"]: {"country": r["country"], "city": r["city"], "region": r["region"]} for r in rows}
+
+
+def get_reconnection_stats(days: int = 30) -> Dict[str, Any]:
+    """Stats de reconnexion : users qui reviennent, taux, délai moyen."""
+    cutoff = f"-{days} days"
+    with _db() as conn:
+        # Users avec au moins 2 sessions distinctes (jours différents)
+        rows = conn.execute("""
+            SELECT user_id, GROUP_CONCAT(DISTINCT date(created_at)) as dates
+            FROM analytics_events
+            WHERE event_type = 'page_view' AND user_id IS NOT NULL
+              AND created_at >= datetime('now', ?)
+            GROUP BY user_id
+        """, (cutoff,)).fetchall()
+
+        unique_users = len(rows)
+        returning = 0
+        total_gap_days = 0
+        gap_count = 0
+
+        for row in rows:
+            dates = sorted(row["dates"].split(","))
+            if len(dates) >= 2:
+                returning += 1
+                for i in range(1, len(dates)):
+                    d1 = datetime.strptime(dates[i - 1], "%Y-%m-%d")
+                    d2 = datetime.strptime(dates[i], "%Y-%m-%d")
+                    total_gap_days += (d2 - d1).days
+                    gap_count += 1
+
+        return {
+            "unique_users": unique_users,
+            "returning_users": returning,
+            "return_rate": round(returning / unique_users * 100, 1) if unique_users > 0 else 0,
+            "avg_days_between": round(total_gap_days / gap_count, 1) if gap_count > 0 else 0,
+        }

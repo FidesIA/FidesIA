@@ -144,6 +144,23 @@
         </div>
     </div>
 
+    <!-- Admin Metrics Modal -->
+    <div id="metrics-modal" class="modal" role="dialog" aria-modal="true" aria-label="Métriques admin" hidden>
+        <div class="modal-backdrop"></div>
+        <div class="modal-content metrics-modal-content">
+            <button class="modal-close" aria-label="Fermer">&times;</button>
+            <div class="metrics-header">
+                <h2>Métriques</h2>
+                <div class="metrics-period">
+                    <button class="metrics-period-btn active" data-days="7">7j</button>
+                    <button class="metrics-period-btn" data-days="30">30j</button>
+                    <button class="metrics-period-btn" data-days="90">90j</button>
+                </div>
+            </div>
+            <div id="metrics-body"><div class="metrics-loading">Chargement...</div></div>
+        </div>
+    </div>
+
     <!-- App Layout -->
     <div id="app" class="app-layout">
         <!-- Sidebar (connecté uniquement) -->
@@ -185,6 +202,9 @@
                     <span class="brand-name">FidesIA</span>
                 </div>
                 <div class="header-actions">
+                    <button id="metrics-btn" class="header-btn" title="Métriques" aria-label="Métriques admin" hidden>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+                    </button>
                     <button id="saint-header-btn" class="header-btn" title="Saint du jour" aria-label="Saint du jour" hidden>
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v6M12 16v6M2 12h6M16 12h6"/><circle cx="12" cy="12" r="3"/></svg>
                     </button>
@@ -234,11 +254,13 @@
     <!-- Scripts (defer for non-blocking load) -->
     <script defer src="/js/vendor/marked.min.js"></script>
     <script defer src="/js/vendor/purify.min.js"></script>
+    <script defer src="/js/vendor/chart.min.js"></script>
     <script defer src="/js/api.js"></script>
     <script defer src="/js/auth.js"></script>
     <script defer src="/js/profile.js"></script>
     <script defer src="/js/corpus.js"></script>
     <script defer src="/js/saints.js"></script>
+    <script defer src="/js/metrics.js"></script>
     <script defer src="/js/chat.js"></script>
     <script defer src="/js/app.js"></script>
 </body>

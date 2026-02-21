@@ -88,6 +88,7 @@ const Saints = {
 
     async openDetail(id) {
         try {
+            API.track('click_saint', { id });
             const saint = await API.get(`/api/saint/${encodeURIComponent(id)}`);
             this._renderModal(saint);
             _openModal('saint-modal');

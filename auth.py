@@ -16,7 +16,7 @@ import jwt
 from fastapi import Header, HTTPException
 from pydantic import BaseModel
 
-from config import JWT_SECRET, JWT_ALGORITHM, JWT_EXPIRE_DAYS, APP_URL, MIN_PASSWORD_LENGTH
+from config import JWT_SECRET, JWT_ALGORITHM, JWT_EXPIRE_DAYS, APP_URL, MIN_PASSWORD_LENGTH, ADMIN_USERS
 from database import (
     create_user, get_user_by_email, get_user_by_id, update_last_login,
     save_reset_token, get_reset_token, delete_reset_token, update_user_password,
@@ -277,4 +277,15 @@ async def require_auth(authorization: Optional[str] = Header(None)) -> UserInfo:
             detail="Authentification requise",
             headers={"WWW-Authenticate": "Bearer"},
         )
+    return user
+
+
+def is_admin(user: UserInfo) -> bool:
+    return user.email.lower() in ADMIN_USERS
+
+
+async def require_admin(authorization: Optional[str] = Header(None)) -> UserInfo:
+    user = await require_auth(authorization)
+    if not is_admin(user):
+        raise HTTPException(status_code=403, detail="Accès admin requis")
     return user

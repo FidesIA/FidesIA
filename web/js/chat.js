@@ -44,6 +44,7 @@ const Chat = {
         document.getElementById('welcome-examples').addEventListener('click', (e) => {
             const btn = e.target.closest('.example-btn');
             if (btn) {
+                API.track('click_example', { label: btn.textContent });
                 input.value = btn.dataset.q;
                 this.send();
             }
@@ -186,6 +187,9 @@ const Chat = {
         // Clear input
         input.value = '';
         input.style.height = 'auto';
+
+        // Track question event
+        API.track(App.state.authenticated ? 'question_auth' : 'question_guest');
 
         // Start streaming
         this._streamResponse(question);

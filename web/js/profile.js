@@ -41,6 +41,7 @@ const Profile = {
 
     open() {
         _openModal('profile-modal');
+        API.track('click_profile');
     },
 
     close() {

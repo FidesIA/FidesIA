@@ -44,6 +44,7 @@ const Donation = {
         if (this._count >= 5 && !this._shown && !sessionStorage.getItem('fidesia_donate_dismissed')) {
             this._shown = true;
             _openModal('donate-modal');
+            API.track('click_donate');
         }
     },
 
@@ -60,6 +61,7 @@ const _MODAL_MAP = {
     'corpus-modal': () => Corpus.close(),
     'saint-modal': () => Saints.close(),
     'donate-modal': () => Donation.close(),
+    'metrics-modal': () => Metrics.close(),
 };
 
 // Scroll lock — prevents iOS Safari touch-scroll-through & lateral drift
@@ -112,6 +114,7 @@ const App = {
         authenticated: false,
         userId: null,
         displayName: '',
+        isAdmin: false,
     },
 
     async init() {
@@ -140,6 +143,7 @@ const App = {
         document.getElementById('sidebar-logout').addEventListener('click', () => AuthUI.logout());
         document.getElementById('guest-login-btn').addEventListener('click', () => AuthUI.open());
         document.getElementById('donate-later-btn').addEventListener('click', () => Donation.close());
+        document.getElementById('metrics-btn').addEventListener('click', () => Metrics.open());
 
         // Unified modal close: close buttons + backdrops
         document.addEventListener('click', (e) => {
@@ -159,7 +163,7 @@ const App = {
         // Global Escape key
         document.addEventListener('keydown', (e) => {
             if (e.key !== 'Escape') return;
-            const modalIds = ['saint-modal', 'donate-modal', 'corpus-modal', 'profile-modal', 'auth-modal'];
+            const modalIds = ['metrics-modal', 'saint-modal', 'donate-modal', 'corpus-modal', 'profile-modal', 'auth-modal'];
             for (const id of modalIds) {
                 const modal = document.getElementById(id);
                 if (modal && !modal.hidden) {
@@ -191,6 +195,7 @@ const App = {
                 e.stopPropagation();
                 const item = shareBtn.closest('.conv-item');
                 if (!item) return;
+                API.track('click_share');
                 API.getConversation(item.dataset.id).then(msgs => {
                     let text = 'FidesIA\n\n';
                     for (const m of msgs) {
@@ -214,22 +219,31 @@ const App = {
         // Saint du jour (visible pour tous)
         Saints.init();
 
+        // Track page view
+        API.track('page_view');
+
         // Check existing session
         const session = await AuthUI.checkSession();
         if (session) {
             this.state.authenticated = true;
             this.state.userId = session.user_id || API.getUserId();
             this.state.displayName = session.display_name || API.getDisplayName();
+            this.state.isAdmin = !!session.is_admin;
             this._showConnectedUI();
         } else {
             this._showGuestUI();
         }
     },
 
-    onLogin(data) {
+    async onLogin(data) {
         this.state.authenticated = true;
         this.state.userId = data.user_id;
         this.state.displayName = data.display_name || '';
+        // Check admin status
+        try {
+            const session = await API.checkSession();
+            this.state.isAdmin = !!(session && session.is_admin);
+        } catch (_) {}
         this._showConnectedUI();
     },
 
@@ -237,6 +251,7 @@ const App = {
         this.state.authenticated = false;
         this.state.userId = null;
         this.state.displayName = '';
+        this.state.isAdmin = false;
         Chat.newChat();
         this._showGuestUI();
     },
@@ -258,12 +273,16 @@ const App = {
         document.getElementById('guest-banner').hidden = true;
         document.getElementById('sidebar-username').textContent = this.state.displayName || 'Connecté';
 
+        // Admin metrics button
+        document.getElementById('metrics-btn').hidden = !this.state.isAdmin;
+
         this.loadConversations();
     },
 
     _showGuestUI() {
         document.getElementById('sidebar').hidden = true;
         document.getElementById('sidebar-toggle').hidden = true;
+        document.getElementById('metrics-btn').hidden = true;
 
         const authBtn = document.getElementById('auth-btn');
         authBtn.title = 'Se connecter';
