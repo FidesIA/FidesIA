@@ -382,11 +382,14 @@ async def rate_exchange(request: Request, req: RatingRequest, user: Optional[Use
 
 # === Corpus ===
 
+_CORPUS_PUBLIC_FIELDS = {"titre", "fichier", "categorie", "source", "annee", "url"}
+
+
 @app.get("/corpus")
 @limiter.limit(RATE_LIMIT_READ)
 async def get_corpus(request: Request):
-    """Retourne l'inventaire du corpus (public, rate-limité)."""
-    return _corpus_cache.get()
+    """Retourne l'inventaire du corpus (public, rate-limité). Filtre les champs internes."""
+    return [{k: v for k, v in doc.items() if k in _CORPUS_PUBLIC_FIELDS} for doc in _corpus_cache.get()]
 
 
 @app.get("/corpus/file/{file_path:path}")
