@@ -36,8 +36,7 @@ const AuthUI = {
     },
 
     open() {
-        document.body.style.overflow = 'hidden';
-        document.getElementById('auth-modal').hidden = false;
+        _openModal('auth-modal');
     },
 
     close() {

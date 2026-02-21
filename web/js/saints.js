@@ -23,9 +23,11 @@ const Saints = {
         try {
             const saints = await API.get('/api/saint-du-jour');
             if (saints.length > 0) {
-                this._current = saints[0];
+                // Privilégier le saint universel
+                const universel = saints.find(s => s.calendrier === 'Calendrier romain général');
+                this._current = universel || saints[0];
                 this._renderWidget(saints);
-                this._renderHeaderBtn(saints[0]);
+                this._renderHeaderBtn(this._current);
             }
         } catch (e) {
             console.warn('Saints init failed:', e);
@@ -35,31 +37,43 @@ const Saints = {
     _renderWidget(saints) {
         const container = document.getElementById('saint-du-jour');
         if (!container) return;
-
-        const saint = saints[0];
-        const subtitle = saint.titres && saint.titres.length > 0
-            ? saint.titres[0]
-            : saint.fete;
-        const rankCss = this._RANK_CSS[saint.rang_liturgique] || '';
-        const rankShort = this._RANK_SHORT[saint.rang_liturgique] || '';
-        const rankBadge = rankCss
-            ? `<span class="saint-rank saint-rank-${DOMPurify.sanitize(rankCss)}">${DOMPurify.sanitize(rankShort)}</span>`
-            : '';
-
         container.innerHTML = '';
-        const widget = document.createElement('div');
-        widget.className = 'saint-widget';
-        widget.dataset.saintId = saint.id;
-        widget.innerHTML = `
-            <div class="saint-widget-icon">&#10013;</div>
-            <div class="saint-widget-info">
-                <div class="saint-widget-label">Saint du jour ${rankBadge}</div>
-                <div class="saint-widget-name">${DOMPurify.sanitize(saint.nom)}</div>
-                <div class="saint-widget-subtitle">${DOMPurify.sanitize(subtitle)}</div>
-            </div>
-        `;
-        widget.addEventListener('click', () => this.openDetail(saint.id));
-        container.appendChild(widget);
+
+        // Séparer universel / local
+        const universels = saints.filter(s => s.calendrier === 'Calendrier romain général');
+        const locaux = saints.filter(s => s.calendrier !== 'Calendrier romain général');
+
+        // Toujours afficher l'universel en premier
+        const ordered = [...universels, ...locaux];
+        if (ordered.length === 0) return;
+
+        for (let i = 0; i < ordered.length; i++) {
+            const saint = ordered[i];
+            const isUniversel = saint.calendrier === 'Calendrier romain général';
+            const subtitle = saint.titres && saint.titres.length > 0
+                ? saint.titres[0]
+                : saint.fete;
+            const rankCss = this._RANK_CSS[saint.rang_liturgique] || '';
+            const rankShort = this._RANK_SHORT[saint.rang_liturgique] || '';
+            const rankBadge = rankCss
+                ? `<span class="saint-rank saint-rank-${DOMPurify.sanitize(rankCss)}">${DOMPurify.sanitize(rankShort)}</span>`
+                : '';
+
+            const label = i === 0 ? 'Saint du jour' : (saint.lieu_celebration || 'Fête locale');
+            const widget = document.createElement('div');
+            widget.className = 'saint-widget' + (isUniversel ? '' : ' saint-widget-local');
+            widget.dataset.saintId = saint.id;
+            widget.innerHTML = `
+                <div class="saint-widget-icon">${isUniversel ? '&#10013;' : '&#9670;'}</div>
+                <div class="saint-widget-info">
+                    <div class="saint-widget-label">${DOMPurify.sanitize(label)} ${rankBadge}</div>
+                    <div class="saint-widget-name">${DOMPurify.sanitize(saint.nom)}</div>
+                    <div class="saint-widget-subtitle">${DOMPurify.sanitize(subtitle)}</div>
+                </div>
+            `;
+            widget.addEventListener('click', () => this.openDetail(saint.id));
+            container.appendChild(widget);
+        }
         container.hidden = false;
     },
 
@@ -76,8 +90,7 @@ const Saints = {
         try {
             const saint = await API.get(`/api/saint/${encodeURIComponent(id)}`);
             this._renderModal(saint);
-            document.body.style.overflow = 'hidden';
-            document.getElementById('saint-modal').hidden = false;
+            _openModal('saint-modal');
         } catch (e) {
             console.warn('Saint detail failed:', e);
         }
@@ -107,6 +120,7 @@ const Saints = {
         html += '<div class="saint-meta">';
         html += `<span class="saint-fete">${esc(s.fete)}</span>`;
         if (s.lieu) html += ` · ${esc(s.lieu)}`;
+        if (s.lieu_celebration) html += `<br><span class="saint-celebration">${esc(s.lieu_celebration)}</span>`;
         if (s.naissance && s.mort) {
             html += ` · ${esc(s.naissance)}–${esc(s.mort)}`;
         } else if (s.mort) {

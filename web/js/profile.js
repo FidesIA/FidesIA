@@ -40,8 +40,7 @@ const Profile = {
     },
 
     open() {
-        document.body.style.overflow = 'hidden';
-        document.getElementById('profile-modal').hidden = false;
+        _openModal('profile-modal');
     },
 
     close() {

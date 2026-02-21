@@ -109,4 +109,6 @@ def _compact(s: dict) -> dict:
         "titres": s.get("titres", []),
         "fete": s.get("fete", ""),
         "rang_liturgique": s.get("rang_liturgique", ""),
+        "calendrier": s.get("calendrier", ""),
+        "lieu_celebration": s.get("lieu_celebration", ""),
     }

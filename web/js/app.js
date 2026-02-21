@@ -43,8 +43,7 @@ const Donation = {
         this._count++;
         if (this._count >= 5 && !this._shown && !sessionStorage.getItem('fidesia_donate_dismissed')) {
             this._shown = true;
-            document.body.style.overflow = 'hidden';
-            document.getElementById('donate-modal').hidden = false;
+            _openModal('donate-modal');
         }
     },
 
@@ -63,19 +62,42 @@ const _MODAL_MAP = {
     'donate-modal': () => Donation.close(),
 };
 
-function _closeModal(modalId) {
-    const fn = _MODAL_MAP[modalId];
-    if (fn) fn();
-    // Restore body scroll if no other modal is open
-    const anyOpen = Object.keys(_MODAL_MAP).some(id => {
+// Scroll lock — prevents iOS Safari touch-scroll-through & lateral drift
+let _scrollLockY = 0;
+
+function _lockScroll() {
+    _scrollLockY = window.scrollY || 0;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${_scrollLockY}px`;
+    document.body.style.left = '0';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+}
+
+function _unlockScroll() {
+    document.body.style.removeProperty('position');
+    document.body.style.removeProperty('top');
+    document.body.style.removeProperty('left');
+    document.body.style.removeProperty('width');
+    document.body.style.removeProperty('overflow');
+    window.scrollTo(0, _scrollLockY);
+}
+
+function _anyModalOpen() {
+    return Object.keys(_MODAL_MAP).some(id => {
         const el = document.getElementById(id);
         return el && !el.hidden;
     });
-    if (!anyOpen) document.body.style.overflow = '';
+}
+
+function _closeModal(modalId) {
+    const fn = _MODAL_MAP[modalId];
+    if (fn) fn();
+    if (!_anyModalOpen()) _unlockScroll();
 }
 
 function _openModal(modalId) {
-    document.body.style.overflow = 'hidden';
+    if (!_anyModalOpen()) _lockScroll();
     const el = document.getElementById(modalId);
     if (el) el.hidden = false;
 }

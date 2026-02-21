@@ -43,7 +43,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=1&m=1"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "basile-cesaree",
@@ -102,7 +103,8 @@
       "https://nominis.cef.fr/contenus/saint/32/Saint-Basile-le-Grand.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "gregoire-nazianze",
@@ -160,7 +162,8 @@
       "https://nominis.cef.fr/contenus/saint/32/Saint-Gregoire-de-Nazianze.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-nom-jesus",
@@ -205,7 +208,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=3&m=1"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "angele-foligno-0104",
@@ -252,7 +256,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_angele_foligno.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie (Diocèse de Foligno), Ordre franciscain"
   },
   {
     "id": "simeon-stylite-0105",
@@ -299,7 +304,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_simeon_stylite.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle (tradition orientale)"
   },
   {
     "id": "epiphanie-du-seigneur",
@@ -347,7 +353,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/fete/109/Epiphanie-du-Seigneur.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-raymond-penyafort",
@@ -394,7 +401,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=7&m=1"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "lucien-beauvais-0108",
@@ -441,7 +449,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_lucien_beauvais.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Beauvais)"
   },
   {
     "id": "alix-leclerc-0109",
@@ -488,7 +497,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_alix_leclerc.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Metz), Congrégation Notre-Dame"
   },
   {
     "id": "gregoire-nysse",
@@ -545,7 +555,8 @@
       "https://nominis.cef.fr/contenus/saint/337/Saint-Gregoire-de-Nysse.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle (tradition patristique)"
   },
   {
     "id": "paulin-aquilee-0111",
@@ -592,7 +603,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_paulin_aquilee.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie"
   },
   {
     "id": "marguerite-bourgeoys-0112",
@@ -639,7 +651,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_marguerite_bourgeoys.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Canada (Diocèse de Montréal)"
   },
   {
     "id": "hilaire-poitiers",
@@ -691,7 +704,8 @@
       "https://nominis.cef.fr/contenus/saint/346/Saint-Hilaire-de-Poitiers.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "felix-nole-0114",
@@ -738,7 +752,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_felix_nole.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie (Diocèse de Nola)"
   },
   {
     "id": "remi-reims-0115",
@@ -785,7 +800,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_remi.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Reims)"
   },
   {
     "id": "marcel-ier-pape-0116",
@@ -832,7 +848,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_marcel_ier_pape.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie"
   },
   {
     "id": "saint-antoine-grand",
@@ -879,7 +896,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=17&m=1"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "prisca-0118",
@@ -926,7 +944,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_prisca.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Rome, Église universelle (tradition ancienne)"
   },
   {
     "id": "marius-compagnons-0119",
@@ -972,7 +991,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_marius_compagnons.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie"
   },
   {
     "id": "saint-sebastien",
@@ -1021,7 +1041,8 @@
       "https://nominis.cef.fr/contenus/saint/414/Saint-Sebastien.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "sainte-agnes",
@@ -1070,7 +1091,8 @@
       "https://nominis.cef.fr/contenus/saint/426/Sainte-Agnes.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-vincent-diacre",
@@ -1116,7 +1138,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=22&m=1"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "ildefonse-toledo-0123",
@@ -1162,7 +1185,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_ildefonse_toledo.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Espagne"
   },
   {
     "id": "francois-sales",
@@ -1228,7 +1252,8 @@
       "https://nominis.cef.fr/contenus/saint/469/Saint-Francois-de-Sales.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "conversion-saint-paul",
@@ -1273,7 +1298,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=25&m=1"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saints-timothee-tite",
@@ -1319,7 +1345,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=26&m=1"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "sainte-angele-merici",
@@ -1368,7 +1395,8 @@
       "https://nominis.cef.fr/contenus/saint/487/Sainte-Angele-Merici.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "thomas-aquin",
@@ -1434,7 +1462,8 @@
       "https://nominis.cef.fr/contenus/saint/593/Saint-Thomas-d-Aquin.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "gildas-sage-0129",
@@ -1481,7 +1510,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_gildas_sage.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "bathilde-0130",
@@ -1528,7 +1558,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_bathilde.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France"
   },
   {
     "id": "saint-jean-bosco",
@@ -1577,7 +1608,8 @@
       "https://nominis.cef.fr/contenus/saint/706/Saint-Jean-Bosco.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "brigitte-irlande-0201",
@@ -1624,7 +1656,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_brigitte_irlande.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Irlande"
   },
   {
     "id": "presentation-seigneur",
@@ -1669,7 +1702,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=2&m=2"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-blaise-sainte-ansgaire",
@@ -1715,7 +1749,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=3&m=2"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "veronique-0204",
@@ -1762,7 +1797,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_veronique.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle (tradition populaire)"
   },
   {
     "id": "sainte-agathe",
@@ -1808,7 +1844,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=5&m=2"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saints-paul-miki-compagnons",
@@ -1854,7 +1891,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=6&m=2"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "colette-corbie-0207",
@@ -1901,7 +1939,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_colette_corbie.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Ordre des Clarisses)"
   },
   {
     "id": "sainte-josephine-bakhita",
@@ -1947,7 +1986,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=8&m=2"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "apolline-0209",
@@ -1995,7 +2035,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_apolline.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle (culte ancien)"
   },
   {
     "id": "sainte-scholastique",
@@ -2042,7 +2083,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=10&m=2"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "vierge-marie-lourdes",
@@ -2088,7 +2130,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=11&m=2"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "eulalie-barcelone-0212",
@@ -2135,7 +2178,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_eulalie_barcelone.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Espagne"
   },
   {
     "id": "beatrice-ornacieux-0213",
@@ -2182,7 +2226,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_beatrice_ornacieux.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Grenoble), Ordre des Chartreux"
   },
   {
     "id": "saints-cyrille-methode",
@@ -2231,7 +2276,8 @@
       "https://nominis.cef.fr/contenus/saint/405/Saints-Cyrille-et-Methode.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "claude-colombiere-0215",
@@ -2278,7 +2324,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_claude_colombiere.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Lyon), Compagnie de Jésus"
   },
   {
     "id": "julienne-nicomedee-0216",
@@ -2325,7 +2372,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_julienne_nicomedee.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "sept-saints-fondateurs-servites",
@@ -2371,7 +2419,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=17&m=2"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "sainte-bernadette-soubirous",
@@ -2420,7 +2469,8 @@
       "https://nominis.cef.fr/contenus/saint/762/Sainte-Bernadette-Soubirous.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Nevers, Sanctuaire de Lourdes)"
   },
   {
     "id": "gabin-0219",
@@ -2467,7 +2517,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_gabin.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Rome"
   },
   {
     "id": "aimee-bologne-0220",
@@ -2514,7 +2565,63 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_aimee_bologne.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie"
+  },
+  {
+    "id": "francisco-jacinta-marto",
+    "nom": "Saints Francisco et Jacinta Marto",
+    "nom_latin": "Franciscus et Hyacintha Marto",
+    "titres": [
+      "Voyants de Fatima",
+      "Enfants bienheureux",
+      "Plus jeunes saints non-martyrs canonisés"
+    ],
+    "naissance": 1908,
+    "mort": 1920,
+    "fete": "20 février",
+    "lieu": "Aljustrel, Fatima, Portugal",
+    "calendrier": "Calendrier propre",
+    "rang_liturgique": "Mémoire facultative",
+    "resume": "Francisco Marto (1908-1919) et sa sœur Jacinta (1910-1920) sont deux des trois enfants bergers de Fatima, au Portugal, qui virent la Vierge Marie six fois entre mai et octobre 1917. Leurs visions inclurent la révélation des trois secrets de Fatima et l'appel à la prière du Rosaire pour la paix dans le monde. Francisco, d'un naturel contemplatif, passait des heures en adoration devant le Saint-Sacrement pour \"consoler Jésus\". Jacinta, profondément marquée par la vision de l'enfer, offrait ses souffrances pour la conversion des pécheurs. Tous deux moururent très jeunes lors de la pandémie de grippe espagnole, furent béatifiés en 2000 par Jean-Paul II et canonisés le 13 mai 2017 par le pape François à Fatima même.",
+    "ecrits": [
+      {
+        "titre": "Paroles de Jacinta rapportées par Sœur Lucie",
+        "annee": 1941,
+        "description": "Sœur Lucie dos Santos, troisième voyante, a consigné dans ses Mémoires les paroles et pensées de Jacinta durant sa maladie, révélant une spiritualité étonnante pour une enfant de dix ans."
+      },
+      {
+        "titre": "Mémoires de Sœur Lucie (sur Francisco et Jacinta)",
+        "annee": 1941,
+        "description": "Récit détaillé des apparitions et de la vie spirituelle des deux enfants, rédigé à la demande de l'évêque de Leiria."
+      }
+    ],
+    "citations": [
+      {
+        "texte": "Ô mon Jésus, c'est par amour pour vous, pour la conversion des pécheurs, et en réparation des péchés commis contre le Cœur Immaculé de Marie.",
+        "source": "Prière enseignée par l'Ange de Fatima aux trois enfants"
+      },
+      {
+        "texte": "Je veux consoler Notre-Seigneur et ensuite convertir les pécheurs, pour que plus personne ne l'offense.",
+        "source": "Paroles de Jacinta rapportées par Sœur Lucie, Mémoires III"
+      },
+      {
+        "texte": "Est-ce que tu ne vois pas que Notre-Seigneur est triste ? Je ne veux pas que Notre-Seigneur soit triste. Je vais lui offrir tous les sacrifices que je pourrai.",
+        "source": "Paroles de Francisco rapportées par Sœur Lucie"
+      }
+    ],
+    "themes": [
+      "apparitions mariales",
+      "Fatima",
+      "prière du Rosaire",
+      "sacrifice",
+      "conversion des pécheurs",
+      "Cœur Immaculé de Marie"
+    ],
+    "sources_en_ligne": [
+      "https://nominis.cef.fr/contenus/saint/11596/Saints-Francisco-et-Jacinta-Marto.html"
+    ],
+    "lieu_celebration": "Portugal (Sanctuaire de Fatima)"
   },
   {
     "id": "pierre-damien",
@@ -2566,7 +2673,8 @@
       "https://nominis.cef.fr/contenus/saint/541/Saint-Pierre-Damien.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "chaire-saint-pierre",
@@ -2611,7 +2719,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=22&m=2"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "polycarpe-smyrne",
@@ -2659,7 +2768,8 @@
       "https://nominis.cef.fr/contenus/saint/122/Saint-Polycarpe-de-Smyrne.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "modeste-treves-0224",
@@ -2706,7 +2816,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_modeste_treves.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "cesaire-nazianze-0225",
@@ -2753,7 +2864,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_cesaire_nazianze.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "alexandre-alexandrie-0226",
@@ -2799,7 +2911,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_alexandre_alexandrie.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "gregoire-narek",
@@ -2851,7 +2964,8 @@
       "https://nominis.cef.fr/contenus/saint/12500/Saint-Gregoire-de-Narek.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "romain-condat-0228",
@@ -2898,7 +3012,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_romain_condat.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Saint-Claude), Jura"
   },
   {
     "id": "oswald-york-0229",
@@ -2945,7 +3060,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_oswald_york.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Angleterre"
   },
   {
     "id": "aubin-angers-0301",
@@ -2992,7 +3108,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_aubin_angers.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse d'Angers)"
   },
   {
     "id": "charles-bon-0302",
@@ -3039,7 +3156,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_charles_bon.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Belgique (Diocèse de Bruges)"
   },
   {
     "id": "cunegonde-0303",
@@ -3086,7 +3204,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_cunegonde.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Allemagne, Luxembourg"
   },
   {
     "id": "saint-casimir",
@@ -3132,7 +3251,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=4&m=3"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "jean-joseph-croix-0305",
@@ -3179,7 +3299,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_jean_joseph_croix.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie, Ordre franciscain"
   },
   {
     "id": "rose-viterbe-0306",
@@ -3226,7 +3347,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_rose_viterbe.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie"
   },
   {
     "id": "sainte-perpetue-felicite",
@@ -3275,7 +3397,8 @@
       "https://nominis.cef.fr/contenus/saint/429/Sainte-Perpetue-et-Felicite.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-jean-dieu",
@@ -3324,7 +3447,8 @@
       "https://nominis.cef.fr/contenus/saint/627/Saint-Jean-de-Dieu.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "sainte-francoise-romaine",
@@ -3371,7 +3495,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=9&m=3"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "quarante-martyrs-sebasthe-0310",
@@ -3418,7 +3543,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/quarante_martyrs_sebasthe.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "euloge-cordoue-0311",
@@ -3465,7 +3591,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_euloge_cordoue.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Espagne"
   },
   {
     "id": "fina-san-gimignano-0312",
@@ -3512,7 +3639,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_fina_san_gimignano.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie"
   },
   {
     "id": "rodrigue-cordoue-0313",
@@ -3559,7 +3687,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_rodrigue_cordoue.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Espagne"
   },
   {
     "id": "mathilde-ringelheim-0314",
@@ -3606,7 +3735,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_mathilde_ringelheim.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Allemagne"
   },
   {
     "id": "sainte-louise-marillac",
@@ -3655,7 +3785,8 @@
       "https://nominis.cef.fr/contenus/saint/651/Sainte-Louise-de-Marillac.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France, Filles de la Charité"
   },
   {
     "id": "abraham-kidunaia-0316",
@@ -3702,7 +3833,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_abraham_kidunaia.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-patrick",
@@ -3752,7 +3884,8 @@
       "https://nominis.cef.fr/contenus/saint/343/Saint-Patrick.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "cyrille-jerusalem",
@@ -3795,7 +3928,8 @@
       "https://nominis.cef.fr/contenus/saint/675/Saint-Cyrille-de-Jerusalem.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-joseph",
@@ -3843,7 +3977,8 @@
       "https://nominis.cef.fr/contenus/saint/2/Saint-Joseph.html"
     ],
     "rang_liturgique": "Solennité",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "cuthbert-lindisfarne-0320",
@@ -3890,7 +4025,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_cuthbert_lindisfarne.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Angleterre (Diocèse de Durham)"
   },
   {
     "id": "nicolas-flue-0321",
@@ -3937,7 +4073,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_nicolas_flue.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Suisse"
   },
   {
     "id": "lea-rome-0322",
@@ -3984,7 +4121,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_lea_rome.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie"
   },
   {
     "id": "saint-turibio-mogrovejo",
@@ -4030,7 +4168,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=23&m=3"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-oscar-romero",
@@ -4080,7 +4219,8 @@
       "https://nominis.cef.fr/contenus/saint/822/Saint-Oscar-Romero.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "El Salvador, Amérique latine"
   },
   {
     "id": "annonciation-seigneur",
@@ -4126,7 +4266,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optionen.php?d=25&m=3"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "ludger-munster-0326",
@@ -4173,7 +4314,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_ludger_munster.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Allemagne"
   },
   {
     "id": "rupert-salzbourg-0327",
@@ -4220,7 +4362,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_rupert_salzbourg.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Allemagne"
   },
   {
     "id": "gontran-rois-francs-0328",
@@ -4267,7 +4410,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_gontran.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Chalon-sur-Saône)"
   },
   {
     "id": "jonas-barachise-0329",
@@ -4313,7 +4457,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saints_jonas_barachise.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle (tradition orientale, Perse)"
   },
   {
     "id": "jean-climaque-0330",
@@ -4360,7 +4505,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_jean_climaque.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle (tradition monastique)"
   },
   {
     "id": "benjamin-perse-0331",
@@ -4407,7 +4553,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_benjamin_perse.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "hugues-grenoble-01-04",
@@ -4447,7 +4594,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Hugues_de_Grenoble.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Grenoble)"
   },
   {
     "id": "saint-francois-paule",
@@ -4496,7 +4644,8 @@
       "https://nominis.cef.fr/contenus/saint/496/Saint-Francois-de-Paule.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "richard-chichester-03-04",
@@ -4536,7 +4685,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Richard_de_Chichester.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "isidore-seville",
@@ -4588,7 +4738,8 @@
       "https://nominis.cef.fr/contenus/saint/780/Saint-Isidore-de-Seville.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "vincent-ferrier",
@@ -4635,7 +4786,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/saint-vincent-ferrier-1350-1419.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "marcellin-champagnat-06-04",
@@ -4675,7 +4827,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Marcellin_Champagnat.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Frères Maristes"
   },
   {
     "id": "saint-jean-baptiste-salle",
@@ -4724,7 +4877,8 @@
       "https://nominis.cef.fr/contenus/saint/695/Saint-Jean-Baptiste-de-la-Salle.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "julie-billiart-08-04",
@@ -4764,7 +4918,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_Julie_Billiart.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France, Belgique (Sœurs de Notre-Dame)"
   },
   {
     "id": "waudru-mons-09-04",
@@ -4804,7 +4959,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_Waudru_de_Mons.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Belgique"
   },
   {
     "id": "fulbert-chartres-10-04",
@@ -4844,7 +5000,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Fulbert_de_Chartres.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "stanislas",
@@ -4892,7 +5049,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/saint-stanislas-1030-1079.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "jules-ier-12-04",
@@ -4932,7 +5090,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Jules_Ier.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Rome"
   },
   {
     "id": "martin-ier",
@@ -4980,7 +5139,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/saint-martin-ier-pape.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "lidwine-schiedam-14-04",
@@ -5020,7 +5180,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_Lidwine_de_Schiedam.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Pays-Bas (Diocèse de Rotterdam)"
   },
   {
     "id": "paterne-vannes-15-04",
@@ -5060,7 +5221,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Paterne_de_Vannes.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "benoit-joseph-labre-16-04",
@@ -5100,7 +5262,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Benoit_Joseph_Labre.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse d'Arras), Italie (Rome)"
   },
   {
     "id": "etienne-harding-17-04",
@@ -5141,7 +5304,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Etienne_Harding.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Ordre cistercien"
   },
   {
     "id": "marie-incarnation-18-04",
@@ -5182,7 +5346,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/bienheureuse_Marie_de_l_Incarnation.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Canada (Québec), Ordre des Ursulines"
   },
   {
     "id": "leon-ix-19-04",
@@ -5222,7 +5387,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Leon_IX.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "agnes-montepulciano-20-04",
@@ -5262,7 +5428,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_Agnes_de_Montepulciano.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie, Ordre dominicain"
   },
   {
     "id": "anselme-cantorbery",
@@ -5320,7 +5487,8 @@
       "https://nominis.cef.fr/contenus/saint/826/Saint-Anselme.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "soter-22-04",
@@ -5360,7 +5528,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Soter.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Rome"
   },
   {
     "id": "georges",
@@ -5408,7 +5577,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/saint-georges-martyr.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "fidele-sigmaringen",
@@ -5456,7 +5626,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/saint-fidele-de-sigmaringen.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-marc",
@@ -5506,7 +5677,8 @@
       "https://nominis.cef.fr/contenus/saint/11/Saint-Marc-Evangeliste.html"
     ],
     "rang_liturgique": "Fête",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "bon-conseil-26-04",
@@ -5546,7 +5718,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/Notre_Dame_du_Bon_Conseil.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie (Genazzano), Ordre des Augustins"
   },
   {
     "id": "zita-lucques-27-04",
@@ -5587,7 +5760,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_Zita_de_Lucques.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie (Diocèse de Lucques)"
   },
   {
     "id": "saint-louis-marie-montfort",
@@ -5636,7 +5810,8 @@
       "https://nominis.cef.fr/contenus/saint/632/Saint-Louis-Marie-de-Montfort.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "catherine-sienne",
@@ -5694,7 +5869,8 @@
       "https://nominis.cef.fr/contenus/saint/847/Sainte-Catherine-de-Sienne.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "pie-v",
@@ -5743,7 +5919,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/saint-pie-v-pape.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "joseph-travailleur",
@@ -5791,7 +5968,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/saint-joseph-travailleur.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "athanase-alexandrie",
@@ -5849,7 +6027,8 @@
       "https://nominis.cef.fr/contenus/saint/912/Saint-Athanase.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "philippe-jacques-apotres",
@@ -5897,7 +6076,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/saints-philippe-et-jacques-apotres.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "florian-04-05",
@@ -5938,7 +6118,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Florian.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Autriche, Pologne"
   },
   {
     "id": "hilaire-arles-05-05",
@@ -5978,7 +6159,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Hilaire_d_Arles.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Archidiocèse d'Aix et Arles)"
   },
   {
     "id": "marian-jacques-06-05",
@@ -6018,7 +6200,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saints_Marian_et_Jacques.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Algérie (tradition ancienne)"
   },
   {
     "id": "gisele-hongrie-07-05",
@@ -6058,7 +6241,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_Gisele_de_Hongrie.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "desire-bourges-08-05",
@@ -6098,7 +6282,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Desire_de_Bourges.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "pacme-09-05",
@@ -6138,7 +6323,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Pacme_le_Grand.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "jean-avila",
@@ -6190,7 +6376,8 @@
       "https://nominis.cef.fr/contenus/saint/949/Saint-Jean-d-Avila.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "mamert-vienne-11-05",
@@ -6230,7 +6417,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Mamert_de_Vienne.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Vienne)"
   },
   {
     "id": "neree-achillee",
@@ -6278,7 +6466,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/saints-neree-et-achillee.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "notre-dame-fatima",
@@ -6327,7 +6516,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/notre-dame-de-fatima.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "matthias-apotre",
@@ -6375,7 +6565,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/saint-matthias-apotre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-damien-molokai",
@@ -6424,7 +6615,8 @@
       "https://nominis.cef.fr/contenus/saint/776/Saint-Damien-de-Molokai.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Belgique, Hawaii (États-Unis)"
   },
   {
     "id": "honore-paris-16-05",
@@ -6465,7 +6657,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Honore_de_Paris.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France"
   },
   {
     "id": "pascal-baylon-17-05",
@@ -6505,7 +6698,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Pascal_Baylon.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Espagne, Ordre franciscain"
   },
   {
     "id": "jean-ier",
@@ -6553,7 +6747,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/saint-jean-ier-pape.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "yves-treguer-19-05",
@@ -6594,7 +6789,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Yves_de_Treguer.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "bernardin-sienne",
@@ -6643,7 +6839,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/saint-bernardin-de-sienne.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "christophe-magallanes",
@@ -6692,7 +6889,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/saints-christophe-magallanes-et-compagnons.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Mexique"
   },
   {
     "id": "saint-rita-de-cascia",
@@ -6740,7 +6938,8 @@
       "https://nominis.cef.fr/contenus/saint/1457-Rita-de-Cascia.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "didier-vienne-23-05",
@@ -6781,7 +6980,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Didier_de_Vienne.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "vincent-lerins-24-05",
@@ -6822,7 +7022,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Vincent_de_Lerins.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Fréjus-Toulon)"
   },
   {
     "id": "bede-venerable",
@@ -6874,7 +7075,8 @@
       "https://nominis.cef.fr/contenus/saint/1059/Saint-Bede-le-Venerable.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-philippe-neri",
@@ -6923,7 +7125,8 @@
       "https://nominis.cef.fr/contenus/saint/592/Saint-Philippe-Neri.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-augustin-cantorbery",
@@ -6972,7 +7175,8 @@
       "https://nominis.cef.fr/contenus/saint/386/Saint-Augustin-de-Cantoubery.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "germain-paris-28-05",
@@ -7012,7 +7216,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Germain_de_Paris.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Paris)"
   },
   {
     "id": "ursule-ledochowska-29-05",
@@ -7052,7 +7257,66 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_Ursule_Ledochowska.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Pologne, Ursulines du Sacré-Cœur"
+  },
+  {
+    "id": "saint-paul-vi",
+    "nom": "Saint Paul VI",
+    "nom_latin": "Paulus PP. VI",
+    "titres": [
+      "Pape",
+      "Serviteur de Vatican II"
+    ],
+    "naissance": 1897,
+    "mort": 1978,
+    "fete": "29 mai",
+    "lieu": "Concesio, Brescia, Italie",
+    "calendrier": "Calendrier romain général",
+    "rang_liturgique": "Mémoire facultative",
+    "resume": "Giovanni Battista Montini, né en 1897 à Concesio (Brescia), fut élu pape sous le nom de Paul VI en 1963, succédant à Jean XXIII. Il mena à terme le Concile Vatican II et promulgua ses documents majeurs, dont la constitution Lumen Gentium et la constitution pastorale Gaudium et Spes. Son encyclique Humanae Vitae (1968) sur la régulation des naissances reste l'un des documents les plus discutés du magistère contemporain. Pape de la réforme liturgique et du dialogue œcuménique, il fut le premier pontife à voyager sur les cinq continents. Béatifié en 2014 et canonisé le 14 octobre 2018 par le pape François.",
+    "ecrits": [
+      {
+        "titre": "Humanae Vitae",
+        "annee": 1968,
+        "description": "Encyclique sur la régulation des naissances, réaffirmant l'enseignement de l'Église sur la contraception."
+      },
+      {
+        "titre": "Evangelii Nuntiandi",
+        "annee": 1975,
+        "description": "Exhortation apostolique sur l'évangélisation dans le monde moderne, considérée comme l'un des plus grands documents missionnaires du XXe siècle."
+      },
+      {
+        "titre": "Populorum Progressio",
+        "annee": 1967,
+        "description": "Encyclique sur le développement des peuples et la justice sociale internationale."
+      }
+    ],
+    "citations": [
+      {
+        "texte": "Le développement est le nouveau nom de la paix.",
+        "source": "Populorum Progressio, 87"
+      },
+      {
+        "texte": "L'homme contemporain écoute plus volontiers les témoins que les maîtres, ou s'il écoute les maîtres, c'est parce qu'ils sont des témoins.",
+        "source": "Evangelii Nuntiandi, 41"
+      },
+      {
+        "texte": "Ne jamais la paix, jamais la paix, ne jamais la guerre !",
+        "source": "Discours aux Nations Unies, 4 octobre 1965"
+      }
+    ],
+    "themes": [
+      "Concile Vatican II",
+      "évangélisation",
+      "dialogue œcuménique",
+      "doctrine sociale",
+      "réforme liturgique"
+    ],
+    "sources_en_ligne": [
+      "https://nominis.cef.fr/contenus/saint/11556/Saint-Paul-VI.html"
+    ],
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "sainte-jeanne-arc",
@@ -7102,7 +7366,8 @@
       "https://nominis.cef.fr/contenus/saint/473/Sainte-Jeanne-d-Arc.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (patronne secondaire)"
   },
   {
     "id": "visitation-vierge",
@@ -7151,7 +7416,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/visitation-de-la-vierge-marie.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "justin-martyr",
@@ -7205,7 +7471,8 @@
       "https://nominis.cef.fr/contenus/saint/97/Saint-Justin-le-Martyr.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "marcellin-pierre",
@@ -7253,7 +7520,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/saints-marcellin-et-pierre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "charles-lwanga",
@@ -7302,7 +7570,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/saints-charles-lwanga-et-compagnons.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "clotilde-04-06",
@@ -7342,7 +7611,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_Clotilde.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France"
   },
   {
     "id": "saint-boniface",
@@ -7392,7 +7662,8 @@
       "https://nominis.cef.fr/contenus/saint/374/Saint-Boniface.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-norbert-xanten",
@@ -7441,7 +7712,8 @@
       "https://nominis.cef.fr/contenus/saint/436/Saint-Norbert-de-Xanten.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "meriadec-vannes-07-06",
@@ -7481,7 +7753,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Meriadec_de_Vannes.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "medard-noyon-08-06",
@@ -7521,7 +7794,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Medard_de_Noyon.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Noyon)"
   },
   {
     "id": "ephrem-syrien",
@@ -7579,7 +7853,8 @@
       "https://nominis.cef.fr/contenus/saint/1157/Saint-Ephrem.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "marie-taigi-10-06",
@@ -7619,7 +7894,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/bienheureuse_Anne_Marie_Taigi.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie (Rome), Trinitaires"
   },
   {
     "id": "saint-barnabe",
@@ -7669,7 +7945,8 @@
       "https://nominis.cef.fr/contenus/saint/9/Saint-Barnabe-Apotre.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "guy-anderlecht-12-06",
@@ -7709,7 +7986,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Guy_d_Anderlecht.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Belgique (Diocèse de Malines-Bruxelles)"
   },
   {
     "id": "antoine-de-padoue",
@@ -7761,7 +8039,8 @@
       "https://nominis.cef.fr/contenus/saint/1320/Saint-Antoine-de-Padoue.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "elisee-14-06",
@@ -7801,7 +8080,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Elisee.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle (tradition biblique)"
   },
   {
     "id": "germaine-pibrac-15-06",
@@ -7841,7 +8121,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_Germaine_Cousin.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Toulouse)"
   },
   {
     "id": "jean-françois-regis-16-06",
@@ -7881,7 +8162,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Jean_Francois_Regis.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "herve-bretagne-17-06",
@@ -7921,7 +8203,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Herve_de_Bretagne.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Bretagne)"
   },
   {
     "id": "elisabet-schonau-18-06",
@@ -7961,7 +8244,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_Elisabeth_de_Schonau.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Allemagne (Diocèse de Limburg)"
   },
   {
     "id": "romuald",
@@ -8010,7 +8294,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/saint-romuald.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "silvere-20-06",
@@ -8051,7 +8336,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Silvere.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Rome"
   },
   {
     "id": "louis-gonzague",
@@ -8100,7 +8386,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/saint-louis-de-gonzague.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "thomas-more",
@@ -8153,7 +8440,8 @@
       "https://nominis.cef.fr/contenus/saint/1293/Saint-Thomas-More.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "joseph-cafasso-23-06",
@@ -8194,7 +8482,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Joseph_Cafasso.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie (Diocèse de Turin)"
   },
   {
     "id": "jean-baptiste-nativite",
@@ -8243,7 +8532,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/nativite-de-saint-jean-baptiste.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "prosper-aquitaine-25-06",
@@ -8283,7 +8573,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_Prosper_d_Aquitaine.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Tarbes)"
   },
   {
     "id": "saint-josemaria-escriva",
@@ -8332,7 +8623,8 @@
       "https://nominis.cef.fr/contenus/saint/818/Saint-Josemaria-Escriva.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Opus Dei"
   },
   {
     "id": "cyrille-alexandrie",
@@ -8384,7 +8676,8 @@
       "https://nominis.cef.fr/contenus/saint/1289/Saint-Cyrille-d-Alexandrie.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "irenee-lyon",
@@ -8434,7 +8727,8 @@
       "https://nominis.cef.fr/contenus/saint/145/Saint-Irenee-de-Lyon.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-pierre",
@@ -8484,7 +8778,8 @@
       "https://nominis.cef.fr/contenus/saint/3/Saint-Pierre-Apotre.html"
     ],
     "rang_liturgique": "Solennité",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-paul",
@@ -8542,7 +8837,8 @@
       "https://nominis.cef.fr/contenus/saint/4/Saint-Paul-Apotre.html"
     ],
     "rang_liturgique": "Solennité",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "premiers-martyrs-rome",
@@ -8591,7 +8887,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/premiers-martyrs-eglise-rome.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-001",
@@ -8633,7 +8930,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_thierry_reims.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-002",
@@ -8674,7 +8972,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_martinien.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle (tradition ancienne)"
   },
   {
     "id": "thomas-apotre-07-03",
@@ -8723,7 +9022,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1373/Saint-Thomas.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "bienheureux-pier-giorgio-frassati",
@@ -8772,7 +9072,8 @@
       "https://nominis.cef.fr/contenus/saint/820/Bienheureux-Pier-Giorgio-Frassati.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "antoine-zaccaria-07-05",
@@ -8821,7 +9122,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1380/Saint-Antoine-Marie-Zaccaria.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "maria-goretti-07-06",
@@ -8870,7 +9172,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1376/Sainte-Maria-Goretti.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-003",
@@ -8912,7 +9215,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_pantene_alexandrie.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-004",
@@ -8954,7 +9258,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_thibaut_provins.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "augustin-zhao-rong-07-09",
@@ -9004,7 +9309,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2218/Saints-Augustin-Zhao-Rong-et-compagnons.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-005",
@@ -9046,7 +9352,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_amalberge_maubeuge.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-benoit-nursie",
@@ -9095,7 +9402,8 @@
       "https://nominis.cef.fr/contenus/saint/398/Saint-Benoit-de-Nursie.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-006",
@@ -9137,7 +9445,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_nabor_felix.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "henri-empereur-07-13",
@@ -9186,7 +9495,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1387/Saint-Henri.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-camille-lellis",
@@ -9235,7 +9545,8 @@
       "https://nominis.cef.fr/contenus/saint/616/Saint-Camille-de-Lellis.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie, Ordre des Camilliens"
   },
   {
     "id": "bonaventure",
@@ -9293,7 +9604,8 @@
       "https://nominis.cef.fr/contenus/saint/1402/Saint-Bonaventure.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "notre-dame-mont-carmel-07-16",
@@ -9342,7 +9654,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1410/Notre-Dame-du-Mont-Carmel.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-007",
@@ -9385,7 +9698,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saintes_martyres_compiegne.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-008",
@@ -9427,7 +9741,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_frederic_utrecht.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-009",
@@ -9469,7 +9784,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_arsene_grand.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "apollinaire-07-20",
@@ -9518,7 +9834,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1419/Saint-Apollinaire.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "laurent-brindisi",
@@ -9570,7 +9887,8 @@
       "https://nominis.cef.fr/contenus/saint/1396/Saint-Laurent-de-Brindisi.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "sainte-marie-madeleine",
@@ -9619,7 +9937,8 @@
       "https://nominis.cef.fr/contenus/saint/6/Sainte-Marie-Madeleine.html"
     ],
     "rang_liturgique": "Fête",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "jean-cassien",
@@ -9668,7 +9987,8 @@
       "https://nominis.cef.fr/contenus/saint/303/Saint-Jean-Cassien.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "sainte-brigitte-suede",
@@ -9717,7 +10037,8 @@
       "https://nominis.cef.fr/contenus/saint/455/Sainte-Brigitte-de-Suede.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "charbel-makhlouf-07-24",
@@ -9767,7 +10088,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1437/Saint-Charbel-Makhlouf.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-jacques-majeur",
@@ -9815,7 +10137,8 @@
       "https://nominis.cef.fr/contenus/saint/7/Saint-Jacques-le-Majeur.html"
     ],
     "rang_liturgique": "Fête",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "joachim-anne-07-26",
@@ -9864,7 +10187,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1445/Saints-Joachim-et-Anne.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-010",
@@ -9905,7 +10229,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_nathalie_cordoue.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-011",
@@ -9946,7 +10271,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saints_nazaire_celse.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie (Diocèse de Milan)"
   },
   {
     "id": "marthe-marie-lazare-07-29",
@@ -9996,7 +10322,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1453/Sainte-Marthe.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "pierre-chrysologue",
@@ -10037,7 +10364,8 @@
       "https://nominis.cef.fr/contenus/saint/1461/Saint-Pierre-Chrysologue.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-ignace-loyola",
@@ -10086,7 +10414,8 @@
       "https://nominis.cef.fr/contenus/saint/583/Saint-Ignace-de-Loyola.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "alphonse-liguori",
@@ -10144,7 +10473,8 @@
       "https://nominis.cef.fr/contenus/saint/1489/Saint-Alphonse-Marie-de-Liguori.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "eusebe-verceil-08-02",
@@ -10193,7 +10523,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1461/Saint-Eusebe-de-Verceil.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-012",
@@ -10234,7 +10565,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_lydie_thyatire.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Grèce, Église universelle"
   },
   {
     "id": "saint-cure-ars",
@@ -10283,7 +10615,8 @@
       "https://nominis.cef.fr/contenus/saint/753/Saint-Cure-d-Ars.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "dedicace-sainte-marie-majeure-08-05",
@@ -10332,7 +10665,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2022/Dedicace-de-Sainte-Marie-Majeure.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "transfiguration-seigneur-08-06",
@@ -10381,7 +10715,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1472/Transfiguration-du-Seigneur.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "sixte-ii-08-07",
@@ -10430,7 +10765,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1478/Saint-Sixte-II-et-compagnons.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-dominique-guzman",
@@ -10480,7 +10816,8 @@
       "https://nominis.cef.fr/contenus/saint/541/Saint-Dominique-de-Guzman.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "sainte-edith-stein",
@@ -10529,7 +10866,8 @@
       "https://nominis.cef.fr/contenus/saint/811/Sainte-Edith-Stein.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-laurent-diacre",
@@ -10578,7 +10916,8 @@
       "https://nominis.cef.fr/contenus/saint/428/Saint-Laurent-Diacre.html"
     ],
     "rang_liturgique": "Fête",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "claire-assise-08-11",
@@ -10628,7 +10967,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1483/Sainte-Claire-d-Assise.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "jeanne-francoise-chantal-08-12",
@@ -10678,7 +11018,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1488/Sainte-Jeanne-Francoise-de-Chantal.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "hippolyte-rome",
@@ -10732,7 +11073,8 @@
       "https://nominis.cef.fr/contenus/saint/201/Saint-Hippolyte-de-Rome.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "maxime-confesseur",
@@ -10786,7 +11128,8 @@
       "https://nominis.cef.fr/contenus/saint/301/Saint-Maxime-le-Confesseur.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-maximilien-kolbe",
@@ -10835,7 +11178,8 @@
       "https://nominis.cef.fr/contenus/saint/778/Saint-Maximilien-Kolbe.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "vierge-marie",
@@ -10885,7 +11229,8 @@
       "https://nominis.cef.fr/contenus/saint/1/Sainte-Marie-Mere-de-Jesus.html"
     ],
     "rang_liturgique": "Solennité",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "etienne-hongrie-08-16",
@@ -10934,7 +11279,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1491/Saint-Etienne-de-Hongrie.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-013",
@@ -10976,7 +11322,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_jeanne_delanoue.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse d'Angers)"
   },
   {
     "id": "saint-014",
@@ -11018,7 +11365,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_helene.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-jean-eudes",
@@ -11067,7 +11415,8 @@
       "https://nominis.cef.fr/contenus/saint/638/Saint-Jean-Eudes.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "bernard-clairvaux",
@@ -11130,7 +11479,8 @@
       "https://nominis.cef.fr/contenus/saint/1549/Saint-Bernard-de-Clairvaux.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "pie-x-08-21",
@@ -11180,7 +11530,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1495/Saint-Pie-X.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "vierge-marie-reine-08-22",
@@ -11230,7 +11581,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1500/Vierge-Marie-Reine.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-015",
@@ -11272,7 +11624,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_rose_lima.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "barthelemy-apotre-08-24",
@@ -11322,7 +11675,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1505/Saint-Barthelemy-apotre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-louis-ix",
@@ -11372,7 +11726,8 @@
       "https://nominis.cef.fr/contenus/saint/423/Saint-Louis-IX.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-016",
@@ -11414,7 +11769,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_jeanne_elisabeth_bichier.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "monique-08-27",
@@ -11464,7 +11820,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1509/Sainte-Monique.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "augustin-hippone",
@@ -11531,7 +11888,8 @@
       "https://nominis.cef.fr/contenus/saint/1385/Saint-Augustin.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "martyre-jean-baptiste-08-29",
@@ -11581,7 +11939,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1511/Martyre-de-saint-Jean-Baptiste.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-017",
@@ -11623,7 +11982,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_fiacre.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France, Irlande"
   },
   {
     "id": "saint-018",
@@ -11665,7 +12025,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_raymond_nonnat.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-019",
@@ -11707,7 +12068,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_gilles.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Nîmes), Provence"
   },
   {
     "id": "saint-020",
@@ -11748,7 +12110,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/bienheureux_andre_grasset.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Martyrs de septembre 1792)"
   },
   {
     "id": "gregoire-grand",
@@ -11807,7 +12170,8 @@
       "https://nominis.cef.fr/contenus/saint/1683/Saint-Gregoire-le-Grand.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-021",
@@ -11849,7 +12213,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_rosalie_palerme.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie (Diocèse de Palerme)"
   },
   {
     "id": "sainte-mere-teresa-calcutta",
@@ -11898,7 +12263,8 @@
       "https://nominis.cef.fr/contenus/saint/805/Sainte-Mere-Teresa-de-Calcutta.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-022",
@@ -11940,7 +12306,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_donatien_reims.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Archidiocèse de Reims)"
   },
   {
     "id": "saint-023",
@@ -11981,7 +12348,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_reine_alesia.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Dijon)"
   },
   {
     "id": "nativite-vierge-marie-09-08",
@@ -12031,7 +12399,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1516/Nativite-de-la-Vierge-Marie.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "pierre-claver-09-09",
@@ -12081,7 +12450,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1520/Saint-Pierre-Claver.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-024",
@@ -12123,7 +12493,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_pulcherie.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-025",
@@ -12164,7 +12535,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saints_prote_hyacinthe.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Rome"
   },
   {
     "id": "saint-nom-marie-09-12",
@@ -12214,7 +12586,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1524/Le-Saint-Nom-de-Marie.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "jean-chrysostome",
@@ -12277,7 +12650,8 @@
       "https://nominis.cef.fr/contenus/saint/1750/Saint-Jean-Chrysostome.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "exaltation-sainte-croix-09-14",
@@ -12327,7 +12701,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1527/Exaltation-de-la-Sainte-Croix.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "notre-dame-douleurs-09-15",
@@ -12377,7 +12752,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1531/Notre-Dame-des-Douleurs.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "corneille-cyprien-09-16",
@@ -12427,7 +12803,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1535/Saints-Corneille-et-Cyprien.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "hildegarde-bingen",
@@ -12486,7 +12863,8 @@
       "https://nominis.cef.fr/contenus/saint/1753/Sainte-Hildegarde-de-Bingen.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "robert-bellarmin",
@@ -12539,7 +12917,8 @@
       "https://nominis.cef.fr/contenus/saint/1754/Saint-Robert-Bellarmin.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-026",
@@ -12581,7 +12960,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_joseph_cupertino.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "janvier-09-19",
@@ -12631,7 +13011,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1539/Saint-Janvier.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "andre-kim-tae-gon-09-20",
@@ -12681,7 +13062,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1543/Saints-Andre-Kim-Tae-gon-Paul-Chong-Ha-sang-et-compagnons.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "matthieu-apotre-09-21",
@@ -12731,7 +13113,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1547/Saint-Matthieu-apotre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-027",
@@ -12773,7 +13156,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_maurice_compagnons.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Suisse, France (Diocèse d'Annecy)"
   },
   {
     "id": "saint-padre-pio",
@@ -12823,7 +13207,8 @@
       "https://nominis.cef.fr/contenus/saint/800/Saint-Padre-Pio.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-028",
@@ -12865,7 +13250,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/sainte_thecle_iconium.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-029",
@@ -12907,7 +13293,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saint_firmin_amiens.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse d'Amiens), Picardie"
   },
   {
     "id": "saint-030",
@@ -12949,7 +13336,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/saints/saints_come_damien.html"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-vincent-paul",
@@ -12998,7 +13386,8 @@
       "https://nominis.cef.fr/contenus/saint/639/Saint-Vincent-de-Paul.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "venceslas-09-28",
@@ -13048,7 +13437,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1551/Saint-Venceslas.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "michel-gabriel-raphael-09-29",
@@ -13098,7 +13488,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/1556/Saints-Michel-Gabriel-et-Raphael-archanges.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "jerome",
@@ -13160,7 +13551,8 @@
       "https://nominis.cef.fr/contenus/saint/1786/Saint-Jerome.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "therese-lisieux",
@@ -13226,7 +13618,8 @@
       "https://nominis.cef.fr/contenus/saint/1862/Sainte-Therese-de-l-Enfant-Jesus.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "anges-gardiens-2oct",
@@ -13275,7 +13668,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/02octobre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-001-cp",
@@ -13317,7 +13711,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2069/Saint-Gerard-de-Brogne"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Belgique (Diocèse de Namur)"
   },
   {
     "id": "saint-francois-assise",
@@ -13373,7 +13768,8 @@
       "https://nominis.cef.fr/contenus/saint/544/Saint-Francois-d-Assise.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "sainte-faustine-kowalska",
@@ -13422,7 +13818,8 @@
       "https://nominis.cef.fr/contenus/saint/808/Sainte-Faustine-Kowalska.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-bruno",
@@ -13471,7 +13868,8 @@
       "https://nominis.cef.fr/contenus/saint/399/Saint-Bruno-Fondateur.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "notre-dame-rosaire-7oct",
@@ -13520,7 +13918,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/07octobre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-002-cp",
@@ -13562,7 +13961,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2068/Sainte-Pelagie"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle (tradition ancienne)"
   },
   {
     "id": "saint-denis-7oct",
@@ -13611,7 +14011,67 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/09octobre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
+  },
+  {
+    "id": "saint-john-henry-newman",
+    "nom": "Saint John Henry Newman",
+    "nom_latin": "Ioannes Henricus Newman",
+    "titres": [
+      "Cardinal",
+      "Docteur de l'Église",
+      "Théologien"
+    ],
+    "naissance": 1801,
+    "mort": 1890,
+    "fete": "9 octobre",
+    "lieu": "Londres, Angleterre",
+    "calendrier": "Calendrier romain général",
+    "rang_liturgique": "Mémoire facultative",
+    "resume": "John Henry Newman, né à Londres en 1801, fut d'abord un éminent théologien et prédicateur de l'Église anglicane avant de se convertir au catholicisme en 1845, événement qui ébranla l'Angleterre victorienne. Ordonné prêtre catholique puis cardinal par Léon XIII en 1879, il devint l'un des plus grands intellectuels catholiques du XIXe siècle. Ses écrits sur le développement de la doctrine chrétienne, la conscience morale et la relation entre foi et raison ont profondément influencé la théologie de Vatican II. Canonisé par le pape François le 13 octobre 2019, il a été déclaré Docteur de l'Église et inscrit au Calendrier romain général en 2025.",
+    "ecrits": [
+      {
+        "titre": "Essai sur le développement de la doctrine chrétienne",
+        "annee": 1845,
+        "description": "Ouvrage majeur écrit durant sa conversion, montrant comment les doctrines chrétiennes se développent organiquement tout en restant fidèles à la vérité originelle."
+      },
+      {
+        "titre": "Apologia Pro Vita Sua",
+        "annee": 1864,
+        "description": "Autobiographie spirituelle et intellectuelle, devenue un classique de la littérature anglaise, retraçant son cheminement vers le catholicisme."
+      },
+      {
+        "titre": "Grammaire de l'assentiment",
+        "annee": 1870,
+        "description": "Traité philosophique sur la nature de la croyance, distinguant l'assentiment réel de l'assentiment notionnel."
+      }
+    ],
+    "citations": [
+      {
+        "texte": "Vivre, c'est changer, et être parfait, c'est avoir changé souvent.",
+        "source": "Essai sur le développement de la doctrine chrétienne, I, 7"
+      },
+      {
+        "texte": "Si j'avais à porter un toast, je boirais d'abord à la conscience, et ensuite au pape.",
+        "source": "Lettre au Duc de Norfolk, 1875"
+      },
+      {
+        "texte": "Cor ad cor loquitur. (Le cœur parle au cœur.)",
+        "source": "Devise cardinalice de Newman"
+      }
+    ],
+    "themes": [
+      "développement doctrinal",
+      "conscience",
+      "conversion",
+      "foi et raison",
+      "théologie fondamentale"
+    ],
+    "sources_en_ligne": [
+      "https://nominis.cef.fr/contenus/saint/11733/Saint-John-Henry-Newman.html"
+    ],
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-003-cp",
@@ -13654,7 +14114,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2070/Saint-Daniel-Comboni"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie"
   },
   {
     "id": "saint-004-cp",
@@ -13696,7 +14157,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2071/Saint-Jean-XXIII"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-005-cp",
@@ -13738,7 +14200,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2072/Notre-Dame-du-Pilar"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Espagne (Archidiocèse de Saragosse)"
   },
   {
     "id": "saint-006-cp",
@@ -13781,7 +14244,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2073/Saint-Geraud-d-Aurillac"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France"
   },
   {
     "id": "saint-callixte-ier-14oct",
@@ -13830,7 +14294,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/14octobre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "therese-avila",
@@ -13892,7 +14357,8 @@
       "https://nominis.cef.fr/contenus/saint/1915/Sainte-Therese-d-Avila.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "sainte-marguerite-marie-alacoque",
@@ -13941,7 +14407,8 @@
       "https://nominis.cef.fr/contenus/saint/662/Sainte-Marguerite-Marie-Alacoque.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "ignace-antioche",
@@ -13989,7 +14456,8 @@
       "https://nominis.cef.fr/contenus/saint/57/Saint-Ignace-d-Antioche.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-luc",
@@ -14038,7 +14506,8 @@
       "https://nominis.cef.fr/contenus/saint/10/Saint-Luc-Evangeliste.html"
     ],
     "rang_liturgique": "Fête",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "jean-brebeuf-isaac-jogues-19oct",
@@ -14088,7 +14557,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/19octobre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-007-cp",
@@ -14130,7 +14600,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2074/Sainte-Adeline-de-Mortain"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France"
   },
   {
     "id": "saint-008-cp",
@@ -14173,7 +14644,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2075/Sainte-Ursule-et-compagnes"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Allemagne (Diocèse de Cologne)"
   },
   {
     "id": "saint-jean-paul-ii",
@@ -14224,7 +14696,8 @@
       "https://nominis.cef.fr/contenus/saint/814/Saint-Jean-Paul-II.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-jean-capistran-23oct",
@@ -14274,7 +14747,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/23octobre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-antoine-marie-claret-24oct",
@@ -14324,7 +14798,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/24octobre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-009-cp",
@@ -14367,7 +14842,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2076/Saints-Crepin-et-Crepinien"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France"
   },
   {
     "id": "saint-010-cp",
@@ -14409,7 +14885,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2077/Saint-Evariste"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Rome"
   },
   {
     "id": "saint-011-cp",
@@ -14452,7 +14929,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2078/Saint-Frumence-d-Ethiopie"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Éthiopie"
   },
   {
     "id": "saints-simon-jude-28oct",
@@ -14501,7 +14979,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/28octobre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "bienheureuse-chiara-luce-badano",
@@ -14550,7 +15029,8 @@
       "https://nominis.cef.fr/contenus/saint/821/Bienheureuse-Chiara-Luce-Badano.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie (Mouvement des Focolari)"
   },
   {
     "id": "saint-012-cp",
@@ -14592,7 +15072,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2079/Bienheureux-Dorothe-de-Montau"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-013-cp",
@@ -14633,7 +15114,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2080/Saint-Quentin"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Beauvais), Picardie"
   },
   {
     "id": "tous-saints-1nov",
@@ -14682,7 +15164,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/01novembre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "commemo-defunts-2nov",
@@ -14731,7 +15214,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/02novembre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-martin-porres-3nov",
@@ -14781,7 +15265,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/03novembre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-charles-borromee",
@@ -14831,7 +15316,8 @@
       "https://nominis.cef.fr/contenus/saint/570/Saint-Charles-Borromee.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-014-cp",
@@ -14873,7 +15359,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2081/Sainte-Sylvie-de-Rome"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie (Rome)"
   },
   {
     "id": "saint-015-cp",
@@ -14915,7 +15402,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2082/Saint-Leonard-de-Noblat"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France"
   },
   {
     "id": "saint-016-cp",
@@ -14958,7 +15446,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2083/Saint-Willibrord"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Pays-Bas, Luxembourg"
   },
   {
     "id": "sainte-elisabeth-trinite",
@@ -15007,7 +15496,8 @@
       "https://nominis.cef.fr/contenus/saint/793/Sainte-Elisabeth-de-la-Trinite.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Dijon), Ordre du Carmel"
   },
   {
     "id": "dedicace-lateran-9nov",
@@ -15056,7 +15546,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/09novembre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "leon-grand",
@@ -15109,7 +15600,8 @@
       "https://nominis.cef.fr/contenus/saint/2175/Saint-Leon-le-Grand.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-martin-de-tours",
@@ -15157,7 +15649,8 @@
       "https://nominis.cef.fr/contenus/saint/397-Martin-de-Tours.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-josaphat-12nov",
@@ -15206,7 +15699,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/12novembre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-017-cp",
@@ -15248,7 +15742,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2084/Saint-Brice-de-Tours"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Tours)"
   },
   {
     "id": "saint-018-cp",
@@ -15290,7 +15785,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2085/Saint-Laurent-O-Toole"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "albert-grand",
@@ -15348,7 +15844,8 @@
       "https://nominis.cef.fr/contenus/saint/2225/Saint-Albert-le-Grand.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "sainte-gertrude-helfta",
@@ -15398,7 +15895,8 @@
       "https://nominis.cef.fr/contenus/saint/424/Sainte-Gertrude-d-Helfta.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "gregoire-thaumaturge",
@@ -15452,7 +15950,58 @@
       "https://nominis.cef.fr/contenus/saint/219/Saint-Gregoire-le-Thaumaturge.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle (tradition patristique)"
+  },
+  {
+    "id": "sainte-elisabeth-hongrie",
+    "nom": "Sainte Élisabeth de Hongrie",
+    "nom_latin": "Elisabeth Hungariae",
+    "titres": [
+      "Princesse",
+      "Tertiaire franciscaine",
+      "Patronne des œuvres caritatives"
+    ],
+    "naissance": 1207,
+    "mort": 1231,
+    "fete": "17 novembre",
+    "lieu": "Presbourg (Bratislava), Hongrie",
+    "calendrier": "Calendrier romain général",
+    "rang_liturgique": "Mémoire obligatoire",
+    "resume": "Élisabeth de Hongrie, fille du roi André II de Hongrie, fut mariée à l'âge de 14 ans au landgrave Louis IV de Thuringe. Profondément pieuse et charitable, elle consacrait une grande partie de ses revenus aux pauvres et aux malades, fondant un hôpital à Marburg. Veuve à 20 ans après la mort de son époux lors de la sixième croisade, elle fut dépouillée de ses biens par sa belle-famille. Elle entra dans le tiers-ordre franciscain et vécut dans la pauvreté, servant les malades jusqu'à sa mort à 24 ans. Canonisée en 1235 par Grégoire IX, elle est l'une des saintes les plus vénérées d'Europe centrale.",
+    "ecrits": [
+      {
+        "titre": "Lettres et témoignages recueillis au procès de canonisation",
+        "annee": 1235,
+        "description": "Dépositions des témoins au procès de canonisation, conservant les paroles et actes de charité d'Élisabeth."
+      },
+      {
+        "titre": "Vie de sainte Élisabeth par Dietrich d'Apolda",
+        "annee": 1289,
+        "description": "Biographie hagiographique la plus complète, compilant les témoignages et miracles de la sainte."
+      }
+    ],
+    "citations": [
+      {
+        "texte": "Voyez, je vous l'avais bien dit : il faut rendre les hommes heureux.",
+        "source": "Paroles rapportées par ses servantes au procès de canonisation"
+      },
+      {
+        "texte": "Nous devons faire des hommes heureux. Ce n'est rien de nourrir le corps si l'on affame l'âme.",
+        "source": "Tradition franciscaine"
+      }
+    ],
+    "themes": [
+      "charité",
+      "pauvreté volontaire",
+      "service des malades",
+      "franciscanisme",
+      "noblesse au service des pauvres"
+    ],
+    "sources_en_ligne": [
+      "https://nominis.cef.fr/contenus/saint/1768/Sainte-Elisabeth-de-Hongrie.html"
+    ],
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "dedicace-pierre-paul-18nov",
@@ -15501,7 +16050,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/18novembre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-019-cp",
@@ -15543,7 +16093,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2086/Sainte-Mechtilde-de-Hackeborn"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Allemagne, Ordre bénédictin"
   },
   {
     "id": "saint-020-cp",
@@ -15585,7 +16136,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2087/Saint-Edmond-d-East-Anglia"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Angleterre"
   },
   {
     "id": "presentation-vierge-21nov",
@@ -15634,7 +16186,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/21novembre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-cecile-de-rome",
@@ -15681,7 +16234,8 @@
       "https://nominis.cef.fr/contenus/saint/230-Cécile-de-Rome.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "clement-rome",
@@ -15728,7 +16282,8 @@
       "https://nominis.cef.fr/contenus/saint/8/Saint-Clement-de-Rome.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "andre-dung-lac-24nov",
@@ -15777,7 +16332,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/24novembre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "sainte-catherine-alexandrie-25nov",
@@ -15826,7 +16382,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/25novembre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-021-cp",
@@ -15868,7 +16425,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2088/Sainte-Delphine-de-Puimichel"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse d'Apt), Provence"
   },
   {
     "id": "saint-022-cp",
@@ -15911,7 +16469,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2089/Sainte-Catherine-Laboure"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France"
   },
   {
     "id": "saint-023-cp",
@@ -15953,7 +16512,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2090/Saint-Jacques-de-la-Marche"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie"
   },
   {
     "id": "saint-024-cp",
@@ -15995,7 +16555,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2091/Saint-Saturnin-de-Toulouse"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Toulouse)"
   },
   {
     "id": "saint-andre",
@@ -16045,7 +16606,8 @@
       "https://nominis.cef.fr/contenus/saint/8/Saint-Andre-Apotre.html"
     ],
     "rang_liturgique": "Fête",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-025-cp",
@@ -16088,7 +16650,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2092/Saint-Eloi-de-Noyon"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France"
   },
   {
     "id": "saint-026-cp",
@@ -16130,7 +16693,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2093/Sainte-Viviane"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie"
   },
   {
     "id": "saint-francois-xavier",
@@ -16179,7 +16743,8 @@
       "https://nominis.cef.fr/contenus/saint/569/Saint-Francois-Xavier.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "clement-alexandrie",
@@ -16232,7 +16797,8 @@
       "https://nominis.cef.fr/contenus/saint/196/Saint-Clement-d-Alexandrie.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "jean-damascene",
@@ -16284,7 +16850,8 @@
       "https://nominis.cef.fr/contenus/saint/2259/Saint-Jean-Damascene.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-027-cp",
@@ -16326,7 +16893,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2094/Saint-Gerald-de-Braga"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-nicolas-de-myre",
@@ -16374,7 +16942,8 @@
       "https://nominis.cef.fr/contenus/saint/343-Nicolas-de-Myre.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "ambroise-milan",
@@ -16432,7 +17001,8 @@
       "https://nominis.cef.fr/contenus/saint/2280/Saint-Ambroise.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "immaculee-conception-8dec",
@@ -16481,7 +17051,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/08decembre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-juan-diego-9dec",
@@ -16530,7 +17101,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/09decembre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-028-cp",
@@ -16573,7 +17145,57 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2095/Bienheureuse-Eulalie-Durocher"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
+  },
+  {
+    "id": "notre-dame-lorette",
+    "nom": "Notre-Dame de Lorette",
+    "nom_latin": "Beata Maria Virgo Lauretana",
+    "titres": [
+      "Patronne de l'aviation",
+      "Patronne des voyageurs"
+    ],
+    "naissance": null,
+    "mort": null,
+    "fete": "10 décembre",
+    "lieu": "Lorette, Marches, Italie",
+    "calendrier": "Calendrier romain général",
+    "rang_liturgique": "Mémoire facultative",
+    "resume": "La mémoire facultative de Notre-Dame de Lorette commémore la tradition selon laquelle la maison de la Sainte Famille à Nazareth aurait été transportée par des anges jusqu'à Lorette, dans les Marches italiennes, en 1294. Le sanctuaire de Lorette, qui abrite la Santa Casa (Sainte Maison), est l'un des plus importants lieux de pèlerinage marial au monde. La basilique fut consacrée en 1507 et de nombreux papes y ont effectué des pèlerinages. Le pape François a inscrit cette mémoire au Calendrier romain général le 7 octobre 2019, reconnaissant l'importance universelle de ce lieu de dévotion mariale.",
+    "ecrits": [
+      {
+        "titre": "Litanies de Lorette",
+        "annee": 1587,
+        "description": "Les Litanies de la Sainte Vierge, approuvées par Sixte V en 1587, tirent leur nom du sanctuaire de Lorette où elles étaient chantées."
+      },
+      {
+        "titre": "Bulle Inter Sanctorum",
+        "annee": 1507,
+        "description": "Bulle du pape Jules II consacrant la basilique de Lorette et confirmant les privilèges du sanctuaire."
+      }
+    ],
+    "citations": [
+      {
+        "texte": "Sous ta protection nous nous réfugions, Sainte Mère de Dieu. Ne méprise pas nos prières quand nous sommes dans l'épreuve.",
+        "source": "Sub Tuum Praesidium, plus ancienne prière mariale connue"
+      },
+      {
+        "texte": "La maison de Marie est la maison de tous. C'est là que chacun peut venir déposer ses peines et ses espérances.",
+        "source": "Pape François, pèlerinage à Lorette, 25 mars 2019"
+      }
+    ],
+    "themes": [
+      "dévotion mariale",
+      "Sainte Maison",
+      "pèlerinage",
+      "Nazareth",
+      "Incarnation"
+    ],
+    "sources_en_ligne": [
+      "https://nominis.cef.fr/contenus/fete/3055/Notre-Dame-de-Lorette.html"
+    ],
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-damase-ier-11dec",
@@ -16621,7 +17243,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/11decembre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "notre-dame-guadalupe-12dec",
@@ -16670,7 +17293,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/12decembre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "sainte-lucie-13dec",
@@ -16719,7 +17343,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/13decembre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "jean-croix",
@@ -16785,7 +17410,8 @@
       "https://nominis.cef.fr/contenus/saint/2304/Saint-Jean-de-la-Croix.html"
     ],
     "rang_liturgique": "Mémoire obligatoire",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-charles-foucauld",
@@ -16835,7 +17461,8 @@
       "https://nominis.cef.fr/contenus/saint/787/Saint-Charles-de-Foucauld.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Viviers), Fraternités"
   },
   {
     "id": "saint-029-cp",
@@ -16878,7 +17505,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2096/Sainte-Adelaide-de-Bourgogne"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-030-cp",
@@ -16920,7 +17548,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2097/Saint-Lazare-de-Bethanie"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-031",
@@ -16962,7 +17591,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2098/Saint-Gatien-de-Tours"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France (Diocèse de Tours)"
   },
   {
     "id": "saint-032",
@@ -17004,7 +17634,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2099/Bienheureux-Urbain-V"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "France"
   },
   {
     "id": "saint-033",
@@ -17046,7 +17677,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2100/Saint-Theophile-d-Antioche"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "pierre-canisius",
@@ -17098,7 +17730,8 @@
       "https://nominis.cef.fr/contenus/saint/2393/Saint-Pierre-Canisius.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-034",
@@ -17141,7 +17774,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2101/Sainte-Francoise-Xaviere-Cabrini"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Amérique (patronne des migrants)"
   },
   {
     "id": "saint-jean-kenty-23dec",
@@ -17191,7 +17825,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/23decembre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-035",
@@ -17233,7 +17868,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2102/Sainte-Adele-de-Pfalzel"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "nativite-seigneur-25dec",
@@ -17282,7 +17918,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/25decembre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-etienne",
@@ -17330,7 +17967,8 @@
       "https://nominis.cef.fr/contenus/saint/34/Saint-Etienne-Protomartyr.html"
     ],
     "rang_liturgique": "Fête",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-jean-evangeliste",
@@ -17385,7 +18023,8 @@
       "https://nominis.cef.fr/contenus/saint/5/Saint-Jean-l-Evangeliste.html"
     ],
     "rang_liturgique": "Fête",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saints-innocents-28dec",
@@ -17434,7 +18073,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/28decembre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-thomas-becket",
@@ -17483,7 +18123,8 @@
       "https://nominis.cef.fr/contenus/saint/413/Saint-Thomas-Becket.html"
     ],
     "rang_liturgique": "Mémoire facultative",
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   },
   {
     "id": "saint-036",
@@ -17525,7 +18166,8 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/contenus/saint/2103/Saint-Roger-de-Cannes"
     ],
-    "calendrier": "Calendrier propre"
+    "calendrier": "Calendrier propre",
+    "lieu_celebration": "Italie"
   },
   {
     "id": "saint-sylvestre-ier-31dec",
@@ -17574,6 +18216,7 @@
     "sources_en_ligne": [
       "https://nominis.cef.fr/optatsints/31decembre.html"
     ],
-    "calendrier": "Calendrier romain général"
+    "calendrier": "Calendrier romain général",
+    "lieu_celebration": "Église universelle"
   }
 ]

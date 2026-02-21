@@ -395,11 +395,15 @@ async def serve_corpus_file(file_path: str):
     except ValueError:
         raise HTTPException(status_code=403, detail="Accès interdit")
 
+    # RFC 5987: filename* pour les noms non-ASCII (œ, é, etc.)
+    from urllib.parse import quote
+    safe_name = full_path.name.encode('ascii', 'replace').decode('ascii')
+    utf8_name = quote(full_path.name)
     return FileResponse(
         str(full_path),
         media_type="application/pdf",
         headers={
-            "Content-Disposition": f"inline; filename=\"{full_path.name}\"",
+            "Content-Disposition": f"inline; filename=\"{safe_name}\"; filename*=UTF-8''{utf8_name}",
             "Cache-Control": "public, max-age=86400",
         },
     )
