@@ -101,7 +101,7 @@ sudo journalctl -u fidesia -f
 - **Saint du jour** : calendrier liturgique avec biographies
 - **Conversations** : historique sauvegarde, partage, suppression
 - **Dashboard admin** : KPIs, graphes (Chart.js), geolocalisation IP, mots-cles
-- **Securite** : CSP, HSTS, rate limiting, validation des entrees, JWT
+- **Securite** : voir section dediee ci-dessous
 
 ## API
 
@@ -123,6 +123,20 @@ sudo journalctl -u fidesia -f
 | GET     | `/saints/today`              | Non      | Saint du jour                   |
 | POST    | `/api/track`                 | Non      | Tracking analytics              |
 | GET     | `/api/admin/metrics`         | Admin    | Dashboard metriques             |
+
+## Securite
+
+- **OpenAPI desactive** : `/docs`, `/redoc` et `/openapi.json` ne sont pas exposes
+- **Headers HTTP** : CSP, HSTS, X-Content-Type-Options, X-Frame-Options, Referrer-Policy, Permissions-Policy
+- **Header Server** supprime (Uvicorn `--no-server-header` + Caddy `defer`)
+- **Rate limiting** (slowapi) sur tous les endpoints
+- **JWT** : bcrypt, expiration 7 jours, secret >= 32 caracteres
+- **Validation des entrees** : Pydantic `Literal` pour les types d'evenements, sanitization HTML des metadonnees
+- **Erreurs generiques** : les erreurs de validation Pydantic ne revelent pas la structure interne
+- **`/health` minimal** : retourne uniquement le statut, sans details techniques
+- **`/corpus` filtre** : seuls les champs publics sont exposes (titre, fichier, categorie, source, annee, url)
+- **`robots.txt`** : bloque les crawlers sur les routes sensibles (`/api/`, `/auth/`, `/admin/`, etc.)
+- **`/.well-known/security.txt`** : contact de securite (RFC 9116)
 
 ## Licence
 

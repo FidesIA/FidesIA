@@ -1,4 +1,4 @@
 Contact: mailto:jbdefromont@hotmail.fr
 Preferred-Languages: fr, en
-Canonical: https://fidesia.fromontville.fr/.well-known/security.txt
+Canonical: https://theologia.fromontville.fr/.well-known/security.txt
 Expires: 2027-02-21T00:00:00.000Z
